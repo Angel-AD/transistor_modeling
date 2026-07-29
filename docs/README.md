@@ -16,10 +16,13 @@ should be able to read it and drive the whole pipeline.
 5. [Feature reference](#5-feature-reference)
 6. [Output layout & `run_loss_*.json` fields](#6-output-layout--run_loss_json-fields)
 7. [Post-processing: compile, rank, plot](#7-post-processing-compile-rank-plot)
-8. [Recommended workflow (how to actually search)](#8-recommended-workflow-how-to-actually-search)
-9. [Reproducibility](#9-reproducibility)
-10. [Tests](#10-tests)
-11. [Gotchas / FAQ](#11-gotchas--faq)
+8. [Additional plotting & comparison tools](#8-additional-plotting--comparison-tools)
+9. [Cross-CSV consistency analysis & reporting](#9-cross-csv-consistency-analysis--reporting)
+10. [Pipeline GUI](#10-pipeline-gui)
+11. [Recommended workflow (how to actually search)](#11-recommended-workflow-how-to-actually-search)
+12. [Reproducibility](#12-reproducibility)
+13. [Tests](#13-tests)
+14. [Gotchas / FAQ](#14-gotchas--faq)
 
 ---
 
@@ -191,7 +194,7 @@ print(sum(len(m.build_tasks(n,c,cfg['DEFAULTS'],'/tmp/x','x','x.csv',a)[0]) for 
 ```
 > `nn_architectures: "@GENERATE@"` expands to **316 architectures** — combined
 > with the other dimensions this easily reaches **hundreds of thousands** of
-> configs (months of compute). See [§8](#8-recommended-workflow-how-to-actually-search).
+> configs (months of compute). See [§11](#11-recommended-workflow-how-to-actually-search).
 
 ---
 
@@ -583,6 +586,57 @@ refine6+), the value is read per-row and included in the group key — so each
 unique `(gm_weights, surgery_mode, gm_vds_min)` becomes its own experiment rather
 than a single experiment sweeping all values.
 
+### `keep_columns.py` — slim a results file to chosen columns
+
+```bash
+python keep_columns.py --csv results.csv --keep id arch_hash ids_rmse combined_gm
+python keep_columns.py --xlsx results.xlsx --keep id arch_hash ids_rmse --suffix _slim
+```
+
+Writes `<name><suffix>.xlsx` (default suffix `_slim`) next to the source; never
+modifies the source. `--csv` inputs go straight to a slim `.xlsx` (no intermediate
+full xlsx written). `--xlsx`/`--csv` each accept one or more files (`nargs="+"`); a
+`--keep` column absent from a given file is silently skipped (printed, not an
+error), so the same `--keep` list can run across files with slightly different
+schemas. Default `--keep` list is a region-analysis column set: `id, run_id,
+arch_id, arch_hash, base_id, eq, combined_gm, ids_rmse, region_knee_*,
+region_weight, vds_loss, region_vds_hi/lo, region_vgs_hi/lo, gm_vds_min,
+gm_vgs_min`.
+
+### `extract_derived_configs.py` — derive the 3 standard follow-up sweeps from a completed sweep
+
+```bash
+python extract_derived_configs.py --source_root ../runs/pure_combined9069_rw0_2.5_20 --dry_run
+python extract_derived_configs.py --source_root ../runs/pure_combined9069_rw0_2.5_20 \
+    --top_n 200 --gmshapeok_top_n 100
+```
+
+Not a data-transform tool itself — orchestrates `analyze_shape.py`, `keep_columns.py`,
+`filter_results.py`, and `gen_config_from_rows.py` as subprocesses over a
+`pure_combined9069`-style sweep root (one folder per equation/output-activation/gm
+combo, `--folders` defaulting to this project's own 8-folder convention). For each
+folder it derives three follow-up configs:
+
+- **best200** (`--top_n`, default 200) — escalates a `combined_gm` ceiling
+  (`--gm_ceiling_start`, default `0.9`, ×1.5 per retry) until enough rows pass, keeps
+  the top-N by `ids_rmse` via `filter_results.py --top_n --sort_by
+  region_knee_ids_rmse --filter_number` (`--filter_number`, default `5`), then
+  `gen_config_from_rows.py --ids all`.
+- **bothshapeok** (`--bothshapeok_top_n`) — same gate-then-rank selection,
+  restricted to rows passing both shape checks (`bothshape_ok`; see
+  [`analyze_shape.py`](../important_mds/shape_analysis_rules.md)).
+- **best100_gmshapeok** (`--gmshapeok_top_n`, default 100) — same idea restricted to
+  the weaker `gmshape_ok` subset, done in pure Python (no `filter_results.py` call,
+  since there's no arbitrary precomputed id list to filter by).
+
+Writes each derived config under `runs/<derived_name>_<suffix>/_configs/`.
+`--skip_bothshapeok`/`--skip_best200`/`--skip_best100_gmshapeok` skip a derivation;
+`--dry_run` prints the constituent commands without running them. This is also
+where the `_ensure_shape_csv()` helper lives that enforces the "slim `.xlsx` only,
+plain CSV deleted" file convention described in
+[`shape_analysis_rules.md`](../important_mds/shape_analysis_rules.md) — that
+convention belongs to this wrapper, not to `analyze_shape.py` itself.
+
 ### `plot_csv_row.py` — re-plot specific rows from a ranked CSV
 
 ```bash
@@ -623,11 +677,286 @@ python plot_saved_state.py --seed <slsqp_seed>.json --eq_name mod1_angelov --con
 ```
 Rebuilds the exact model (reads knee config + `opt_params_path` from the JSON),
 prints a **calculated-vs-saved RMSE check** (`OK`/`MISMATCH` per metric), and
-fills the plot’s info box with both the saved and recomputed RMSEs.
+fills the plot’s info box with both the saved and recomputed RMSEs. Beyond the
+plot itself, it also writes a `.md` equation write-up (folds normalization into
+layer-0 weights and generates an ADS-compatible symbolic equation plus a
+Verilog-A `.va` model), an `_eq_comparison.png` (NN vs. the truncated symbolic
+equation), and an `_val.png` validation plot when `--val` is given.
 
 ---
 
-## 8. Recommended workflow (how to actually search)
+## 8. Additional plotting & comparison tools
+
+Beyond the three plotting tools above, several more scripts plot or diff results —
+none of these are needed for the basic train → compile → rank → plot loop, but
+they're useful once you're comparing across measurement CSVs or architectures.
+
+### `plot_extrapolate_csv_row.py` — plot a model beyond the training range
+```bash
+python plot_extrapolate_csv_row.py --ranked_csv refine6/refine6_ranked_by_ids_rmse.csv \
+    --csv ../csvs/<measurements>.csv --id 1
+```
+Same row-selection as `plot_csv_row.py` (`--id`/`--row`/`--config_name`, mutually
+exclusive), but defaults to a much wider voltage sweep (`--plot_vds_list` default
+`0,5,...,50`, `--plot_vgs_list` correspondingly wider) and passes `--extrapolate`
+to `plot_saved_state.py`, so the model is plotted past the training range even
+where no measured data exists to compare against. Output is `plot_extrapolate.png`
+(or `--out_suffix`) rather than `plot_saved_state_full.png`, so it never clobbers
+the standard plot; results land in `plotted_configs/<csv_stem>_extrap_id<N>/`.
+`--min_vgs`, `--python_exe`, `--dry_run`.
+
+### `plot_gm_derivatives.py` / `plot_ids_vds_derivatives.py` — diagnostic plots of the raw measured derivatives
+```bash
+python plot_gm_derivatives.py --csv ../csvs/<measurements>.csv --vds 0,5,10,15,20,28
+python plot_gm_derivatives.py --root <run_dir> --ranked_csv <ranked>.csv --id 3   # overlay a trained model
+python plot_ids_vds_derivatives.py --csv ../csvs/<measurements>.csv --vgs -3,-2,-1,0
+```
+Plot Ids and its derivatives computed directly from the **measurement data**, not a
+trained model. `plot_gm_derivatives.py` works along the Vgs axis — gm1/gm2/gm3 =
+`d^n Ids/dVgs^n` at fixed `--vds` transfer-curve slices, via the same
+`create_gms_for_train` ground truth the training pipeline itself uses.
+`plot_ids_vds_derivatives.py` works along the Vds axis — gds1/gds2/gds3 =
+`d^n Ids/dVds^n` along a fixed-`--vgs` trace, Savitzky–Golay smoothed
+(`--win`/`--poly`). Both can optionally overlay one trained model's *exact
+autograd* derivatives (dashed) via `--ranked_csv`+`--id` or `--dir`; `--csv` is
+auto-detected from `--root`/`--ranked_csv` if omitted. `--out`, `--open`.
+
+### `plot_arch_hash.py` — plot one architecture across every measurement CSV
+```bash
+python plot_arch_hash.py --root ../runs/best200ids_of_9069_byloss_rw0_2.5_20 \
+    --folder tanh_margin10 --arch_hash <hash> --format md
+```
+Looks up an architecture — identified by its content-stable `arch_hash`, unlike
+the per-file `arch_id` index — in every `<root>/<csv_name>/<folder>/...`
+subfolder, re-plots it in each (loads the already-trained weights via
+`plot_saved_state.py`, no retraining), recomputes its shape-compliance category
+(`gmshape`/`gdsshape`/`bothshape`/`none`/`filter_only`, same formula as
+`analyze_shape.py`), and consolidates everything into
+`<out_dir>/<folder>/<category>/[<goal>/]<arch_hash>/` plus a `compliance.json`,
+then calls `make_arch_pdf.py` to assemble `all_csvs.pdf`/`all_csvs.md`.
+`--folder`/`--arch_hash` accept comma-separated lists. `--out_dir`, `--goal`,
+`--min_vgs`, `--plot_vds_list`/`--plot_vgs_list`, `--val`, `--add_zero_vds`,
+`--format` (pdf/md/both), `--python_exe`, `--dry_run`.
+
+### `make_arch_pdf.py` — assemble an arch_hash folder's plots into one PDF/markdown
+```bash
+python make_arch_pdf.py --dir <out_dir>/<folder>/<category>/<arch_hash> --format both
+python make_arch_pdf.py --root <out_dir> --folder tanh_margin10 --format md   # every arch_hash under a folder
+```
+Pure assembly — no plotting or training of its own. Combines an arch_hash folder's
+already-generated `<csv>_plot_saved_state_full.png` images into one titled
+multi-page PDF and/or markdown file (one section per measurement csv), plus a
+final summary section with shape-compliance (from `compliance.json`) and the
+architecture's config (parsed from its companion `.md` equation write-up).
+`--dir`/`--root` mutually exclusive, `--pattern` (glob for per-csv folders),
+`--out_name`, `--format` (pdf/md/both).
+
+### `plot_best_gmshapeok_pdf.py` — one-command "best-N per folder" report
+```bash
+python plot_best_gmshapeok_pdf.py --source_root ../runs/pure_combined9069_rw0_2.5_20 \
+    --mode gmshapeok --top_n 2 --pdf
+```
+Picks the best N architectures per folder — reusing `extract_derived_configs.py`'s
+exact gate-then-rank selection logic (`--mode gmshapeok`/`bothshapeok`, `--pool_n`/
+`--gm_ceiling_start` control the gate) so results match that script's derivations
+— plots each via `plot_csv_row.py`, and (with `--pdf`) assembles a captioned PDF
+(folder, rank, id/arch_id/arch_hash, config_name, metrics, csv, selection gate).
+`--folders`, `--out_pdf_dir`/`--out_pdf_name` (defaults: `<source_root>/out_pdfs`,
+`best<top_n>_<mode>.pdf`), `--python_exe`, `--dry_run`.
+
+### `compare_architecture.py` / `compare_column_values.py` — diff two ranked result sets
+```bash
+python compare_architecture.py refine6.xlsx 1 refine8.xlsx --tol 1e-6
+python compare_column_values.py refine6.xlsx refine8.xlsx --show-all
+```
+`compare_architecture.py` (positional `file1 ref_id file2`) finds ids in `file2`
+that match a reference row from `file1` on every shared column **except** an
+exclusion list (equation/identity + metric columns, extendable via `--exclude`,
+optional float `--tol`) — useful for finding "the same architecture reproduced in
+a different sweep." Prints matching ids, or (if none) which column is blocking a
+match. `compare_column_values.py` (positional `file1 file2`) instead reports, per
+shared column, the set-difference of distinct values between the two files —
+useful for spotting sweep-dimension drift between two config runs. Both share the
+`--exclude`/`--id-col` convention.
+
+### `render_html_view.py` — browsable HTML mirror of the `.md` reports
+```bash
+python render_html_view.py --out_root <best_archs_plots_root>
+```
+Mirrors every `.md` file under `--out_root` into a sibling `.html` twin, via a
+small hand-rolled markdown→HTML converter (headers, bold, inline code, bullets,
+tables, images, links — internal `.md` links are rewritten to `.html`). Purely
+additive, never touches the `.md` sources. Exists because VS Code's own markdown
+preview navigates in place on a link click, while the HTML twins open properly in
+a real browser tab/window. `--workers` (default 16).
+
+---
+
+## 9. Cross-CSV consistency analysis & reporting
+
+A separate layer above the basic train → compile → rank → plot loop: given a
+sweep that was run against **several measurement CSVs**, find architectures that
+are good *consistently across all of them*, not just on one, and write that up as
+a report. For the full walkthrough and worked examples see
+[`important_mds/bestids_across_allcsvs_analysis_steps.md`](../important_mds/bestids_across_allcsvs_analysis_steps.md);
+this section documents the CLI of each script involved.
+
+### `find_consistent_archs.py` — the search logic
+Not really a standalone CLI tool — this is where the actual search methods live,
+called by `write_findings.py` and `run_plot_consistent_archs.py`:
+- **Method A** (`fit_quality_minmax`, goal `best_fit_quality`) — worst-case
+  percentile rank across all csvs, no compliance threshold.
+- **Method B** (`*_all_csvs`, goal `best_consistent_with_all_csvs`) — count of csvs
+  where the architecture is `gmshape_ok`/`bothshape_ok` (see
+  [`analyze_shape.py`](../important_mds/shape_analysis_rules.md)), tie-broken by
+  average `ids_rmse`.
+- **Method C** (`*_pair`) — same as B, restricted to a designated csv pair
+  (`--pair_csvs`, default `cg2h40010_new_2.5_20_2_70W_center9` /
+  `cg2h40010_new_2.9_28_2_70W_center9`).
+- **Method D** (`fit_quality_minmax_pair`, goal `best_fit_quality_pair`) — method A
+  restricted to that same pair.
+
+CLI: `--root`, `--folder`, `--pair_csvs`, `--gm_ceiling`, `--top`, `--json` (write
+full results to a path).
+
+### `run_plot_consistent_archs.py` — the top-level orchestrator (produces `best_archs_plots/`)
+```bash
+python run_plot_consistent_archs.py --csv_base_root ../runs/csv_base_2.5_20 --html
+```
+Runs the whole consistency pipeline across **all** `--folders` at once:
+1. `write_findings.py` for every (folder, base_config) pair — the search pass.
+2. Collects every picked `arch_hash`, deduped by (folder, arch_hash, goal).
+3. `plot_arch_hash.py` on each unique pick, all sharing **one** `--workers` pool —
+   the expensive step, since each call loads trained weights and runs inference.
+4. Re-runs `write_findings.py` (fills in the compliance "category" column now that
+   plots exist).
+5. `write_overall_findings.py` per folder.
+
+`--html` additionally runs `render_html_view.py` at the end. Flags:
+`--csv_base_root` (required), `--out_root` (default
+`<csv_base_root>/best_archs_plots`), `--base_configs` (default: this project's 3
+standard base configs), `--folders`, `--pair_csvs`, `--gm_ceiling`, `--top`,
+`--format` (pdf/md/both), `--workers`/`--search_workers` (default 8 each — two
+separate pools, one for the cheap search step and one for the expensive plotting
+step), `--skip_plotting`, `--dry_run`. **Does not** run
+`write_findings_with_plots.py` or `write_overall_best_archs.py` automatically —
+those are separate manual steps.
+
+### `write_findings.py` / `write_findings_with_plots.py` — the per-folder consistency writeup
+```bash
+python write_findings.py --root ../runs/best200ids_of_9069_byloss_rw0_2.5_20 \
+    --folder tanh_margin10 --out_root ../runs/csv_base_2.5_20/best_archs_plots --top 5
+```
+`write_findings.py` generates `consistency_summary_<base_config>.md` (+ a
+machine-readable `.json`) for one (root, folder), from `find_consistent_archs.py`'s
+methods A–D, annotating each picked `arch_hash` with its architecture summary and
+shape-compliance category (read from `plot_arch_hash.py`'s `compliance.json` if it
+already exists). `--only_tanh` restricts the population to tanh-only
+architectures first. `--gm_ceiling`, `--out` (override the default json path).
+
+`write_findings_with_plots.py` is the same report structure but embeds each
+architecture's actual plot images inline instead of just linking (an `arch_hash`
+repeated across sections gets its images embedded only the first time); it's a
+manual step, never invoked automatically by `run_plot_consistent_archs.py`. Needs
+`--out_root`/`--folder` (comma-separated for several) and `--base_configs`
+(comma-separated, default all 3), and requires `plot_arch_hash.py --format md` to
+have already run.
+
+### `write_overall_findings.py` / `write_overall_best_archs.py` — cross-base_config and cross-folder leaderboards
+`write_overall_findings.py --out_root ... --folder <folder>` combines
+`write_findings.py`'s output across the folder's 3 base_configs into
+`consistency_summary_overall.md`, cross-referencing which `arch_hash`es were
+independently picked by **more than one** base_config's search — a stronger
+signal than any single search. `--subdir tanh_only` reuses it for the tanh-only
+variant; `--top` (default 20).
+
+`write_overall_best_archs.py --out_root <best_archs_plots_root>` goes one level
+higher — for each of the 6 methods, picks the single best folder/arch_hash across
+every folder's own rank-#1 picks, then ranks folders against each other, writing
+one top-level `best_archs_summary_overall.md` (not nested per-folder). `--top`
+(default 8 — how many folders to list per method), `--base_configs`, `--folders`.
+
+### `write_tanh_only_comparison.py` / `write_overall_tanh_only_comparison.py` — tanh-only vs. heterogeneous
+Per-folder (`write_tanh_only_comparison.py --out_root ... --folder <folder>`) and
+overall (`write_overall_tanh_only_comparison.py --out_root
+<best_archs_plots_root>`) comparisons of the tanh-only-architecture search against
+the unrestricted/heterogeneous search, for each of the 6 methods — states a
+verdict (heterogeneous winning is the common case; calls out any case where
+tanh-only wins). Ties (identical `arch_hash` picked by both) are treated as ties,
+not a spurious winner, since percentiles aren't comparable across
+differently-sized candidate pools. Writes `comparison_<base_config>.md` per
+base_config plus `comparison_overall.md`. `--top`, `--base_configs`, `--folders`.
+
+### `run_tanh_only_analysis.py` — drives the tanh-only search + comparison end to end
+```bash
+python run_tanh_only_analysis.py --csv_base_root ../runs/csv_base_2.5_20
+```
+Runs the tanh-only-restricted search (`--only_tanh`) once per (folder,
+base_config) in a `--workers` pool, plots any newly-picked architectures not
+already covered by the heterogeneous pass (dedup on the shared plot tree) in a
+separate `--plot_workers` pool (the heavier step), then runs
+`write_overall_findings.py --subdir tanh_only` and
+`write_tanh_only_comparison.py` per folder. `--html` runs `render_html_view.py` at
+the end, same as `run_plot_consistent_archs.py`. Companion to
+`run_plot_consistent_archs.py`, which must already have produced the unrestricted
+`consistency_summary_*.json` files. `--format` (pdf/md/both), `--gm_ceiling`,
+`--top`, `--skip_plotting`, `--dry_run`.
+
+### `run_full_pop_shape.py` / `run_shape_analysis_csv_base.py` — prerequisite shape-CSV generation
+```bash
+python run_shape_analysis_csv_base.py --csv_base_root ../runs/csv_base_2.5_20
+python run_full_pop_shape.py --root ../runs/pure_combined9069_rw0_2.5_20 --folder tanh_margin10,softplus
+```
+Both ensure a full-population `<folder>_shape.csv` exists (via `analyze_shape.py`,
+run against the *entire* unfiltered population, not a pre-filtered subset — a
+cross-csv consistency search has to compare the same candidate pool everywhere)
+before `find_consistent_archs.py`'s shape-consistency methods (B/C) can run.
+`run_shape_analysis_csv_base.py` does this across all `--base_configs`/`--folders`
+under a `--csv_base_root` (default: the 3 standard base_configs), in a `--workers`
+pool (default 8), resumable (skips folders that already have a `_shape.csv`).
+`run_full_pop_shape.py` does the same for one `--root`/`--folder` (comma-separated
+for several), and additionally trims the derived compliance CSVs to a slim xlsx
+via `keep_columns.py`, deleting the intermediate CSVs (the "true"
+`analyze_shape.py` file-format convention described in
+[`shape_analysis_rules.md`](../important_mds/shape_analysis_rules.md)). `--force`
+re-runs even if a `_shape.csv` already exists.
+
+### `run_artifacts.py` — shared metadata-recovery helpers (no CLI)
+A library, not a script you run directly — used throughout this section (and by
+`pipeline_gui.py`) to recover run metadata that isn't always present in an older
+`run_loss_*.json`: `run_meta(root)` reads `_run_meta.json` (or falls back to a
+run's JSON+log) to recover the measurement/base CSV paths; `cli_args_from_log
+(run_dir)` parses the `CMD: [...]` line stored at the top of the gzipped
+`run_log.txt.gz` into a `{flag: value}` dict, backfilling fields an older JSON is
+missing; `run_hash`/`arch_id` compute stable IDs; `base_lineage`/`provenance_for`/
+`base_csv_index` track which base experiment/row a derived run came from (via
+`_provenance.json` sidecars or arch_hash matching).
+
+---
+
+## 10. Pipeline GUI
+
+### `pipeline_gui.py` — desktop GUI wrapping the whole pipeline
+```bash
+python pipeline_gui.py
+```
+A pure-`tkinter` (stdlib only, nothing extra to install) GUI so you don't have to
+type long commands by hand. A shared-context panel (runs root, experiment picker,
+measurement CSV, ranking/metric/format selectors that auto-resolve to a concrete
+ranked CSV/xlsx path, auto-filled from each experiment's `_run_meta.json` via
+`run_artifacts.py`) feeds six tabs: **Plot config (row)** (`plot_csv_row.py`),
+**Compare** (`compare_architecture.py`/`compare_column_values.py`), **Generate
+config** (`gen_config_from_rows.py`), **Run optimizations**
+(`multi_experiment_runner.py`), **Compile/rank** (one-click full pipeline:
+`compute_region_metrics.py` → `compile_results_csv.py` → `compile_master_best.py`
+×3 → `compile_ranked.py` → `compile_results_to_xlsx.py` → `filter_results.py` →
+`keep_columns.py`), and **Plot** (`plot_best_configs.py`). Every command runs as a
+subprocess with output streamed to a log pane, plus buttons to open/reveal/copy
+result files.
+
+---
+
+## 11. Recommended workflow (how to actually search)
 
 The Cartesian sweep explodes fast. **Do not** point a runner at a full
 `@GENERATE@` × all-dimensions grid (≈10⁵–10⁶ configs = months). Instead, search
@@ -650,7 +979,7 @@ A round is typically **tens to a few hundred** configs, finishing in minutes.
 
 ---
 
-## 9. Reproducibility
+## 12. Reproducibility
 
 - Each worker seeds `torch` + `numpy` from `--seed` (config `seeds`) **before**
   building the model. Same seed + same config ⇒ same result on the same machine.
@@ -663,7 +992,7 @@ A round is typically **tens to a few hundred** configs, finishing in minutes.
 
 ---
 
-## 10. Tests
+## 13. Tests
 
 > **This section previously described a `test_overall_smoke.py`-orchestrated suite
 > (`test_multi_runner_smoke.py`, `test_compile_results_csv_smoke.py`,
@@ -693,7 +1022,7 @@ code path as production.
 
 ---
 
-## 11. Gotchas / FAQ
+## 14. Gotchas / FAQ
 
 - **`--opt=value` for negative/comma args.** `--min_vgs=-4.0`,
   `--plot_vgs_list=-3.5,...` — the space form is parsed as a flag.
