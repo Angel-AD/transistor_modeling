@@ -19,7 +19,7 @@ $csv = "..\csvs\cg2h40010_new_2.4_5_2_70W_center9.csv"
 
 Write-Host "=== [1/2] refine_avkf2_gm_1 : region_weights=[2,4], box vgs -3..0 / vds 0..15 ===" -ForegroundColor Cyan
 python multi_experiment_runner.py `
-    --config physics_nn_configs\refine_avkf2_gm_1_regionwt_2_4.json `
+    --config ..\physics_nn_configs\refine_avkf2_gm_1_regionwt_2_4.json `
     --csv $csv `
     --master_root_path ..\runs\refine_avkf2_gm_1 `
     --max_workers $Workers
@@ -30,7 +30,7 @@ if ($LASTEXITCODE -ne 0) {
 
 Write-Host "=== [2/2] refine_vdsk_freelam_vdsloss_gm_1 : region_weights=[2,4] ===" -ForegroundColor Cyan
 python multi_experiment_runner.py `
-    --config physics_nn_configs\refine_vdsk_freelam_vdsloss_gm_1_regionwt_2_4.json `
+    --config ..\physics_nn_configs\refine_vdsk_freelam_vdsloss_gm_1_regionwt_2_4.json `
     --csv $csv `
     --master_root_path ..\runs\refine_vdsk_freelam_vdsloss_gm_1 `
     --max_workers $Workers

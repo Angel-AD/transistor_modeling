@@ -13,7 +13,7 @@ $csv = "..\csvs\cg2h40010_new_2.4_5_2_70W_center9.csv"
 
 Write-Host "=== refine_vdsk_freelam_vdsloss_gm_1 : region_weights=[2,4] x vds_losses=[0,5] ===" -ForegroundColor Cyan
 python multi_experiment_runner.py `
-    --config physics_nn_configs\refine_vdsk_freelam_vdsloss_gm_1_regionwt_2_4.json `
+    --config ..\physics_nn_configs\refine_vdsk_freelam_vdsloss_gm_1_regionwt_2_4.json `
     --csv $csv `
     --master_root_path ..\runs\refine_vdsk_freelam_vdsloss_gm_1 `
     --max_workers $Workers

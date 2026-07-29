@@ -9,7 +9,7 @@ param([int]$Workers = 46)
 $ErrorActionPreference = "Stop"
 Set-Location $PSScriptRoot
 
-$config = "physics_nn_configs\avkf2_id21677_bestpicks10_gmvds3.json"
+$config = "..\physics_nn_configs\avkf2_id21677_bestpicks10_gmvds3.json"
 $roots  = @()
 
 foreach ($csv in Get-ChildItem ..\csvs\*.csv) {

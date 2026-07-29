@@ -32,7 +32,7 @@ $roots = $configPrefixes.Keys | ForEach-Object { "..\runs\pure_combined9069\$_" 
 
 foreach ($batch in 1, 2, 3) {
     foreach ($key in $configPrefixes.Keys) {
-        $config = "physics_nn_configs\$($configPrefixes[$key])${batch}.json"
+        $config = "..\physics_nn_configs\$($configPrefixes[$key])${batch}.json"
         $root   = "..\runs\pure_combined9069\$key"
         Write-Host "=== batch$batch $key -> $root ===" -ForegroundColor Cyan
         python multi_experiment_runner.py `

@@ -22,7 +22,7 @@ Set-Location $PSScriptRoot
 $root = "..\runs\pure_combined9069\tanh_margin10_nogm"
 
 foreach ($batch in 1, 2, 3) {
-    $config = "physics_nn_configs\pure_combined9069_tanh_margin10_nogm_batch${batch}.json"
+    $config = "..\physics_nn_configs\pure_combined9069_tanh_margin10_nogm_batch${batch}.json"
     Write-Host "=== batch$batch output_activation=tanh (margin=0.1, use_gm=False) -> $root ===" -ForegroundColor Cyan
     python multi_experiment_runner.py `
         --config $config `

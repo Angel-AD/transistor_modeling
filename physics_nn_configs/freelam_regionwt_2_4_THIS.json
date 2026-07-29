@@ -1,0 +1,1371 @@
+{
+  "_comment": "Split of refine_vdsk_freelam_vdsloss_gm_1_regionwt_2_4.json for parallel finish -- THIS machine (15 exps, ~1238 remaining runs). Run against a master root that already holds the done runs; skip-guard does the rest.",
+  "DEFAULTS": {
+    "knee_alpha_scales": [
+      1.0
+    ],
+    "knee_combiners": [
+      "sum"
+    ],
+    "learning_rates": [
+      0.01
+    ],
+    "output_activations": [
+      "linear"
+    ],
+    "gm1_weights": [
+      0.0
+    ],
+    "gm2_weights": [
+      0.0
+    ],
+    "gm3_weights": [
+      0.0
+    ],
+    "gm_surgery_modes": [
+      "none"
+    ],
+    "gm_max_ratios": [
+      1.0
+    ],
+    "gm_vds_mins": [
+      0
+    ],
+    "gm_vgs_mins": [
+      null
+    ],
+    "epochs": 800,
+    "lbfgs_epochs": 20,
+    "lbfgs_max_iter": 100,
+    "lbfgs_gm_aware": true,
+    "loss_norm": "nmse",
+    "seeds": [
+      27
+    ],
+    "deterministic": true,
+    "mixed_init": "per_activation",
+    "max_workers": 42
+  },
+  "EXPERIMENTS": {
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_quad__w0p1-0-0__none_2": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm1_weights": [
+        0.1
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.0
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_quad": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_quad"
+        }
+      },
+      "vds_losses": [
+        0,
+        5
+      ]
+    },
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_cub__w0p1-0-0__none_2": {
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm1_weights": [
+        0.1
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.5
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "vds_losses": [
+        0,
+        5
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_cub": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_cub"
+        }
+      }
+    },
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_cub_freelam__w0-0-0p1__none_2": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.1
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.5
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_cub_freelam": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_cub_freelam"
+        }
+      },
+      "vds_losses": [
+        0,
+        5
+      ]
+    },
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_quad_freelam__w0-0p1-0p1__none_2": {
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.1
+      ],
+      "gm3_weights": [
+        0.1
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.0
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_quad_freelam": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_quad_freelam"
+        }
+      },
+      "vds_losses": [
+        0,
+        5
+      ]
+    },
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_quad__w0p1-0-0__none": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm1_weights": [
+        0.1
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.5
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "vds_losses": [
+        0,
+        5
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_quad": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_quad"
+        }
+      }
+    },
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_quad__w0-0p1-0p1__none_2": {
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.1
+      ],
+      "gm3_weights": [
+        0.1
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.5
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_quad": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_quad"
+        }
+      },
+      "vds_losses": [
+        0,
+        5
+      ]
+    },
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_cub_freelam__w0p1-0-0__none_2": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm1_weights": [
+        0.1
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.0
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_cub_freelam": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_cub_freelam"
+        }
+      },
+      "vds_losses": [
+        0,
+        5
+      ]
+    },
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_quad_freelam__w0p1-0-0p1__none": {
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm1_weights": [
+        0.1
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.1
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.0
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_quad_freelam": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_quad_freelam"
+        }
+      },
+      "vds_losses": [
+        0,
+        5
+      ]
+    },
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_cub_freelam__w0-0-0p1__none": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.1
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.0
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "vds_losses": [
+        0,
+        5
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_cub_freelam": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_cub_freelam"
+        }
+      }
+    },
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_quad_freelam__w0-0-0p1__none": {
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.1
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.0
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_quad_freelam": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_quad_freelam"
+        }
+      },
+      "vds_losses": [
+        0,
+        5
+      ]
+    },
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_quad_freelam__w0p1-0p1-0p1__none_2": {
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm1_weights": [
+        0.1
+      ],
+      "gm2_weights": [
+        0.1
+      ],
+      "gm3_weights": [
+        0.1
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.0
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_quad_freelam": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_quad_freelam"
+        }
+      },
+      "vds_losses": [
+        0,
+        5
+      ]
+    },
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_cub__w0p1-0-0p1__none": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]"
+      ],
+      "gm1_weights": [
+        0.1
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.1
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.0
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_cub": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_cub"
+        }
+      },
+      "vds_losses": [
+        0,
+        5
+      ]
+    },
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_quad__w0-0-0p1__none": {
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.1
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.0
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_quad": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_quad"
+        }
+      },
+      "vds_losses": [
+        0,
+        5
+      ]
+    },
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_quad__w0-0-0p1__none_2": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.1
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.5
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_quad": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_quad"
+        }
+      },
+      "vds_losses": [
+        0,
+        5
+      ]
+    },
+    "refine_vdsk_freelam_vdsloss_gm_1__vdsk_cub_freelam__w0-0p1-0p1__none_2": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.1
+      ],
+      "gm3_weights": [
+        0.1
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "learning_rates": [
+        0.01
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "knee_alpha_scales": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "seeds": [
+        27
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm_vds_mins": [
+        4
+      ],
+      "gm_vgs_mins": [
+        -3.0
+      ],
+      "region_weights": [
+        2,
+        4
+      ],
+      "epochs": 1000,
+      "lbfgs_epochs": 20,
+      "lbfgs_max_iter": 100,
+      "lbfgs_gm_aware": true,
+      "loss_norm": "nmse",
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "ids_constraint": false,
+      "region_vgs_lo": -3,
+      "region_vgs_hi": 0.0,
+      "region_vds_lo": 0.0,
+      "region_vds_hi": 15.0,
+      "base_configs": {
+        "PhysNN_pure-vdsgate_vdsk_cub_freelam": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure:vdsgate_vdsk_cub_freelam"
+        }
+      },
+      "vds_losses": [
+        0,
+        5
+      ]
+    }
+  }
+}

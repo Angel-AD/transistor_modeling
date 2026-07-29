@@ -19,7 +19,7 @@ $roots = @("..\runs\pure_combined9069\sigmoid", "..\runs\pure_combined9069\tanh"
 
 foreach ($batch in 1, 2, 3) {
     foreach ($act in @("sigmoid", "tanh", "softplus")) {
-        $config = "physics_nn_configs\pure_combined9069_${act}_batch${batch}_gmvds3.json"
+        $config = "..\physics_nn_configs\pure_combined9069_${act}_batch${batch}_gmvds3.json"
         $root   = "..\runs\pure_combined9069\$act"
         Write-Host "=== batch$batch output_activation=$act -> $root ===" -ForegroundColor Cyan
         python multi_experiment_runner.py `
