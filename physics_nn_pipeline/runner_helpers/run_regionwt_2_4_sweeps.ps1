@@ -12,7 +12,7 @@
 # -Workers overrides each config's max_workers (capped at os.cpu_count() by the runner).
 param([int]$Workers = 46)
 $ErrorActionPreference = "Stop"
-Set-Location $PSScriptRoot
+Set-Location (Split-Path $PSScriptRoot -Parent)
 
 # Measurement CSV (device IV data). Same default as run_new_sweeps.ps1 / compile_overall.ps1.
 $csv = "..\csvs\cg2h40010_new_2.4_5_2_70W_center9.csv"

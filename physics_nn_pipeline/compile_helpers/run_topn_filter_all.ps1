@@ -21,7 +21,7 @@ param(
     [string[]]$SortByMetrics = @("region_knee_combined_gm", "region_knee_ids_rmse")
 )
 $ErrorActionPreference = "Stop"
-Set-Location $PSScriptRoot
+Set-Location (Split-Path $PSScriptRoot -Parent)
 
 $roots = @(
     "..\runs\pure_combined9069\tanh_margin10",
@@ -35,7 +35,7 @@ $roots = @(
 foreach ($root in $roots) {
     foreach ($metric in $SortByMetrics) {
         Write-Host "=== compile_overall: $root  (top $TopN by $metric) ===" -ForegroundColor Cyan
-        & .\compile_overall.ps1 -root $root -SkipRegionMetrics -ShortName -TopN $TopN -SortBy $metric
+        & .\compile_helpers\compile_overall.ps1 -root $root -SkipRegionMetrics -ShortName -TopN $TopN -SortBy $metric
         if ($LASTEXITCODE -ne 0) {
             Write-Host "FAILED on $root / $metric (exit $LASTEXITCODE)." -ForegroundColor Red
             exit $LASTEXITCODE

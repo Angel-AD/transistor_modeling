@@ -19,7 +19,7 @@ param(
     [switch]$SkipRegionMetrics
 )
 $ErrorActionPreference = "Stop"
-Set-Location $PSScriptRoot
+Set-Location (Split-Path $PSScriptRoot -Parent)
 
 $roots = @(
     "..\runs\pure_combined9069\tanh_margin10",
@@ -32,7 +32,7 @@ $roots = @(
 
 foreach ($root in $roots) {
     Write-Host "=== compile_overall: $root ===" -ForegroundColor Cyan
-    & .\compile_overall.ps1 -root $root -maxCombinedGm $MaxCombinedGm -maxIdsRmse $MaxIdsRmse -SkipRegionMetrics:$SkipRegionMetrics
+    & .\compile_helpers\compile_overall.ps1 -root $root -maxCombinedGm $MaxCombinedGm -maxIdsRmse $MaxIdsRmse -SkipRegionMetrics:$SkipRegionMetrics
     if ($LASTEXITCODE -ne 0) {
         Write-Host "FAILED on $root (exit $LASTEXITCODE)." -ForegroundColor Red
         exit $LASTEXITCODE

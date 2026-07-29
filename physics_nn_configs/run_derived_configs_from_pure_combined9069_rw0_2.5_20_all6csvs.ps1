@@ -113,7 +113,7 @@ foreach ($root in $allRoots) {
     Write-Host "=== compile $root ===" -ForegroundColor Cyan
     Push-Location $physicsPipelineDir
     try {
-        & .\compile_overall.ps1 -root $root -ShortName
+        & .\compile_helpers\compile_overall.ps1 -root $root -ShortName
     } finally {
         Pop-Location
     }

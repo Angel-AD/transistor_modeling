@@ -1,19 +1,18 @@
-# Runs avkf2_id21677_bestpicks10_gmvds3.json (10 hand-picked good-shape architectures --
-# 8 from avkf2_id21677_483pct_gmvds3 + 2 from avkf2_id21677_8586mixed_gmvds3) against EVERY
-# csv in ..\csvs, one after another, then compiles each resulting folder (compile_overall.ps1).
-# All results are grouped under ..\runs\bestpicks10\<csv-name>\
+# Runs avkf2_id21677_sim100new_vdssweep.json against EVERY csv in ..\csvs, one after another,
+# then compiles each resulting folder (compile_overall.ps1).
+# All results are grouped under ..\runs\sim100new\<csv-name>\
 # Resumable: finished runs (dir has run_loss_* AND weights_loss_*) are skipped.
-#   .\run_bestpicks10_all_csvs.ps1                # 46 workers (default)
-#   .\run_bestpicks10_all_csvs.ps1 -Workers 60
+#   .\run_sim100new_all_csvs.ps1                # 46 workers (default)
+#   .\run_sim100new_all_csvs.ps1 -Workers 60
 param([int]$Workers = 46)
 $ErrorActionPreference = "Stop"
-Set-Location $PSScriptRoot
+Set-Location (Split-Path $PSScriptRoot -Parent)
 
-$config = "..\physics_nn_configs\avkf2_id21677_bestpicks10_gmvds3.json"
+$config = "..\physics_nn_configs\avkf2_id21677_sim100new_vdssweep.json"
 $roots  = @()
 
 foreach ($csv in Get-ChildItem ..\csvs\*.csv) {
-    $root = "..\runs\bestpicks10\$($csv.BaseName)"
+    $root = "..\runs\sim100new\$($csv.BaseName)"
     $roots += $root
     Write-Host "=== $($csv.Name) -> $root ===" -ForegroundColor Cyan
     python multi_experiment_runner.py `
@@ -32,7 +31,7 @@ Write-Host "all csvs finished. compiling..." -ForegroundColor Green
 # Compile every resulting folder (csv/base auto-detected from each folder's base_files).
 foreach ($root in $roots) {
     Write-Host "=== compile $root ===" -ForegroundColor Cyan
-    & .\compile_overall.ps1 -root $root
+    & .\compile_helpers\compile_overall.ps1 -root $root
     Write-Host "compiled: $root" -ForegroundColor Green
 }
 Write-Host "all done." -ForegroundColor Green

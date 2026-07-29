@@ -13,7 +13,7 @@ param(
     [double]$GmStartTol = 0
 )
 $ErrorActionPreference = "Stop"
-Set-Location $PSScriptRoot
+Set-Location (Split-Path $PSScriptRoot -Parent)
 
 $roots = @(
     "..\runs\pure_combined9069\tanh_margin10",

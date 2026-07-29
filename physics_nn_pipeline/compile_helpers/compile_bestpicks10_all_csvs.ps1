@@ -4,7 +4,7 @@
 # stopping training early or re-running compile after a manual fix.
 #   .\compile_bestpicks10_all_csvs.ps1
 $ErrorActionPreference = "Stop"
-Set-Location $PSScriptRoot
+Set-Location (Split-Path $PSScriptRoot -Parent)
 
 foreach ($csv in Get-ChildItem ..\csvs\*.csv) {
     $root = "..\runs\bestpicks10\$($csv.BaseName)"
@@ -13,7 +13,7 @@ foreach ($csv in Get-ChildItem ..\csvs\*.csv) {
         continue
     }
     Write-Host "=== compile $root ===" -ForegroundColor Cyan
-    & .\compile_overall.ps1 -root $root
+    & .\compile_helpers\compile_overall.ps1 -root $root
     Write-Host "compiled: $root" -ForegroundColor Green
 }
 Write-Host "all done." -ForegroundColor Green

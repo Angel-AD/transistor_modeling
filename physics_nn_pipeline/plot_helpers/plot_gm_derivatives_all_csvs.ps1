@@ -14,7 +14,7 @@ param(
     [switch]$Open
 )
 $ErrorActionPreference = "Stop"
-Set-Location $PSScriptRoot
+Set-Location (Split-Path $PSScriptRoot -Parent)
 
 $csvs = Get-ChildItem -Path "..\csvs" -Filter "cg2h40010_new_*.csv"
 $written = @()

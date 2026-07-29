@@ -2,7 +2,7 @@
 # Run from anywhere: it cd's to its own folder (physics_nn_pipeline) first.
 #   .\run_new_sweeps.ps1
 $ErrorActionPreference = "Stop"
-Set-Location $PSScriptRoot
+Set-Location (Split-Path $PSScriptRoot -Parent)
 
 # Measurement CSV (device IV data). Default taken from compile_overall.ps1 — change if needed.
 $csv = "..\csvs\cg2h40010_new_2.4_5_2_70W_center9.csv"

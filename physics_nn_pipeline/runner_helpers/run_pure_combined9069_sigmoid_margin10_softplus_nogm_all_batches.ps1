@@ -22,7 +22,7 @@ param(
     [string]$Csv = "..\csvs\cg2h40010_new_2.4_5_2_70W_center9.csv"
 )
 $ErrorActionPreference = "Stop"
-Set-Location $PSScriptRoot
+Set-Location (Split-Path $PSScriptRoot -Parent)
 
 $configPrefixes = @{
     "sigmoid_margin10_nogm" = "pure_combined9069_sigmoid_margin10_nogm_batch"
@@ -49,7 +49,7 @@ foreach ($batch in 1, 2, 3) {
     Write-Host "batch$batch finished. compiling..." -ForegroundColor Green
     foreach ($root in $roots) {
         Write-Host "=== compile $root ===" -ForegroundColor Cyan
-        & .\compile_overall.ps1 -root $root
+        & .\compile_helpers\compile_overall.ps1 -root $root
         Write-Host "compiled: $root" -ForegroundColor Green
     }
 }

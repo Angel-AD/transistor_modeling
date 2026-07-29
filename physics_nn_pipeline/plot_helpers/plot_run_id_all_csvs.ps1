@@ -12,7 +12,7 @@ param(
     [switch]$ShowOnly
 )
 $ErrorActionPreference = "Stop"
-Set-Location $PSScriptRoot
+Set-Location (Split-Path $PSScriptRoot -Parent)
 
 $mode = if ($ShowOnly) { "--show_only" } else { "--open" }
 

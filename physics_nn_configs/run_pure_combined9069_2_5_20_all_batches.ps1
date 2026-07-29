@@ -113,7 +113,7 @@ foreach ($batch in 1, 2, 3) {
 Write-Host "all batches finished. compiling..." -ForegroundColor Green
 foreach ($root in $roots) {
     Write-Host "=== compile $root ===" -ForegroundColor Cyan
-    & .\compile_overall.ps1 -root $root
+    & .\compile_helpers\compile_overall.ps1 -root $root
     Write-Host "compiled: $root" -ForegroundColor Green
 }
 Write-Host "all done: $($roots.Count) folders x 3 batches compiled into $outRoot" -ForegroundColor Green

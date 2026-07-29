@@ -8,7 +8,7 @@
 # -Workers overrides the config's max_workers (capped at os.cpu_count() by the runner).
 param([int]$Workers = 46)
 $ErrorActionPreference = "Stop"
-Set-Location $PSScriptRoot
+Set-Location (Split-Path $PSScriptRoot -Parent)
 
 $csv = "..\csvs\cg2h40010_new_2.4_5_2_70W_center9.csv"
 
