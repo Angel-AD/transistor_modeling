@@ -13,9 +13,14 @@ d^n Ids/dVgs^n` on input col 0, `gds = dIds/dVds` on col 1).
    loads and evaluates every model, so pre-filtering keeps it cheap.
 2. Evaluate shape on the survivors, split into TWO independent compliance categories (a
    model can pass one without the other — individually smooth gm2/gm3 curves don't guarantee
-   the Ids fit itself is well-shaped, and vice versa), written as SIX files total (slim
-   `.xlsx` only — no plain CSV kept for these 6; the base `<name>_shape.csv`, with every row's
-   metrics regardless of compliance, stays as CSV+slim):
+   the Ids fit itself is well-shaped, and vice versa), written as SIX files total. **Note:**
+   `analyze_shape.py` itself (`write_gmshape_outputs()`) writes all six as plain `.csv` — the
+   "slim `.xlsx` only, CSV deleted" convention described below is enforced by a separate
+   wrapper, `_ensure_shape_csv()` in `extract_derived_configs.py`, which runs `analyze_shape.py`
+   then `keep_columns.py` then deletes the intermediate CSVs. That wrapper is what the
+   full-population batch scripts (`run_full_pop_shape.py`, `run_shape_analysis_csv_base.py`) use;
+   running `analyze_shape.py` directly, as its own usage examples show, leaves you with plain
+   CSVs for all six files below (the base `<name>_shape.csv` is CSV either way):
    - **`gmshape`** — GM-only (gm3 window/tail/start/global checks).
      `_gmshape_ok_by_gmshape_slim.xlsx` (sorted by `region_knee_combined_gm`),
      `_gmshape_ok_by_gdshape_slim.xlsx` (SAME rows, sorted by `gds_residual_worst_max` instead

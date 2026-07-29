@@ -18,7 +18,7 @@ should be able to read it and drive the whole pipeline.
 7. [Post-processing: compile, rank, plot](#7-post-processing-compile-rank-plot)
 8. [Recommended workflow (how to actually search)](#8-recommended-workflow-how-to-actually-search)
 9. [Reproducibility](#9-reproducibility)
-10. [Smoke tests](#10-smoke-tests)
+10. [Tests](#10-tests)
 11. [Gotchas / FAQ](#11-gotchas--faq)
 
 ---
@@ -93,10 +93,11 @@ python plot_best_configs.py        --dir runs/nn/<experiment> --csv ../csvs/<...
 ### CLI
 | flag | required | default | meaning |
 |---|---|---|---|
-| `--config` | yes | – | path to the sweep JSON |
+| `--config` | yes | – | path to the sweep JSON. **Takes one or more paths** (`nargs="+"`) — passing several loads and runs all of their experiments together under one shared worker pool. |
 | `--csv` | yes | – | measurement CSV forwarded to every worker |
 | `--master_root_path` | no | env `MASTER_ROOT_PATH` or built-in | output root |
 | `--opt_params_path` | no | env `OPT_PARAMS_PATH` | fallback seed path (overridden per-variant) |
+| `--max_workers` | no | (config's own `max_workers`, or their max if multiple configs) | global override for the shared `ProcessPoolExecutor` pool size |
 | `--min_vgs` | no | `-4.0` | extrapolation floor passed downstream |
 | `--plot_vds_list` | no | `0,5,10,15,20,28` | (only used if a worker plots) |
 | `--plot_vgs_list` | no | `-3.5,...,0` | " |
@@ -139,6 +140,16 @@ python plot_best_configs.py        --dir runs/nn/<experiment> --csv ../csvs/<...
 }
 ```
 
+> **Not exhaustive.** `build_tasks()` in `multi_experiment_runner.py` reads roughly a dozen more
+> keys not shown above — swept: `gm_max_ratios`, `knee_vgs_thrs`, `gm_vds_mins`, `gm_vgs_mins`,
+> `ids_region_weights`, `region_weights`, `vds_losses`, `ids_out_margins`,
+> `vdsgate_output_activations`; scalar/global: `gm_warmup_epochs`, `gm_warmup_lr`,
+> `ids_constraint`, `ids_target`, `ids_lambda`, `knee_vgs_tau`, `knee_max_correction`,
+> `add_zero_vds`, `ids_region_center/width/lo/hi`, `knee_lr_scale`, `region_vgs_lo/hi`,
+> `region_vds_lo/hi`, `adamw_avoid_localmin`. Several show up in [`gen_config_from_rows.py`](#post-processing-compile-rank-plot)'s
+> `--set` table below; check `build_tasks()` directly (or the verification one-liner just below)
+> if you need the full, current list.
+
 **`base_config` fields** (one per entry in `base_configs`):
 
 | field | meaning |
@@ -146,7 +157,7 @@ python plot_best_configs.py        --dir runs/nn/<experiment> --csv ../csvs/<...
 | `equation_type` | `"pure"` (NN only) or `"noNN_knee:<eq>"` (physics+NN). `<eq>` ∈ `mod1_angelov`, `classic_angelov`, `angelov_6_term`, `angelov_9_term`. |
 | `use_gm` | `true` enables gm gradient-matching loss (uses `gm*_weights`, `gm_surgery_modes`). |
 | `use_opt_params` | `true` initializes physics params from an SLSQP seed **and constrains each to a tight ±10% prior box around its seed value** (`width_percent=0.10`, sigmoid-bounded so a param can never leave the box; floor `δ=1e-6` for near-zero params). Requires `opt_params_variants` or `--opt_params_path`. `false` uses wide default bounds. See [§5 Tight priors](#tight-priors-from-slsqp-seeds-use_opt_params--freeze_physics). |
-| `freeze_physics` | `true` **locks** physics params exactly at the seed values (`requires_grad=False`) → NN-only training. `false` lets them train **within the ±10% box**. Empirically trained > frozen for gm (see [EXPERIMENT_LOG](EXPERIMENT_LOG.md) R7). |
+| `freeze_physics` | `true` **locks** physics params exactly at the seed values → NN-only training. `false` lets them train **within the ±10% box**. Empirically trained > frozen for gm (see [EXPERIMENT_LOG](EXPERIMENT_LOG.md) R7). Implementation note: for the `noNN_knee:<eq>` models used throughout this doc, a frozen param is stored as a plain Python float (never wrapped as an `nn.Parameter`, so there's no `requires_grad` to set) — `requires_grad=False` is only literally what happens in the separate hybrid-PINN code path. Either way the param does not train. |
 
 **`opt_params_variants`** (only when `use_opt_params=true`) — fans the experiment
 out over several seeds; each is a separate run:
@@ -166,8 +177,12 @@ Per experiment it's the **Cartesian product**:
 ```
 knee_alpha_scales × knee_combiners × learning_rates × nn_architectures ×
 output_activations × gm1_weights × gm2_weights × gm3_weights ×
-gm_surgery_modes × seeds × opt_params_variants × base_configs
+gm_surgery_modes × gm_max_ratios × knee_vgs_thrs × gm_vds_mins × gm_vgs_mins ×
+ids_region_weights × region_weights × vds_losses × ids_out_margins ×
+vdsgate_output_activations × seeds × opt_params_variants × base_configs
 ```
+(the last 9 dimensions before `seeds` all default to a single-element list, so they're
+invisible unless you actually sweep them — that's the common case shown in the schema above.)
 Check before launching:
 ```bash
 python -c "import json,multi_experiment_runner as m;from types import SimpleNamespace as S; \
@@ -362,13 +377,18 @@ the `gm*_weights` become pure *priorities* rather than scale-correction factors.
 
 ```
 <master_root>/
+  base_files/                            # snapshot of the CSV + config used (reproducibility)
+  _run_meta.json                        # records the measurement CSV / config paths etc.
   <experiment_name>/
     multi_experiment_runner.py            # copy of the runner used
-    exp_001_<surgery>_W<g1>-<g2>-<g3>_s<seed>/
+    _provenance.json                      # lineage: which base experiment/row this was derived from, if any
+    exp_001_<surgery>_W<g1>-<g2>-<g3>_s<seed>_rw<region_weight>/
       run_loss_<loss>_<tag>.json          # metrics + full config
       weights_loss_<loss>_<tag>.pt        # torch state_dict
       run_log.txt.gz                       # gzipped stdout/stderr of the run
 ```
+(the `_rw<region_weight>` suffix exists so runs differing only in `region_weight` don't collide
+in the same directory.)
 
 Key `run_loss_*.json` fields:
 
@@ -376,7 +396,7 @@ Key `run_loss_*.json` fields:
 |---|---|
 | `ids_rmse` | **true Ids RMSE** = `sqrt(mean((pred-y)^2))`, computed directly (loss-agnostic). |
 | `mse_loss` | true Ids MSE (`ids_rmse^2`). |
-| `objective_loss` | the value the optimizer minimized (MSE today; may differ if the loss is changed). |
+| `objective_loss` | the value the optimizer minimized. Plain Ids MSE for non-gm runs; **when `use_gm` is on, it's the combined Ids + Σ gmN_weight·gm_loss objective**, not Ids MSE alone. |
 | `gm1_rmse`,`gm2_rmse`,`gm3_rmse` | RMSE of model gm vs smoothed empirical gm. |
 | `seed`, `deterministic`, `mixed_init` | reproducibility settings used. |
 | `architecture`, `output_activation`, `learning_rate`, `epochs` | NN config. |
@@ -395,10 +415,21 @@ python compile_results_csv.py --dir  <experiment_dir>          # one CSV for one
 python compile_results_csv.py --root <master_root>             # one CSV per immediate subdir
 python compile_results_csv.py --root <root> --sort_by ids_rmse,gm1_rmse
 ```
-Recursively scans `**/*.json` (skips `best_n_configs/`). `--root` writes
-`compiled_results_<experiment>.csv` inside each subdir. Columns include
-`best_loss, ids_rmse, gm1_rmse, gm2_rmse, gm3_rmse, config_name, architecture,
-lr, output_activation, gm_surgery_mode, file_path`.
+Recursively scans `**/*.json` (skips `best_n_configs/`, and for `--root` also
+`plotted_configs/`, `base_files/`, and any `ranked_*` folder). **`--dir` writes plain
+`compiled_results.csv`; `--root` writes `compiled_results_<experiment>.csv` inside each
+subdir** — the two modes name their output differently, so check which one you ran.
+Also handles SLSQP `{"results": [...]}` seed files, not just `run_loss_*.json`.
+
+Columns are far more numerous than a curated highlight list can usefully show — beyond
+`best_loss, ids_rmse, gm1_rmse, gm2_rmse, gm3_rmse, config_name, architecture, lr,
+output_activation, gm_surgery_mode, file_path`, the real output also includes provenance/lineage
+(`id, run_id, run_hash, arch_id, arch_hash, base_exp, base_id, base_csv`), every physics/knee/gm
+config field the runner accepts (`use_gm, gm*_weight, gm_max_ratio, freeze_physics,
+use_opt_params, knee_*, ids_constraint/target/lambda, gm_warmup_*, gm_vds_min, gm_vgs_min,
+ids_region_*, deterministic, mixed_init, vds_loss, lbfgs_*, loss_norm, csv, epochs, seed`), and a
+union of any `region_*` columns present. Check the script's own `--help`/source for the exact,
+current column list rather than treating this doc as authoritative.
 
 ### `compile_master_best.py` — best-N across experiments
 ```bash
@@ -507,16 +538,21 @@ and writes a ready-to-run config JSON.
 | `1,3,7` | explicit list |
 | `all` | every row |
 
-**`--set KEY=VALUE`** (repeatable, JSON-parsed value) — two behaviours depending
-on the key:
+**`--set KEY=VALUE`** (repeatable, JSON-parsed value; `VALUE` can also be `@path/to/file.json`
+to load a large value, e.g. a big `nn_architectures` list, from a file) — **every `--set` is a
+flat override, and it *replaces*, it does not merge or add to, the source rows' values.**
+(An earlier design intended additive "expansion" for the list-typed dimensions below — the
+docstring language survives from that — but that is not what the current code does.)
 
-*Swept-dimension expansion* — if `KEY` is one of the list-typed swept dimensions
-below **and** `VALUE` is a JSON list, the script checks every unique
-`(arch, gm_weights, surgery_mode, …)` identity and **adds missing entries** for
-any value in the list that is not already present.  The key is then removed from
-the global overrides so it does not overwrite the per-config single-element list.
+For the keys in the table below, overriding the value also changes how source rows are
+*grouped*: rows that differed only in that field now collapse into a single group (since the
+field is dropped from the group's identity key), and the group's generated experiment gets
+`VALUE` as its swept list wholesale — **the original per-row values for that field are
+discarded, not kept alongside the new ones.** So `--set gm_vds_mins=[2.6,3.0,3.4,3.8,4.0]` does
+not add these five values to whatever `gm_vds_min` values the selected rows had — it sets the
+experiment's `gm_vds_min` sweep to exactly those five, full stop.
 
-| `--set` key | expands dimension |
+| `--set` key | groups by dropping |
 |---|---|
 | `gm_vds_mins=[2.6,3.0,3.4,3.8,4.0]` | `gm_vds_min` per config |
 | `seeds=[27,42]` | `seed` |
@@ -530,9 +566,12 @@ the global overrides so it does not overwrite the per-config single-element list
 | `knee_combiners=[...]` | `knee_combiner` |
 | `output_activations=[...]` | `output_activation` |
 
-*Simple global override* — all other keys (`add_zero_vds`, `epochs`,
-`lbfgs_epochs`, `loss_norm`, `ids_constraint`, `max_workers`, …) are applied as-is
-to every generated experiment.
+All other keys (`add_zero_vds`, `epochs`, `lbfgs_epochs`, `loss_norm`, `ids_constraint`,
+`max_workers`, …) are simple global overrides applied as-is to every generated experiment, with
+no grouping effect. Two special cases: `--set equation_type=X` (or
+`equation_types=[X,Y]`) fans out into one experiment per equation type rather than overriding in
+place; `use_gm`/`equation_type`/`use_opt_params` route into each experiment's `base_configs`
+rather than its top-level dict.
 
 **`--prefix`** sets the experiment-name prefix, which also becomes the subdirectory
 name under `--master_root_path` when the runner executes (e.g. `refine8__w0p1-0p1-0__ewbounded`).
@@ -624,22 +663,33 @@ A round is typically **tens to a few hundred** configs, finishing in minutes.
 
 ---
 
-## 10. Smoke tests
+## 10. Tests
 
-Fast end-to-end checks (tiny configs) under `physics_nn_pipeline/`:
+> **This section previously described a `test_overall_smoke.py`-orchestrated suite
+> (`test_multi_runner_smoke.py`, `test_compile_results_csv_smoke.py`,
+> `test_compile_results_to_xlsx_smoke.py`, `test_plot_best_configs_smoke.py`, and a
+> `smoke_paths.py` path module) that does not exist in this repo — only 2 of those 7 files are
+> actually present. What follows describes what's really here.**
+
 ```bash
-python test_overall_smoke.py        # runs all of the below in dependency order
-# individually:
-python slsqp_scripts/test_slsqp_runner_smoke.py     # SLSQP runner -> seeds + fixtures
-python test_multi_runner_smoke.py                   # NN runner -> RMSE-consistency checks
-python test_compile_results_csv_smoke.py
-python test_compile_master_best_smoke.py
-python test_compile_results_to_xlsx_smoke.py        # needs openpyxl
-python test_plot_best_configs_smoke.py              # re-plot + best_n_configs + calc-vs-saved RMSE
+python slsqp_scripts/test_slsqp_runner_smoke.py     # SLSQP runner -> seeds + fixtures. Works standalone.
+python test_region_weight.py                        # unit tests for the region-weight loss math,
+                                                      # with a source guard that fails loudly if
+                                                      # per_neuron_simple_angelov_nn_test.py's
+                                                      # formula changes underneath it
+python test_runner_e2e.py                            # runs the REAL multi_experiment_runner.py end-to-end,
+                                                      # one tiny experiment per feature (region weight,
+                                                      # vds_loss, gm mask, surgery mode, ids-region, loss_norm,
+                                                      # ...), checking both that each option is recorded in
+                                                      # run_loss_*.json AND that the debug log shows it fired.
+                                                      # Needs the real measurement CSV; skips if absent.
+python test_compile_master_best_smoke.py             # currently BROKEN in this repo — imports a
+                                                      # `smoke_paths` module and shells out to a
+                                                      # `test_compile_results_csv_smoke.py`, neither of
+                                                      # which exists here. Fix or remove before relying on it.
 ```
-All smoke artifacts are written under `<project_root>/tests/` (paths centralized
-in `physics_nn_pipeline/smoke_paths.py`). The runner smokes are **config-driven**
-(`*/opt_configs_smoke.json`), exercising the same code path as production.
+The SLSQP smoke is config-driven (`slsqp_configs/opt_configs_smoke.json`), exercising the same
+code path as production.
 
 ---
 
