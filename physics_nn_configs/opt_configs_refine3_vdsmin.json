@@ -1,0 +1,343 @@
+{
+  "_comment": "refine3 vds-min sweep: top-20 by ids_rmse + top-20 by combined_gm (gm>0) from refine3, each group of (weights, surgery_mode) becomes one experiment, gm_vds_min swept over [1,2,3,4] to test low-Vds gm exclusion.",
+  "DEFAULTS": {
+    "knee_alpha_scales": [
+      1.0
+    ],
+    "knee_combiners": [
+      "sum"
+    ],
+    "learning_rates": [
+      0.01
+    ],
+    "output_activations": [
+      "linear"
+    ],
+    "gm1_weights": [
+      0.1
+    ],
+    "gm2_weights": [
+      0.0
+    ],
+    "gm3_weights": [
+      0.0
+    ],
+    "gm_surgery_modes": [
+      "none"
+    ],
+    "gm_max_ratios": [
+      1.0
+    ],
+    "epochs": 800,
+    "lbfgs_epochs": 20,
+    "lbfgs_max_iter": 100,
+    "lbfgs_gm_aware": true,
+    "loss_norm": "nmse",
+    "seeds": [
+      27
+    ],
+    "deterministic": true,
+    "mixed_init": "per_activation",
+    "max_workers": 42,
+    "gm_vds_mins": [
+      0
+    ]
+  },
+  "EXPERIMENTS": {
+    "refine3_vdsmin__ids__w0-1-0_none": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        1.0
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "gm_vds_mins": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "base_configs": {
+        "PureNN": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure"
+        }
+      }
+    },
+    "refine3_vdsmin__gm__w3-1-0_ewbounded": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.1
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "element-wise-bounded"
+      ],
+      "gm_vds_mins": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "base_configs": {
+        "PureNN": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure"
+        }
+      }
+    },
+    "refine3_vdsmin__gm__w3-1-0_ewpercent": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.1
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent"
+      ],
+      "gm_vds_mins": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "base_configs": {
+        "PureNN": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure"
+        }
+      }
+    },
+    "refine3_vdsmin__gm__w3-1-0_none": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.1
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "gm_vds_mins": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "base_configs": {
+        "PureNN": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure"
+        }
+      }
+    },
+    "refine3_vdsmin__gm__w3-1-1_ewbounded": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.1
+      ],
+      "gm3_weights": [
+        0.1
+      ],
+      "gm_surgery_modes": [
+        "element-wise-bounded"
+      ],
+      "gm_vds_mins": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "base_configs": {
+        "PureNN": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure"
+        }
+      }
+    },
+    "refine3_vdsmin__gm__w3-1-1_none": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.1
+      ],
+      "gm3_weights": [
+        0.1
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "gm_vds_mins": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "base_configs": {
+        "PureNN": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure"
+        }
+      }
+    },
+    "refine3_vdsmin__gm__w3-3-1_ewpercent": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.1
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent"
+      ],
+      "gm_vds_mins": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "base_configs": {
+        "PureNN": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure"
+        }
+      }
+    },
+    "refine3_vdsmin__ids__w1-0-0_none": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        1.0
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "gm_vds_mins": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "base_configs": {
+        "PureNN": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure"
+        }
+      }
+    },
+    "refine3_vdsmin__ids__w1-1-0_none": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        1.0
+      ],
+      "gm2_weights": [
+        1.0
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "gm_vds_mins": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "base_configs": {
+        "PureNN": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure"
+        }
+      }
+    }
+  }
+}

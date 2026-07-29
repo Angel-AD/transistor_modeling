@@ -1,0 +1,2393 @@
+{
+  "_comment": "Best followups configs (union of top-100 by ids/gm1/gm2/gm3/combined_gm), re-run with the refine2 recipe (800 epochs, explicit gm-aware L-BFGS, nmse). ratio-dependent surgery includes both followups ratios [1.0,5.0].",
+  "DEFAULTS": {
+    "knee_alpha_scales": [
+      1.0
+    ],
+    "knee_combiners": [
+      "sum"
+    ],
+    "learning_rates": [
+      0.01
+    ],
+    "output_activations": [
+      "linear"
+    ],
+    "gm1_weights": [
+      0.0
+    ],
+    "gm2_weights": [
+      0.0
+    ],
+    "gm3_weights": [
+      0.0
+    ],
+    "gm_surgery_modes": [
+      "none"
+    ],
+    "gm_max_ratios": [
+      1.0
+    ],
+    "epochs": 800,
+    "lbfgs_epochs": 20,
+    "lbfgs_max_iter": 100,
+    "lbfgs_gm_aware": true,
+    "loss_norm": "nmse",
+    "seeds": [
+      27
+    ],
+    "deterministic": true,
+    "mixed_init": "per_activation",
+    "max_workers": 42
+  },
+  "EXPERIMENTS": {
+    "fubest__gm123__pure_none": {
+      "base_configs": {
+        "NN": {
+          "equation_type": "pure",
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm123__pure_pctbnd": {
+      "base_configs": {
+        "NN": {
+          "equation_type": "pure",
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm23__pure_none": {
+      "base_configs": {
+        "NN": {
+          "equation_type": "pure",
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm23__pure_pctbnd": {
+      "base_configs": {
+        "NN": {
+          "equation_type": "pure",
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm13__pure_none": {
+      "base_configs": {
+        "NN": {
+          "equation_type": "pure",
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm13__pure_pctbnd": {
+      "base_configs": {
+        "NN": {
+          "equation_type": "pure",
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm12__pure_none": {
+      "base_configs": {
+        "NN": {
+          "equation_type": "pure",
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ]
+    },
+    "fubest__gm12__pure_pctbnd": {
+      "base_configs": {
+        "NN": {
+          "equation_type": "pure",
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ]
+    },
+    "fubest__gm12__9term_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ]
+    },
+    "fubest__gm12__9term_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ]
+    },
+    "fubest__gm12__9term_2_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ]
+    },
+    "fubest__gm12__9term_2_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ]
+    },
+    "fubest__gm13__9term_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm13__9term_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm12__classic_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ]
+    },
+    "fubest__gm12__classic_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ]
+    },
+    "fubest__gm12__classic_2_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ]
+    },
+    "fubest__gm12__classic_2_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ]
+    },
+    "fubest__gm23__9term_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm23__9term_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm12__mod1_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ]
+    },
+    "fubest__gm12__mod1_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ]
+    },
+    "fubest__gm23__classic_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm23__classic_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm123__classic_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm123__classic_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm123__9term_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm123__9term_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm123__9term_2_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm123__9term_2_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm12__mod1_2_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ]
+    },
+    "fubest__gm12__mod1_2_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ]
+    },
+    "fubest__gm23__9term_2_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm23__9term_2_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm13__9term_2_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm13__9term_2_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm123__mod1_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm123__mod1_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm23__classic_2_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm23__classic_2_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm13__classic_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm13__classic_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm123__classic_2_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm123__classic_2_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm13__mod1_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm13__mod1_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm13__mod1_2_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm13__mod1_2_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm123__mod1_2_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm123__mod1_2_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm23__mod1_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm23__mod1_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm23__mod1_2_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm23__mod1_2_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm13__classic_2_none": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "fubest__gm13__classic_2_pctbnd": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    }
+  }
+}

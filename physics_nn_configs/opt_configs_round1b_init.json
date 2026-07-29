@@ -1,0 +1,52 @@
+{
+  "_comment": "Round 1b: does per_activation still beat xavier across a BROAD set of mixed architectures? 2 init modes x 20 internally-mixed architectures x 1 seed = 40 configs. Single seed, but 20 architectures give a sign test across architecture space. Every architecture has at least one layer that mixes activations (so mixed_init actually matters).",
+  "DEFAULTS": {
+    "base_configs": {
+      "PureNN": {"freeze_physics": false, "use_opt_params": false, "equation_type": "pure", "use_gm": false}
+    },
+    "knee_alpha_scales": [1.0],
+    "knee_combiners": ["sum"],
+    "learning_rates": [0.01],
+    "nn_architectures": [
+      "[[\"tanh\", \"sin\"], [\"tanh\", \"sin\"]]",
+      "[[\"tanh\", \"swish\"], [\"tanh\", \"swish\"]]",
+      "[[\"tanh\", \"mish\"], [\"tanh\", \"mish\"]]",
+      "[[\"tanh\", \"cos\"], [\"tanh\", \"cos\"]]",
+      "[[\"tanh\", \"sigmoid\"], [\"tanh\", \"sigmoid\"]]",
+      "[[\"tanh\", \"softplus\"], [\"tanh\", \"softplus\"]]",
+      "[[\"sin\", \"swish\"], [\"sin\", \"swish\"]]",
+      "[[\"sin\", \"mish\"], [\"sin\", \"mish\"]]",
+      "[[\"swish\", \"mish\"], [\"swish\", \"mish\"]]",
+      "[[\"tanh\", \"sin\", \"swish\"], [\"tanh\", \"sin\", \"swish\"]]",
+      "[[\"tanh\", \"sin\", \"mish\"], [\"tanh\", \"sin\", \"mish\"]]",
+      "[[\"tanh\", \"swish\", \"mish\"], [\"tanh\", \"swish\", \"mish\"]]",
+      "[[\"tanh\", \"sin\", \"swish\", \"mish\"], [\"tanh\", \"sin\", \"swish\", \"mish\"]]",
+      "[[\"tanh\", \"sin\"]]",
+      "[[\"tanh\", \"sin\", \"swish\"]]",
+      "[[\"tanh\", \"sin\", \"swish\", \"mish\"]]",
+      "[[\"tanh\", \"sin\"], [\"tanh\", \"swish\"]]",
+      "[[\"tanh\", \"mish\"], [\"sin\", \"swish\"]]",
+      "[[\"tanh\", \"sin\", \"swish\"], [\"tanh\", \"mish\"]]",
+      "[[\"tanh\", \"cos\", \"sin\"], [\"tanh\", \"cos\", \"sin\"]]"
+    ],
+    "output_activations": ["linear"],
+    "gm1_weights": [0.0],
+    "gm2_weights": [0.0],
+    "gm3_weights": [0.0],
+    "gm_surgery_modes": ["none"],
+    "epochs": 600,
+    "seeds": [1],
+    "deterministic": true,
+    "max_workers": 8
+  },
+  "EXPERIMENTS": {
+    "het_xavier": {
+      "base_configs": {"Het_Xavier": {"freeze_physics": false, "use_opt_params": false, "equation_type": "pure", "use_gm": false}},
+      "mixed_init": "xavier"
+    },
+    "het_per_activation": {
+      "base_configs": {"Het_PerAct": {"freeze_physics": false, "use_opt_params": false, "equation_type": "pure", "use_gm": false}},
+      "mixed_init": "per_activation"
+    }
+  }
+}

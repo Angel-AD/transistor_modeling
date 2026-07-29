@@ -1,0 +1,208 @@
+{
+    "DEFAULTS": {
+      "base_configs": {
+        "Opt_Frozen_GM": {
+          "freeze_physics": true,
+          "use_opt_params": true,
+          "equation_type": "noNN_knee:mod1_angelov",
+          "use_gm": true
+        }
+      },
+      "knee_alpha_scales": [5.0],
+      "knee_combiners": ["sum", "product"],
+      "learning_rates": [0.01, 0.005],
+      "nn_architectures": "@GENERATE@",
+      "output_activations": ["linear", "softplus"],
+      "gm1_weights": [0.0],
+      "gm2_weights": [0.0],
+      "gm3_weights": [0.0],
+      "gm_surgery_modes": ["none"],
+      "epochs": 5000,
+      "seeds": [27],
+      "deterministic": true,
+      "mixed_init": "per_activation",
+      "max_workers": 38
+    },
+    "EXPERIMENTS": {
+      "pure_nn_no_gm": {
+        "base_configs": {
+          "PureNN": {
+            "freeze_physics": true,
+            "use_opt_params": false,
+            "equation_type": "pure",
+            "use_gm": false
+          }
+        }
+      },
+      "pure_nn_gm1_pcgrad": {
+        "base_configs": {
+          "PureNN_GM1": {
+            "freeze_physics": true,
+            "use_opt_params": false,
+            "equation_type": "pure",
+            "use_gm": true
+          }
+        },
+        "gm1_weights": [0.1, 0.3, 0.5],
+        "gm_surgery_modes": ["none", "element-wise-bounded"]
+      },
+      "pure_nn_gm2_pcgrad": {
+        "base_configs": {
+          "PureNN_GM2": {
+            "freeze_physics": true,
+            "use_opt_params": false,
+            "equation_type": "pure",
+            "use_gm": true
+          }
+        },
+        "gm2_weights": [0.1, 0.3, 0.5],
+        "gm_surgery_modes": ["none", "element-wise-bounded"]
+      },
+      "pure_nn_gm3_pcgrad": {
+        "base_configs": {
+          "PureNN_GM3": {
+            "freeze_physics": true,
+            "use_opt_params": false,
+            "equation_type": "pure",
+            "use_gm": true
+          }
+        },
+        "gm3_weights": [0.1, 0.3, 0.5],
+        "gm_surgery_modes": ["none", "element-wise-bounded"]
+      },
+      "pure_nn_gm123_pcgrad": {
+        "base_configs": {
+          "PureNN_GM123": {
+            "freeze_physics": true,
+            "use_opt_params": false,
+            "equation_type": "pure",
+            "use_gm": true
+          }
+        },
+        "gm1_weights": [0.1, 0.3, 0.5],
+        "gm2_weights": [0.1, 0.3, 0.5],
+        "gm3_weights": [0.1, 0.3, 0.5],
+        "gm_surgery_modes": ["none", "element-wise-bounded"]
+      },
+      "physics_nn_no_gm": {
+        "base_configs": {
+          "Physics_NN": {
+            "freeze_physics": true,
+            "use_opt_params": true,
+            "equation_type": "noNN_knee:mod1_angelov",
+            "use_gm": false
+          }
+        },
+        "opt_params_variants": [
+          {
+            "label": "mod1",
+            "path": "C:/Users/acost/repos/slsqp_seeds/cg2h40010_new_2.2_5_2_70W_center9/mod1_gm1/exp_001_mod1_angelov_cfg9_n20_gm1_W0.1-0.0-0.0/slsqp_seed.json",
+            "equation_type": "noNN_knee:mod1_angelov"
+          },
+          {
+            "label": "classic",
+            "path": "C:/Users/acost/repos/slsqp_seeds/cg2h40010_new_2.2_5_2_70W_center9/classic_gm1/exp_001_classic_angelov_cfg9_n20_gm1_W0.1-0.0-0.0/slsqp_seed.json",
+            "equation_type": "noNN_knee:classic_angelov"
+          }
+        ]
+      },
+      "physics_nn_gm1_pcgrad": {
+        "base_configs": {
+          "Physics_NN_GM1": {
+            "freeze_physics": true,
+            "use_opt_params": true,
+            "equation_type": "noNN_knee:mod1_angelov",
+            "use_gm": true
+          }
+        },
+        "gm1_weights": [0.1, 0.3, 0.5],
+        "gm_surgery_modes": ["none", "element-wise-bounded"],
+        "opt_params_variants": [
+          {
+            "label": "mod1",
+            "path": "C:/Users/acost/repos/slsqp_seeds/cg2h40010_new_2.2_5_2_70W_center9/mod1_gm1/exp_001_mod1_angelov_cfg9_n20_gm1_W0.1-0.0-0.0/slsqp_seed.json",
+            "equation_type": "noNN_knee:mod1_angelov"
+          },
+          {
+            "label": "classic",
+            "path": "C:/Users/acost/repos/slsqp_seeds/cg2h40010_new_2.2_5_2_70W_center9/classic_gm1/exp_001_classic_angelov_cfg9_n20_gm1_W0.1-0.0-0.0/slsqp_seed.json",
+            "equation_type": "noNN_knee:classic_angelov"
+          }
+        ]
+      },
+      "physics_nn_gm2_pcgrad": {
+        "base_configs": {
+          "Physics_NN_GM2": {
+            "freeze_physics": true,
+            "use_opt_params": true,
+            "equation_type": "noNN_knee:mod1_angelov",
+            "use_gm": true
+          }
+        },
+        "gm2_weights": [0.1, 0.3, 0.5],
+        "gm_surgery_modes": ["none", "element-wise-bounded"],
+        "opt_params_variants": [
+          {
+            "label": "mod1",
+            "path": "C:/Users/acost/repos/slsqp_seeds/cg2h40010_new_2.2_5_2_70W_center9/mod1_gm1/exp_001_mod1_angelov_cfg9_n20_gm1_W0.1-0.0-0.0/slsqp_seed.json",
+            "equation_type": "noNN_knee:mod1_angelov"
+          },
+          {
+            "label": "classic",
+            "path": "C:/Users/acost/repos/slsqp_seeds/cg2h40010_new_2.2_5_2_70W_center9/classic_gm1/exp_001_classic_angelov_cfg9_n20_gm1_W0.1-0.0-0.0/slsqp_seed.json",
+            "equation_type": "noNN_knee:classic_angelov"
+          }
+        ]
+      },
+      "physics_nn_gm3_pcgrad": {
+        "base_configs": {
+          "Physics_NN_GM3": {
+            "freeze_physics": true,
+            "use_opt_params": true,
+            "equation_type": "noNN_knee:mod1_angelov",
+            "use_gm": true
+          }
+        },
+        "gm3_weights": [0.1, 0.3, 0.5],
+        "gm_surgery_modes": ["none", "element-wise-bounded"],
+        "opt_params_variants": [
+          {
+            "label": "mod1",
+            "path": "C:/Users/acost/repos/slsqp_seeds/cg2h40010_new_2.2_5_2_70W_center9/mod1_gm1/exp_001_mod1_angelov_cfg9_n20_gm1_W0.1-0.0-0.0/slsqp_seed.json",
+            "equation_type": "noNN_knee:mod1_angelov"
+          },
+          {
+            "label": "classic",
+            "path": "C:/Users/acost/repos/slsqp_seeds/cg2h40010_new_2.2_5_2_70W_center9/classic_gm1/exp_001_classic_angelov_cfg9_n20_gm1_W0.1-0.0-0.0/slsqp_seed.json",
+            "equation_type": "noNN_knee:classic_angelov"
+          }
+        ]
+      },
+      "physics_nn_gm123_pcgrad": {
+        "base_configs": {
+          "Physics_NN_GM123": {
+            "freeze_physics": true,
+            "use_opt_params": true,
+            "equation_type": "noNN_knee:mod1_angelov",
+            "use_gm": true
+          }
+        },
+        "gm1_weights": [0.1, 0.3, 0.5],
+        "gm2_weights": [0.1, 0.3, 0.5],
+        "gm3_weights": [0.1, 0.3, 0.5],
+        "gm_surgery_modes": ["none", "element-wise-bounded"],
+        "opt_params_variants": [
+          {
+            "label": "mod1",
+            "path": "C:/Users/acost/repos/slsqp_seeds/cg2h40010_new_2.2_5_2_70W_center9/mod1_gm1/exp_001_mod1_angelov_cfg9_n20_gm1_W0.1-0.0-0.0/slsqp_seed.json",
+            "equation_type": "noNN_knee:mod1_angelov"
+          },
+          {
+            "label": "classic",
+            "path": "C:/Users/acost/repos/slsqp_seeds/cg2h40010_new_2.2_5_2_70W_center9/classic_gm1/exp_001_classic_angelov_cfg9_n20_gm1_W0.1-0.0-0.0/slsqp_seed.json",
+            "equation_type": "noNN_knee:classic_angelov"
+          }
+        ]
+      }
+    }
+  }

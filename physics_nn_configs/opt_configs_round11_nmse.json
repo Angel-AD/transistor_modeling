@@ -1,0 +1,202 @@
+{
+  "_comment": "Round 11: NMSE loss balancing vs none (+ auto gm-aware L-BFGS).",
+  "DEFAULTS": {
+    "base_configs": {},
+    "knee_alpha_scales": [
+      3.0
+    ],
+    "knee_combiners": [
+      "product"
+    ],
+    "learning_rates": [
+      0.01
+    ],
+    "nn_architectures": [
+      "[[\"sin\", \"sin\", \"swish\", \"mish\"], [\"sin\", \"sin\", \"swish\", \"mish\"]]"
+    ],
+    "output_activations": [
+      "linear"
+    ],
+    "gm1_weights": [
+      0.0
+    ],
+    "gm2_weights": [
+      0.0
+    ],
+    "gm3_weights": [
+      0.0
+    ],
+    "gm_surgery_modes": [
+      "element-wise-percent"
+    ],
+    "gm_max_ratios": [
+      1.0,
+      5.0
+    ],
+    "epochs": 400,
+    "lbfgs_epochs": 15,
+    "lbfgs_max_iter": 200,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "deterministic": true,
+    "mixed_init": "per_activation",
+    "max_workers": 48
+  },
+  "EXPERIMENTS": {
+    "pure_none": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"sin\", \"sin\", \"swish\", \"mish\"], [\"sin\", \"sin\", \"swish\", \"mish\"]]"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "loss_norm": "none",
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "pure_nmse": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"sin\", \"sin\", \"swish\", \"mish\"], [\"sin\", \"sin\", \"swish\", \"mish\"]]"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "loss_norm": "nmse",
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "phys_none": {
+      "base_configs": {
+        "Phys6": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "opt_params_variants": [
+        {
+          "label": "6term",
+          "equation_type": "noNN_knee:angelov_6_term",
+          "path": "runs/slsqp/angelov_6_term_no_gm/exp_001_angelov_6_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "nn_architectures": [
+        "[[\"swish\", \"mish\", \"swish\", \"mish\"], [\"swish\", \"mish\", \"swish\", \"mish\"]]"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "loss_norm": "none",
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    },
+    "phys_nmse": {
+      "base_configs": {
+        "Phys6": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "opt_params_variants": [
+        {
+          "label": "6term",
+          "equation_type": "noNN_knee:angelov_6_term",
+          "path": "runs/slsqp/angelov_6_term_no_gm/exp_001_angelov_6_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "nn_architectures": [
+        "[[\"swish\", \"mish\", \"swish\", \"mish\"], [\"swish\", \"mish\", \"swish\", \"mish\"]]"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "gm_surgery_modes": [
+        "element-wise-percent"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "loss_norm": "nmse",
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ]
+    }
+  }
+}

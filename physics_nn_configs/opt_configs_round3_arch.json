@@ -1,0 +1,153 @@
+{
+  "_comment": "Round 3: pure-NN capacity-extended architecture search. 52 archs x 5 seeds x 4 objective-experiments = 1040 configs. per_activation init, 400 epochs.",
+  "DEFAULTS": {
+    "base_configs": {
+      "PureNN": {
+        "freeze_physics": false,
+        "use_opt_params": false,
+        "equation_type": "pure",
+        "use_gm": false
+      }
+    },
+    "knee_alpha_scales": [
+      1.0
+    ],
+    "knee_combiners": [
+      "sum"
+    ],
+    "learning_rates": [
+      0.01
+    ],
+    "nn_architectures": [
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"tanh\", \"sin\", \"tanh\", \"sin\"], [\"tanh\", \"sin\", \"tanh\", \"sin\"]]",
+      "[[\"tanh\", \"sin\", \"tanh\", \"sin\"], [\"tanh\", \"sin\", \"tanh\", \"sin\"], [\"tanh\", \"sin\", \"tanh\", \"sin\"]]",
+      "[[\"tanh\", \"sin\", \"tanh\", \"sin\", \"tanh\", \"sin\"], [\"tanh\", \"sin\", \"tanh\", \"sin\", \"tanh\", \"sin\"]]",
+      "[[\"tanh\", \"sin\", \"tanh\", \"sin\", \"tanh\", \"sin\"], [\"tanh\", \"sin\", \"tanh\", \"sin\", \"tanh\", \"sin\"], [\"tanh\", \"sin\", \"tanh\", \"sin\", \"tanh\", \"sin\"]]",
+      "[[\"tanh\", \"swish\", \"tanh\", \"swish\"], [\"tanh\", \"swish\", \"tanh\", \"swish\"]]",
+      "[[\"tanh\", \"swish\", \"tanh\", \"swish\"], [\"tanh\", \"swish\", \"tanh\", \"swish\"], [\"tanh\", \"swish\", \"tanh\", \"swish\"]]",
+      "[[\"tanh\", \"swish\", \"tanh\", \"swish\", \"tanh\", \"swish\"], [\"tanh\", \"swish\", \"tanh\", \"swish\", \"tanh\", \"swish\"]]",
+      "[[\"tanh\", \"swish\", \"tanh\", \"swish\", \"tanh\", \"swish\"], [\"tanh\", \"swish\", \"tanh\", \"swish\", \"tanh\", \"swish\"], [\"tanh\", \"swish\", \"tanh\", \"swish\", \"tanh\", \"swish\"]]",
+      "[[\"tanh\", \"sin\", \"swish\", \"tanh\"], [\"tanh\", \"sin\", \"swish\", \"tanh\"]]",
+      "[[\"tanh\", \"sin\", \"swish\", \"tanh\"], [\"tanh\", \"sin\", \"swish\", \"tanh\"], [\"tanh\", \"sin\", \"swish\", \"tanh\"]]",
+      "[[\"tanh\", \"sin\", \"swish\", \"tanh\", \"sin\", \"swish\"], [\"tanh\", \"sin\", \"swish\", \"tanh\", \"sin\", \"swish\"]]",
+      "[[\"tanh\", \"sin\", \"swish\", \"tanh\", \"sin\", \"swish\"], [\"tanh\", \"sin\", \"swish\", \"tanh\", \"sin\", \"swish\"], [\"tanh\", \"sin\", \"swish\", \"tanh\", \"sin\", \"swish\"]]",
+      "[[\"swish\", \"mish\", \"swish\", \"mish\"], [\"swish\", \"mish\", \"swish\", \"mish\"]]",
+      "[[\"swish\", \"mish\", \"swish\", \"mish\"], [\"swish\", \"mish\", \"swish\", \"mish\"], [\"swish\", \"mish\", \"swish\", \"mish\"]]",
+      "[[\"swish\", \"mish\", \"swish\", \"mish\", \"swish\", \"mish\"], [\"swish\", \"mish\", \"swish\", \"mish\", \"swish\", \"mish\"]]",
+      "[[\"swish\", \"mish\", \"swish\", \"mish\", \"swish\", \"mish\"], [\"swish\", \"mish\", \"swish\", \"mish\", \"swish\", \"mish\"], [\"swish\", \"mish\", \"swish\", \"mish\", \"swish\", \"mish\"]]"
+    ],
+    "output_activations": [
+      "linear"
+    ],
+    "gm1_weights": [
+      0.0
+    ],
+    "gm2_weights": [
+      0.0
+    ],
+    "gm3_weights": [
+      0.0
+    ],
+    "gm_surgery_modes": [
+      "none"
+    ],
+    "epochs": 400,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "deterministic": true,
+    "mixed_init": "per_activation",
+    "max_workers": 48
+  },
+  "EXPERIMENTS": {
+    "best_ids": {
+      "base_configs": {
+        "Ids": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": false
+        }
+      }
+    },
+    "best_gm1": {
+      "base_configs": {
+        "GM1": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "gm1_weights": [
+        0.3
+      ]
+    },
+    "best_gm2": {
+      "base_configs": {
+        "GM2": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "gm2_weights": [
+        0.3
+      ]
+    },
+    "best_gm3": {
+      "base_configs": {
+        "GM3": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "gm3_weights": [
+        0.3
+      ]
+    }
+  }
+}

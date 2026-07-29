@@ -1,0 +1,215 @@
+{
+  "_comment": "Round 4: Ids capacity extension + PCGrad pure-NN gm sweeps.",
+  "DEFAULTS": {
+    "base_configs": {
+      "PureNN": {
+        "freeze_physics": false,
+        "use_opt_params": false,
+        "equation_type": "pure",
+        "use_gm": false
+      }
+    },
+    "knee_alpha_scales": [
+      1.0
+    ],
+    "knee_combiners": [
+      "sum"
+    ],
+    "learning_rates": [
+      0.01
+    ],
+    "nn_architectures": [
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+      "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]"
+    ],
+    "output_activations": [
+      "linear"
+    ],
+    "gm1_weights": [
+      0.0
+    ],
+    "gm2_weights": [
+      0.0
+    ],
+    "gm3_weights": [
+      0.0
+    ],
+    "gm_surgery_modes": [
+      "none"
+    ],
+    "epochs": 600,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "deterministic": true,
+    "mixed_init": "per_activation",
+    "max_workers": 48
+  },
+  "EXPERIMENTS": {
+    "ids_capacity": {
+      "base_configs": {
+        "Ids": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": false
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+        "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+        "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+        "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+        "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+        "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+        "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+        "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+        "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "epochs": 600
+    },
+    "gm1_pcgrad": {
+      "base_configs": {
+        "GM1": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"mish\", \"swish\", \"mish\"], [\"swish\", \"mish\", \"swish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded",
+        "soft",
+        "element-wise-bounded"
+      ],
+      "gm1_weights": [
+        0.3,
+        1.0
+      ],
+      "epochs": 400
+    },
+    "gm2_pcgrad": {
+      "base_configs": {
+        "GM2": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"sin\", \"tanh\", \"sin\"], [\"tanh\", \"sin\", \"tanh\", \"sin\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded",
+        "soft",
+        "element-wise-bounded"
+      ],
+      "gm2_weights": [
+        0.3,
+        1.0
+      ],
+      "epochs": 400
+    },
+    "gm3_pcgrad": {
+      "base_configs": {
+        "GM3": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\", \"sin\", \"sin\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded",
+        "soft",
+        "element-wise-bounded"
+      ],
+      "gm3_weights": [
+        0.3,
+        1.0
+      ],
+      "epochs": 400
+    }
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "_comment": "top-20 ids_rmse archs x 10 vdsgate_aeff gate variants (order lin/quad/cub x optional _clam x optional _sig), no gm.",
+  "DEFAULTS": {
+    "knee_alpha_scales": [
+      1.0
+    ],
+    "knee_combiners": [
+      "sum"
+    ],
+    "learning_rates": [
+      0.01
+    ],
+    "output_activations": [
+      "linear"
+    ],
+    "gm1_weights": [
+      0.0
+    ],
+    "gm2_weights": [
+      0.0
+    ],
+    "gm3_weights": [
+      0.0
+    ],
+    "gm_surgery_modes": [
+      "none"
+    ],
+    "gm_max_ratios": [
+      1.0
+    ],
+    "gm_vds_mins": [
+      0
+    ],
+    "gm_vgs_mins": [
+      null
+    ],
+    "epochs": 1000,
+    "lbfgs_epochs": 20,
+    "lbfgs_max_iter": 100,
+    "lbfgs_gm_aware": true,
+    "loss_norm": "nmse",
+    "seeds": [
+      27
+    ],
+    "deterministic": true,
+    "mixed_init": "per_activation",
+    "max_workers": 14
+  },
+  "EXPERIMENTS": {
+    "vdsgate_gates": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"]]",
+        "[[\"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\"], [\"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\"], [\"sigmoid\", \"sigmoid\", \"sigmoid\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\"], [\"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\"], [\"sigmoid\", \"sigmoid\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "epochs": 1000,
+      "base_configs": {
+        "lin": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_lin"
+        },
+        "lin_sig": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_lin_sig"
+        },
+        "quad": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_quad"
+        },
+        "quad_clam": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_quad_clam"
+        },
+        "quad_sig": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_quad_sig"
+        },
+        "quad_clam_sig": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_quad_clam_sig"
+        },
+        "cub": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_cub"
+        },
+        "cub_clam": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_cub_clam"
+        },
+        "cub_sig": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_cub_sig"
+        },
+        "cub_clam_sig": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_cub_clam_sig"
+        }
+      }
+    }
+  }
+}

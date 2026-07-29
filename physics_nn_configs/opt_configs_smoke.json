@@ -1,0 +1,91 @@
+{
+  "_comment": "Smoke variant of opt_configs.json for multi_experiment_runner. Self-contained (use_opt_params=false everywhere, no SLSQP seed fixtures needed). 16 configs across pure-NN / NN+mod1_angelov / NN+classic_angelov, with and without gm. GM orders (gm1/gm2/gm3) are split into separate experiments because the runner's sweep is a Cartesian product and cannot select a gm 'diagonal' within one experiment. Activations: tanh, mish, swish.",
+  "DEFAULTS": {
+    "base_configs": {
+      "PureNN": {
+        "freeze_physics": false,
+        "use_opt_params": false,
+        "equation_type": "pure",
+        "use_gm": false
+      }
+    },
+    "knee_alpha_scales": [1.0],
+    "knee_combiners": ["sum"],
+    "learning_rates": [0.01],
+    "nn_architectures": ["[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"],
+    "output_activations": ["linear"],
+    "gm1_weights": [0.0],
+    "gm2_weights": [0.0],
+    "gm3_weights": [0.0],
+    "gm_surgery_modes": ["soft"],
+    "epochs": 30,
+    "max_workers": 4
+  },
+  "EXPERIMENTS": {
+    "pure_nn_no_gm": {
+      "base_configs": {"PureNN": {"freeze_physics": false, "use_opt_params": false, "equation_type": "pure", "use_gm": false}},
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"mish\"], [\"tanh\", \"mish\"]]",
+        "[[\"tanh\", \"swish\"], [\"tanh\", \"swish\"]]"
+      ],
+      "epochs": 60,
+      "max_workers": 3
+    },
+    "pure_nn_gm1": {
+      "base_configs": {"PureNN_GM1": {"freeze_physics": false, "use_opt_params": false, "equation_type": "pure", "use_gm": true}},
+      "gm1_weights": [0.1]
+    },
+    "pure_nn_gm2": {
+      "base_configs": {"PureNN_GM2": {"freeze_physics": false, "use_opt_params": false, "equation_type": "pure", "use_gm": true}},
+      "gm2_weights": [0.1]
+    },
+    "pure_nn_gm3": {
+      "base_configs": {"PureNN_GM3": {"freeze_physics": false, "use_opt_params": false, "equation_type": "pure", "use_gm": true}},
+      "gm3_weights": [0.1]
+    },
+    "mod1_no_gm": {
+      "base_configs": {"Mod1NN": {"freeze_physics": false, "use_opt_params": false, "equation_type": "noNN_knee:mod1_angelov", "use_gm": false}},
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"mish\"], [\"tanh\", \"mish\"]]",
+        "[[\"tanh\", \"swish\"], [\"tanh\", \"swish\"]]"
+      ],
+      "max_workers": 3
+    },
+    "mod1_gm1": {
+      "base_configs": {"Mod1NN_GM1": {"freeze_physics": false, "use_opt_params": false, "equation_type": "noNN_knee:mod1_angelov", "use_gm": true}},
+      "gm1_weights": [0.1]
+    },
+    "mod1_gm2": {
+      "base_configs": {"Mod1NN_GM2": {"freeze_physics": false, "use_opt_params": false, "equation_type": "noNN_knee:mod1_angelov", "use_gm": true}},
+      "gm2_weights": [0.1]
+    },
+    "mod1_gm3": {
+      "base_configs": {"Mod1NN_GM3": {"freeze_physics": false, "use_opt_params": false, "equation_type": "noNN_knee:mod1_angelov", "use_gm": true}},
+      "gm3_weights": [0.1]
+    },
+    "classic_no_gm": {
+      "base_configs": {"ClassicNN": {"freeze_physics": false, "use_opt_params": false, "equation_type": "noNN_knee:classic_angelov", "use_gm": false}}
+    },
+    "classic_gm1": {
+      "base_configs": {"ClassicNN_GM1": {"freeze_physics": false, "use_opt_params": false, "equation_type": "noNN_knee:classic_angelov", "use_gm": true}},
+      "gm1_weights": [0.1]
+    },
+    "classic_gm2": {
+      "base_configs": {"ClassicNN_GM2": {"freeze_physics": false, "use_opt_params": false, "equation_type": "noNN_knee:classic_angelov", "use_gm": true}},
+      "gm2_weights": [0.1]
+    },
+    "classic_gm3": {
+      "base_configs": {"ClassicNN_GM3": {"freeze_physics": false, "use_opt_params": false, "equation_type": "noNN_knee:classic_angelov", "use_gm": true}},
+      "gm3_weights": [0.1]
+    },
+    "opt_params_seeded": {
+      "base_configs": {"Seeded": {"freeze_physics": false, "use_opt_params": true, "equation_type": "noNN_knee:mod1_angelov", "use_gm": false}},
+      "opt_params_variants": [
+        {"label": "mod1", "path": "../tests/slsqp_mod1_physics_seed_cfg9.json", "equation_type": "noNN_knee:mod1_angelov"},
+        {"label": "classic", "path": "../tests/slsqp_classic_physics_seed_cfg9.json", "equation_type": "noNN_knee:classic_angelov"}
+      ]
+    }
+  }
+}

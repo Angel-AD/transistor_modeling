@@ -1,0 +1,216 @@
+{
+  "_comment": "Round 7: frozen vs trained physics x 4 eqs.",
+  "DEFAULTS": {
+    "base_configs": {
+      "Frz": {
+        "freeze_physics": true,
+        "use_opt_params": true,
+        "use_gm": true
+      },
+      "Train": {
+        "freeze_physics": false,
+        "use_opt_params": true,
+        "use_gm": true
+      }
+    },
+    "knee_alpha_scales": [
+      3.0,
+      5.0
+    ],
+    "knee_combiners": [
+      "product"
+    ],
+    "learning_rates": [
+      0.01
+    ],
+    "nn_architectures": [
+      "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]"
+    ],
+    "output_activations": [
+      "linear"
+    ],
+    "gm1_weights": [
+      0.0
+    ],
+    "gm2_weights": [
+      0.0
+    ],
+    "gm3_weights": [
+      0.0
+    ],
+    "gm_surgery_modes": [
+      "none",
+      "no-bounded"
+    ],
+    "epochs": 800,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "deterministic": true,
+    "mixed_init": "per_activation",
+    "max_workers": 48,
+    "opt_params_variants": [
+      {
+        "label": "mod1",
+        "equation_type": "noNN_knee:mod1_angelov",
+        "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+      },
+      {
+        "label": "classic",
+        "equation_type": "noNN_knee:classic_angelov",
+        "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+      },
+      {
+        "label": "6term",
+        "equation_type": "noNN_knee:angelov_6_term",
+        "path": "runs/slsqp/angelov_6_term_no_gm/exp_001_angelov_6_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+      },
+      {
+        "label": "9term",
+        "equation_type": "noNN_knee:angelov_9_term",
+        "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+      }
+    ]
+  },
+  "EXPERIMENTS": {
+    "fz_gm1": {
+      "base_configs": {
+        "Frz": {
+          "freeze_physics": true,
+          "use_opt_params": true,
+          "use_gm": true
+        },
+        "Train": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "6term",
+          "equation_type": "noNN_knee:angelov_6_term",
+          "path": "runs/slsqp/angelov_6_term_no_gm/exp_001_angelov_6_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "nn_architectures": [
+        "[[\"swish\", \"mish\", \"swish\", \"mish\"], [\"swish\", \"mish\", \"swish\", \"mish\"]]"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm1_weights": [
+        1.0
+      ]
+    },
+    "fz_gm2": {
+      "base_configs": {
+        "Frz": {
+          "freeze_physics": true,
+          "use_opt_params": true,
+          "use_gm": true
+        },
+        "Train": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "6term",
+          "equation_type": "noNN_knee:angelov_6_term",
+          "path": "runs/slsqp/angelov_6_term_no_gm/exp_001_angelov_6_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]"
+      ],
+      "knee_combiners": [
+        "product"
+      ],
+      "gm2_weights": [
+        3.0
+      ]
+    },
+    "fz_gm3": {
+      "base_configs": {
+        "Frz": {
+          "freeze_physics": true,
+          "use_opt_params": true,
+          "use_gm": true
+        },
+        "Train": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "opt_params_variants": [
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "6term",
+          "equation_type": "noNN_knee:angelov_6_term",
+          "path": "runs/slsqp/angelov_6_term_no_gm/exp_001_angelov_6_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "nn_architectures": [
+        "[[\"sin\", \"sin\", \"sin\", \"sin\"], [\"sin\", \"sin\", \"sin\", \"sin\"]]"
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "gm3_weights": [
+        3.0
+      ]
+    }
+  }
+}

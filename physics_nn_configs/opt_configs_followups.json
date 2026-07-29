@@ -1,0 +1,1660 @@
+{
+  "_comment": "Four follow-ups (multi-gm PCGrad). 32 sub-exps, 3136 runs.",
+  "DEFAULTS": {
+    "knee_alpha_scales": [
+      3.0
+    ],
+    "knee_combiners": [
+      "sum"
+    ],
+    "learning_rates": [
+      0.01
+    ],
+    "output_activations": [
+      "linear"
+    ],
+    "gm1_weights": [
+      0.0
+    ],
+    "gm2_weights": [
+      0.0
+    ],
+    "gm3_weights": [
+      0.0
+    ],
+    "gm_surgery_modes": [
+      "none"
+    ],
+    "gm_max_ratios": [
+      1.0
+    ],
+    "epochs": 600,
+    "lbfgs_epochs": 20,
+    "lbfgs_max_iter": 100,
+    "loss_norm": "nmse",
+    "seeds": [
+      27
+    ],
+    "deterministic": true,
+    "mixed_init": "per_activation",
+    "max_workers": 48
+  },
+  "EXPERIMENTS": {
+    "pureNN_gms_ids__gm12__proj": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_ids__gm12__amp": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_ids__gm13__proj": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_ids__gm13__amp": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_ids__gm23__proj": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_ids__gm23__amp": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_ids__gm123__proj": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_ids__gm123__amp": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_gms__gm12__proj": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_gms__gm12__amp": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_gms__gm13__proj": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_gms__gm13__amp": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_gms__gm23__proj": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_gms__gm23__amp": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_gms__gm123__proj": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "pureNN_gms_gms__gm123__amp": {
+      "base_configs": {
+        "PureNN": {
+          "freeze_physics": false,
+          "use_opt_params": false,
+          "equation_type": "pure",
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ]
+    },
+    "physicsNN_gms_ids__gm12__proj": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_ids__gm12__amp": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_ids__gm13__proj": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_ids__gm13__amp": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_ids__gm23__proj": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_ids__gm23__amp": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_ids__gm123__proj": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_ids__gm123__amp": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_gms__gm12__proj": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_gms__gm12__amp": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_gms__gm13__proj": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_gms__gm13__amp": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_gms__gm23__proj": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_gms__gm23__amp": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_gms__gm123__proj": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "no-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    },
+    "physicsNN_gms_gms__gm123__amp": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "nn_architectures": [
+        "[[\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "gm1_weights": [
+        0.3
+      ],
+      "gm2_weights": [
+        0.3
+      ],
+      "gm3_weights": [
+        0.3
+      ],
+      "gm_surgery_modes": [
+        "soft",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "gm_max_ratios": [
+        1.0,
+        5.0
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0
+      ],
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ]
+    }
+  }
+}

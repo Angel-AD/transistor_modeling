@@ -1,0 +1,121 @@
+{
+  "_comment": "high-order vdsgate_aeff knee (4th-7th alpha) x softplus/sigmoid, same top-20 archs, no gm. Runs into runs/vdsgate_gates for a combined ranking with the lin/quad/cub sweep.",
+  "DEFAULTS": {
+    "knee_alpha_scales": [
+      1.0
+    ],
+    "knee_combiners": [
+      "sum"
+    ],
+    "learning_rates": [
+      0.01
+    ],
+    "output_activations": [
+      "linear"
+    ],
+    "gm1_weights": [
+      0.0
+    ],
+    "gm2_weights": [
+      0.0
+    ],
+    "gm3_weights": [
+      0.0
+    ],
+    "gm_surgery_modes": [
+      "none"
+    ],
+    "gm_max_ratios": [
+      1.0
+    ],
+    "gm_vds_mins": [
+      0
+    ],
+    "gm_vgs_mins": [
+      null
+    ],
+    "epochs": 1000,
+    "lbfgs_epochs": 20,
+    "lbfgs_max_iter": 100,
+    "lbfgs_gm_aware": true,
+    "loss_norm": "nmse",
+    "seeds": [
+      27
+    ],
+    "deterministic": true,
+    "mixed_init": "per_activation",
+    "max_workers": 14
+  },
+  "EXPERIMENTS": {
+    "vdsgate_gates_hi": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"]]",
+        "[[\"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\"], [\"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\"], [\"sigmoid\", \"sigmoid\", \"sigmoid\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\"], [\"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\", \"sigmoid\"], [\"sigmoid\", \"sigmoid\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\"]]"
+      ],
+      "output_activations": [
+        "linear"
+      ],
+      "epochs": 1000,
+      "base_configs": {
+        "quart": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_quart"
+        },
+        "quart_sig": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_quart_sig"
+        },
+        "quint": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_quint"
+        },
+        "quint_sig": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_quint_sig"
+        },
+        "sext": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_sext"
+        },
+        "sext_sig": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_sext_sig"
+        },
+        "sept": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_sept"
+        },
+        "sept_sig": {
+          "use_opt_params": false,
+          "use_gm": false,
+          "equation_type": "pure:vdsgate_aeff_sept_sig"
+        }
+      }
+    }
+  }
+}

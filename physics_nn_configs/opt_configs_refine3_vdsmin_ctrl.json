@@ -1,0 +1,151 @@
+{
+  "_comment": "Control: 10 configs from refine3 id>=106 (gm>0), faithfully reproduced with gm_vds_min=0. Full hyperparameters captured (warmup, constraint, ids_target). Results should match refine3 originals to confirm gm_vds_min=0 is a no-op.",
+  "DEFAULTS": {
+    "knee_alpha_scales": [
+      1.0
+    ],
+    "knee_combiners": [
+      "sum"
+    ],
+    "learning_rates": [
+      0.01
+    ],
+    "output_activations": [
+      "linear"
+    ],
+    "gm1_weights": [
+      0.1
+    ],
+    "gm2_weights": [
+      0.0
+    ],
+    "gm3_weights": [
+      0.0
+    ],
+    "gm_surgery_modes": [
+      "none"
+    ],
+    "gm_max_ratios": [
+      1.0
+    ],
+    "epochs": 800,
+    "lbfgs_epochs": 20,
+    "lbfgs_max_iter": 100,
+    "lbfgs_gm_aware": true,
+    "loss_norm": "nmse",
+    "seeds": [
+      27
+    ],
+    "deterministic": true,
+    "mixed_init": "per_activation",
+    "max_workers": 42,
+    "gm_vds_mins": [
+      0
+    ]
+  },
+  "EXPERIMENTS": {
+    "refine3_vdsmin_ctrl__w0-1-0_none_wu400_cst": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm1_weights": [
+        0.0
+      ],
+      "gm2_weights": [
+        1.0
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "gm_vds_mins": [
+        0
+      ],
+      "base_configs": {
+        "PureNN": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure"
+        }
+      },
+      "gm_warmup_epochs": 400,
+      "gm_warmup_lr": 0.003,
+      "ids_constraint": true,
+      "ids_target": 0.006,
+      "ids_lambda": 100.0
+    },
+    "refine3_vdsmin_ctrl__w1-0-0_none_wu400_cst": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"]]"
+      ],
+      "gm1_weights": [
+        1.0
+      ],
+      "gm2_weights": [
+        0.0
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "gm_vds_mins": [
+        0
+      ],
+      "base_configs": {
+        "PureNN": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure"
+        }
+      },
+      "gm_warmup_epochs": 400,
+      "gm_warmup_lr": 0.003,
+      "ids_constraint": true,
+      "ids_target": 0.006,
+      "ids_lambda": 100.0
+    },
+    "refine3_vdsmin_ctrl__w1-1-0_none_wu400_cst": {
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\"]]"
+      ],
+      "gm1_weights": [
+        1.0
+      ],
+      "gm2_weights": [
+        1.0
+      ],
+      "gm3_weights": [
+        0.0
+      ],
+      "gm_surgery_modes": [
+        "none"
+      ],
+      "gm_vds_mins": [
+        0
+      ],
+      "base_configs": {
+        "PureNN": {
+          "use_opt_params": false,
+          "use_gm": true,
+          "equation_type": "pure"
+        }
+      },
+      "gm_warmup_epochs": 400,
+      "gm_warmup_lr": 0.003,
+      "ids_constraint": true,
+      "ids_target": 0.006,
+      "ids_lambda": 100.0
+    }
+  }
+}

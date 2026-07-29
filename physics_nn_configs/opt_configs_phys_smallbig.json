@@ -1,0 +1,299 @@
+{
+  "_comment": "Physics+NN (freeze_physics=False) small vs big, het vs hom arch exploration. Full sweep per arch: 3 eqs x 8 gm combos x 3 surgery x 2 knee x 2 alpha(3,5); gm_max_ratio pinned 1.0. Archs already in refine2 physics are excluded.",
+  "DEFAULTS": {
+    "knee_alpha_scales": [
+      3.0,
+      5.0
+    ],
+    "knee_combiners": [
+      "sum",
+      "product"
+    ],
+    "learning_rates": [
+      0.01
+    ],
+    "output_activations": [
+      "linear"
+    ],
+    "gm1_weights": [
+      0.0
+    ],
+    "gm2_weights": [
+      0.0
+    ],
+    "gm3_weights": [
+      0.0
+    ],
+    "gm_surgery_modes": [
+      "none"
+    ],
+    "gm_max_ratios": [
+      1.0
+    ],
+    "epochs": 800,
+    "lbfgs_epochs": 20,
+    "lbfgs_max_iter": 100,
+    "lbfgs_gm_aware": true,
+    "loss_norm": "nmse",
+    "seeds": [
+      27
+    ],
+    "deterministic": true,
+    "mixed_init": "per_activation",
+    "max_workers": 42
+  },
+  "EXPERIMENTS": {
+    "physSmallHet": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "nn_architectures": [
+        "[[\"mish\", \"tanh\"], [\"mish\", \"mish\"]]",
+        "[[\"tanh\", \"mish\", \"swish\"], [\"swish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"mish\", \"swish\", \"mish\", \"swish\", \"tanh\"]]",
+        "[[\"tanh\", \"mish\", \"tanh\", \"swish\"], [\"mish\", \"tanh\"]]",
+        "[[\"mish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\"], [\"tanh\", \"swish\", \"tanh\", \"tanh\"], [\"tanh\", \"mish\"]]",
+        "[[\"swish\", \"mish\"], [\"mish\", \"mish\", \"tanh\"], [\"mish\", \"mish\", \"swish\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0,
+        5.0
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm1_weights": [
+        0.0,
+        0.3
+      ],
+      "gm2_weights": [
+        0.0,
+        0.3
+      ],
+      "gm3_weights": [
+        0.0,
+        0.3
+      ]
+    },
+    "physSmallHom": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "nn_architectures": [
+        "[[\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\"], [\"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0,
+        5.0
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm1_weights": [
+        0.0,
+        0.3
+      ],
+      "gm2_weights": [
+        0.0,
+        0.3
+      ],
+      "gm3_weights": [
+        0.0,
+        0.3
+      ]
+    },
+    "physBigHet": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "nn_architectures": [
+        "[[\"swish\", \"tanh\", \"mish\"], [\"swish\", \"mish\", \"tanh\", \"mish\", \"mish\", \"swish\", \"mish\"], [\"tanh\", \"swish\"]]",
+        "[[\"mish\", \"swish\"], [\"mish\", \"tanh\", \"tanh\", \"swish\", \"tanh\", \"swish\", \"mish\", \"tanh\", \"mish\", \"tanh\"], [\"mish\", \"swish\", \"swish\"]]",
+        "[[\"swish\", \"mish\", \"mish\"], [\"swish\", \"swish\"], [\"tanh\", \"swish\", \"mish\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"tanh\", \"tanh\", \"tanh\", \"mish\", \"tanh\", \"tanh\"], [\"mish\", \"mish\"], [\"swish\", \"mish\", \"mish\", \"swish\"]]",
+        "[[\"tanh\", \"tanh\", \"swish\", \"tanh\"], [\"swish\", \"mish\", \"swish\", \"tanh\", \"tanh\", \"mish\", \"tanh\", \"swish\", \"mish\", \"tanh\", \"swish\"]]",
+        "[[\"swish\", \"mish\", \"tanh\", \"mish\", \"mish\", \"mish\", \"tanh\", \"swish\", \"mish\", \"mish\"], [\"mish\", \"tanh\", \"swish\"], [\"swish\", \"tanh\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"tanh\"], [\"mish\", \"swish\", \"tanh\", \"swish\"], [\"tanh\", \"swish\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0,
+        5.0
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm1_weights": [
+        0.0,
+        0.3
+      ],
+      "gm2_weights": [
+        0.0,
+        0.3
+      ],
+      "gm3_weights": [
+        0.0,
+        0.3
+      ]
+    },
+    "physBigHom": {
+      "base_configs": {
+        "PhysNN": {
+          "freeze_physics": false,
+          "use_opt_params": true,
+          "use_gm": true
+        }
+      },
+      "opt_params_variants": [
+        {
+          "label": "classic",
+          "equation_type": "noNN_knee:classic_angelov",
+          "path": "runs/slsqp/classic_no_gm/exp_001_classic_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "9term",
+          "equation_type": "noNN_knee:angelov_9_term",
+          "path": "runs/slsqp/angelov_9_term_no_gm/exp_001_angelov_9_term_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        },
+        {
+          "label": "mod1",
+          "equation_type": "noNN_knee:mod1_angelov",
+          "path": "runs/slsqp/mod1_no_gm/exp_001_mod1_angelov_cfg9_n5_gm0_W0.0-0.0-0.0/slsqp_seed.json"
+        }
+      ],
+      "nn_architectures": [
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\"]]",
+        "[[\"swish\", \"swish\", \"swish\", \"swish\", \"swish\"], [\"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\", \"swish\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\"]]",
+        "[[\"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\", \"mish\", \"mish\", \"mish\"], [\"mish\", \"mish\"]]",
+        "[[\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\", \"tanh\"], [\"tanh\", \"tanh\"]]"
+      ],
+      "gm_surgery_modes": [
+        "none",
+        "element-wise-percent",
+        "element-wise-bounded"
+      ],
+      "knee_combiners": [
+        "sum",
+        "product"
+      ],
+      "knee_alpha_scales": [
+        3.0,
+        5.0
+      ],
+      "gm_max_ratios": [
+        1.0
+      ],
+      "gm1_weights": [
+        0.0,
+        0.3
+      ],
+      "gm2_weights": [
+        0.0,
+        0.3
+      ],
+      "gm3_weights": [
+        0.0,
+        0.3
+      ]
+    }
+  }
+}

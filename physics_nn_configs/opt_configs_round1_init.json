@@ -1,0 +1,36 @@
+{
+  "_comment": "Round 1: for HETEROGENEOUS (mixed-activation) NNs, is mixed_init='xavier' or 'per_activation' better? Pure NN (no physics, no gm LOSS) to isolate the NN init effect; gm RMSEs are still measured. Two experiments differ ONLY in mixed_init; identical mixed architectures and 5 seeds for statistical power. 4 archs x 5 seeds x 2 modes = 40 configs.",
+  "DEFAULTS": {
+    "base_configs": {
+      "PureNN": {"freeze_physics": false, "use_opt_params": false, "equation_type": "pure", "use_gm": false}
+    },
+    "knee_alpha_scales": [1.0],
+    "knee_combiners": ["sum"],
+    "learning_rates": [0.01],
+    "nn_architectures": [
+      "[[\"tanh\", \"sin\"], [\"tanh\", \"sin\"]]",
+      "[[\"tanh\", \"swish\"], [\"tanh\", \"swish\"]]",
+      "[[\"tanh\", \"mish\"], [\"tanh\", \"mish\"]]",
+      "[[\"tanh\", \"sin\", \"swish\"], [\"tanh\", \"sin\", \"swish\"]]"
+    ],
+    "output_activations": ["linear"],
+    "gm1_weights": [0.0],
+    "gm2_weights": [0.0],
+    "gm3_weights": [0.0],
+    "gm_surgery_modes": ["none"],
+    "epochs": 600,
+    "seeds": [1, 2, 3, 4, 5],
+    "deterministic": true,
+    "max_workers": 8
+  },
+  "EXPERIMENTS": {
+    "het_xavier": {
+      "base_configs": {"Het_Xavier": {"freeze_physics": false, "use_opt_params": false, "equation_type": "pure", "use_gm": false}},
+      "mixed_init": "xavier"
+    },
+    "het_per_activation": {
+      "base_configs": {"Het_PerAct": {"freeze_physics": false, "use_opt_params": false, "equation_type": "pure", "use_gm": false}},
+      "mixed_init": "per_activation"
+    }
+  }
+}
