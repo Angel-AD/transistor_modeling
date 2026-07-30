@@ -6,6 +6,10 @@ sweeps and physics-only SLSQP seed fits, plus the compile/rank/plot tooling.
 This guide is meant to be self-contained — a new person (or a fresh AI session)
 should be able to read it and drive the whole pipeline.
 
+> For how the models themselves are built (the NN, the physics equations, the
+> various `equation_type` wrappers/combiners), see
+> [MODEL_ARCHITECTURES.md](MODEL_ARCHITECTURES.md).
+
 ---
 
 ## Table of contents

@@ -32,7 +32,7 @@ baselines, and the standing conclusions they drove are in
 | [`optim_utils/`](optim_utils) | Shared library: model definitions, physics params/equations, normalization, plotting helpers, solver-space utilities. |
 | [`physics_nn_configs/`](physics_nn_configs) | The sweep configs (`opt_configs_*.json`) and PowerShell orchestration scripts (`run_*.ps1`) actually used to launch runs — this is the active config set. |
 | [`important_mds/`](important_mds) | Working notes on specific analyses: cross-CSV architecture consistency, shape-compliance rules, and how specific derived config sets (`pure_combined9069`, `bestpicks10`, ...) were built. |
-| [`docs/`](docs) | Full user guide and the experiment log. |
+| [`docs/`](docs) | Full user guide, the experiment log, and the model-architecture reference. |
 
 `physics_nn_configs/` is a sibling of `physics_nn_pipeline/`, not nested
 inside it — several `run_*.ps1` scripts `cd` into `physics_nn_pipeline/`
