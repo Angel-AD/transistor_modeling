@@ -1,31 +1,38 @@
 # Model architectures — how `Ids` is computed
 
-This explains, in plain terms, every way this codebase turns two numbers —
-`Vgs` (gate voltage) and `Vds` (drain voltage) — into a predicted drain
-current `Ids`. No prior ML or device-physics background assumed; jargon is
-defined the first time it's used.
+This explains, in plain terms, how this codebase turns two numbers — `Vgs`
+(gate voltage) and `Vds` (drain voltage) — into a predicted drain current
+`Ids`. No prior ML or device-physics background assumed; jargon is defined
+the first time it's used.
 
-Which method a training run uses is controlled by one config string,
-`equation_type`. It comes in exactly two shapes:
+**Two modeling approaches are actually used in this project:**
 
-```
-equation_type = "pure"                → the neural network IS the model
-equation_type = "pure:<wrapper>"       → the network's output gets reshaped by <wrapper>
-equation_type = "noNN_knee:<eq>"       → an empirical formula <eq> is the model, and the
-                                          network only adds a small correction on top
-```
+- **Pure NN** — the network predicts `Ids` by itself, with nothing else
+  built in.
+- **vdsgate** — the network is combined with the same `Vds`-envelope
+  structure the Angelov empirical equation uses, so the prediction
+  automatically looks like a real transistor curve.
 
 (Confirmed by checking every `equation_type` value actually used in
-`physics_nn_configs/*.json` — nothing else appears in this project.)
+`physics_nn_configs/*.json` for the architecture sweeps this project runs —
+nothing else appears there.)
 
 ```mermaid
 flowchart TD
-    IN["Vgs, Vds"] --> SPLIT{"equation_type"}
-    SPLIT -->|"pure[:wrapper]"| PUREPATH["Neural network → optional wrapper"]
-    SPLIT -->|"noNN_knee:eq"| HYBRIDPATH["Empirical formula + a gated correction from the network"]
+    IN["Vgs, Vds"] --> SPLIT{"which approach?"}
+    SPLIT -->|"pure NN"| PUREPATH["Neural network alone"]
+    SPLIT -->|"vdsgate"| WRAPPATH["Neural network + Angelov's Vds-envelope"]
     PUREPATH --> OUT["Ids"]
-    HYBRIDPATH --> OUT
+    WRAPPATH --> OUT
 ```
+
+Both are written in config as `equation_type: "pure"` (plain NN) or
+`equation_type: "pure:<wrapper>"` (NN + a `vdsgate*` wrapper) — the
+`"pure"` prefix is really just how the code's config-string parser is
+built, not a meaningful label on its own; §2 and §3 below are the two
+approaches that prefix actually produces. A third approach exists in the
+code (`equation_type: "noNN_knee:<eq>"`) but isn't used anywhere in this
+project's current work — see the note at the end.
 
 ---
 
@@ -69,9 +76,9 @@ cutoff). See §2b for what happens if you pick a *bounded* one instead
 
 ---
 
-## 2. Family A — Pure NN (`equation_type: "pure"` or `"pure:<wrapper>"`)
+## 2. Pure NN (`equation_type: "pure"`, no wrapper)
 
-### 2a. No wrapper: the network's raw prediction
+### 2a. The network's raw prediction
 
 $$I_{ds} = \mathrm{NN}(V_{gs}, V_{ds})$$
 
@@ -112,19 +119,28 @@ this at all — `margin` is simply ignored for them.
 together with `ids_out_margin: 0.1`; the `softplus` sweep sets neither —
 `per_neuron_simple_angelov_nn_test.py:778-790`.)
 
-### 2c. Wrapper: reshaping the output to look like a transistor curve
+---
+
+## 3. vdsgate — combining the Angelov equation's envelope with the network
+
+`equation_type: "pure:<wrapper>"`, where `<wrapper>` is `vdsgate`,
+`vdsgatelin`, `vdsgate_aeff*`, or `vdsgate_vdsk*`.
 
 The **wrapper** is a second, independent squashing step, applied *after* the
-network's own `output_activation`. It's how a plain "pure" network is made
-to automatically obey basic transistor physics — exactly zero current at
-`Vds = 0`, current flowing the correct direction — instead of hoping the
-network learns that from data alone. Every `vdsgate*` config in this repo
-uses one.
+network's own `output_activation`. It's how the network is made to
+automatically obey basic transistor physics — exactly zero current at
+`Vds = 0`, current flowing the correct direction — instead of hoping it
+learns that from data alone.
 
 **The key idea: it borrows its shape directly from the Angelov empirical
-equation described in §3.** Look at the *tail* of that equation:
+equation.** That equation looks like this — look at its *tail*, the part
+that only depends on `Vds`:
 
 $$\underbrace{I_{pk}\cdot(1+\tanh\psi)}_{\text{depends on }V_{gs}\text{ only}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{depends on }V_{ds}\text{ only — the "envelope"}}$$
+
+(`ψ` is a polynomial in `Vgs` — see §5 for the full Angelov formula and
+what its symbols mean. It's not used as the *model* anywhere in this
+project's current work; it only matters here for this one borrowed piece.)
 
 The `vdsgate` wrapper reuses that exact `Vds`-envelope — literally the same
 `tanh(α·Vds)·(1+λ·Vds)` formula — but **replaces the empirically-derived
@@ -174,13 +190,37 @@ $$I_{ds} = g(\mathrm{NN}) \cdot \tanh\!\left(\frac{V_{ds}}{V_{ds,knee}(V_{gs})}\
 
 ---
 
-## 3. Family B — Empirical + NN hybrid (`equation_type: "noNN_knee:<eq>"`)
+## 4. Which one is used where
 
-Here the roles flip: the empirical equation is the model, and the network only
-supplies a small, gated *correction* on top of it.
+The 9069-architecture base sweep and everything derived from it (the
+best-ids shortlists, retrained across all 6 measurement CSVs, consistency
+checks — see [`SWEEP_METHODOLOGY.md`](SWEEP_METHODOLOGY.md)) uses **only**
+the two approaches above:
 
-### 3a. The empirical equation itself (the Angelov family)
+| Folder | Approach |
+|---|---|
+| `sigmoid_margin10`, `sigmoid_margin10_nogm` | Pure NN, `output_activation: "sigmoid"` + margin |
+| `tanh_margin10`, `tanh_margin10_nogm` | Pure NN, `output_activation: "tanh"` + margin |
+| `softplus`, `softplus_nogm` | Pure NN, `output_activation: "softplus"` (no margin needed) |
+| `vdsgate_aeff_quad_tanhm`, `vdsgate_aeff_quad_v3` | vdsgate (§3) |
 
+Nowhere in that sweep does the empirical+NN hybrid described in §5 appear —
+that's a separate, parallel line of experiments (see below).
+
+---
+
+## 5. Also in the code, not used in this project's current work
+
+A third approach exists (`equation_type: "noNN_knee:<eq>"`), used in a
+separate set of experiments (`EXPERIMENT_LOG.md` rounds 5–11, the
+`opt_configs_round5`–`round11`/`refine*`/`phys*`/`followups*` configs) but
+**not** in the 9069/sweep-methodology work above. Documented here for
+completeness, in case those experiments are picked back up.
+
+Here the empirical equation is the model, and the network only supplies a
+small, gated *correction* on top of it.
+
+**The empirical equation itself (the Angelov family).**
 `classic_angelov`, `angelov_6_term`, and `angelov_9_term` are the same
 formula with a longer or shorter polynomial in `Vgs`:
 
@@ -190,26 +230,17 @@ $$I_{emp} = \underbrace{I_{pk}\cdot(1+\tanh\psi)}_{\text{"how much current, as a
 
 More polynomial terms ($N=9$) trace the curve's shape more precisely, at the
 cost of needing smaller learning rates on the higher-order terms to avoid
-blowing up.
-
-`mod1_angelov` is a more advanced variant that lets the peak voltage and
-steepness *themselves* shift with `Vds` — useful for capturing current
-dispersion effects the simpler forms can't. See
+blowing up. `mod1_angelov` is a more advanced variant that lets the peak
+voltage and steepness *themselves* shift with `Vds` — see
 `optim_utils/per_neuron_noNN.py:mod1_angelov` for its full form.
 
-### 3b. The gate: when does the network get to speak?
-
-A **gate** decides how much the network's correction is allowed to
-contribute, and it fades toward zero as `Vds` grows (deep in the region
-where the empirical equation is already reliable on its own):
+**The gate.** A gate decides how much the network's correction is allowed
+to contribute, fading toward zero as `Vds` grows:
 
 $$\text{gate} = 1 - \tanh\!\left(\frac{|\alpha|}{k} \cdot V_{ds}\right)$$
 
-Near `Vds = 0` the gate is close to 1 (network fully active); at large `Vds`
-it decays toward 0 (the empirical equation takes over). It reuses that equation's
-own $\alpha$ — it isn't learned separately — so the gate automatically
-matches how steep that particular equation's knee is. $k$
-(`knee_alpha_scale`) just widens or narrows that transition.
+It reuses the empirical equation's own $\alpha$ rather than being learned
+separately, so it automatically matches how steep that equation's knee is.
 
 ```mermaid
 flowchart TD
@@ -224,7 +255,7 @@ flowchart TD
     C1 & C2 & C3 & C4 --> OUT["Ids"]
 ```
 
-### 3c. `knee_combiner` — how the correction is folded in
+**`knee_combiner`** — how the correction is folded in:
 
 | `knee_combiner` | formula | plain-language meaning |
 |---|---|---|
@@ -238,23 +269,18 @@ flowchart TD
 > — only the four above are implemented (anything else silently behaves like
 > `sum`). Already fixed there.
 
----
-
-## 4. Tight-prior seeding (`use_opt_params` + `freeze_physics`)
-
-A cross-cutting trick used with the `noNN_knee` family: rather than training
-an empirical equation's parameters from a random start, seed them from an
-empirical-only fit (done separately via SLSQP, a classic optimization
-algorithm — see `docs/README.md` §4), then keep each parameter **within
-±10% of that seeded value** during training:
+**Tight-prior seeding** (`use_opt_params` + `freeze_physics`) is a trick
+used only with this family: rather than training the empirical equation's
+parameters from a random start, seed them from an empirical-only fit (done
+separately via SLSQP — see `docs/README.md` §4), then keep each parameter
+**within ±10% of that seeded value** during training:
 
 $$\delta = |v_{seed}| \cdot 0.10$$
 $$v = (v_{seed}-\delta) + \big[(v_{seed}+\delta)-(v_{seed}-\delta)\big]\cdot\mathrm{sigmoid}(\theta)$$
 
 $\theta$ is the actual trainable number, but no matter what value it takes,
 `sigmoid(θ)` always stays between 0 and 1 — so `v` can *never* leave its
-±10% box. This keeps the equation's parameters physically sensible even while
-letting them adjust slightly to fit the data better.
+±10% box.
 
 - **`freeze_physics: false`** — `θ` trains; `v` refines anywhere inside the box.
 - **`freeze_physics: true`** — `θ` never updates; `v` stays exactly at its seed.
