@@ -10,7 +10,10 @@ should be able to read it and drive the whole pipeline.
 > various `equation_type` wrappers/combiners), see
 > [MODEL_ARCHITECTURES.md](MODEL_ARCHITECTURES.md) (technical reference) or
 > [MODEL_ARCHITECTURES_EXPLAINED.md](MODEL_ARCHITECTURES_EXPLAINED.md) (plain-language,
-> no jargon). For how architectures are
+> no jargon). For exactly what the `sigmoid_margin10`/`tanh_margin10`/`softplus`
+> sweeps do (confirms: no wrapper involved), see
+> [OUTPUT_ACTIVATION_MARGIN_SWEEPS.md](OUTPUT_ACTIVATION_MARGIN_SWEEPS.md).
+> For how architectures are
 > searched for and compared across measurement CSVs, see
 > [SWEEP_METHODOLOGY.md](SWEEP_METHODOLOGY.md).
 
