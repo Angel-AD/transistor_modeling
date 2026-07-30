@@ -9,8 +9,8 @@ the first time it's used.
 
 - **Pure NN** — the network predicts `Ids` by itself, with nothing else
   built in.
-- **vdsgate** — the network is combined with the same `Vds`-envelope
-  structure the Angelov empirical equation uses, so the prediction
+- **vdsgate** — the network is combined with the same `Vds`-shaping factor
+  the Angelov empirical equation uses, so the prediction
   automatically looks like a real transistor curve.
 
 (Confirmed by checking every `equation_type` value actually used in
@@ -21,7 +21,7 @@ nothing else appears there.)
 flowchart TD
     IN["Vgs, Vds"] --> SPLIT{"which approach?"}
     SPLIT -->|"pure NN"| PUREPATH["Neural network alone"]
-    SPLIT -->|"vdsgate"| WRAPPATH["Neural network + Angelov's Vds-envelope"]
+    SPLIT -->|"vdsgate"| WRAPPATH["Neural network + Angelov's Vds-shaping factor"]
     PUREPATH --> OUT["Ids"]
     WRAPPATH --> OUT
 ```
@@ -121,7 +121,7 @@ together with `ids_out_margin: 0.1`; the `softplus` sweep sets neither —
 
 ---
 
-## 3. vdsgate — combining the Angelov equation's envelope with the network
+## 3. vdsgate — combining the Angelov equation's Vds-shaping factor with the network
 
 `equation_type: "pure:<wrapper>"`, where `<wrapper>` is `vdsgate`,
 `vdsgatelin`, `vdsgate_aeff*`, or `vdsgate_vdsk*`.
@@ -129,13 +129,13 @@ together with `ids_out_margin: 0.1`; the `softplus` sweep sets neither —
 The **wrapper** doesn't add a new kind of squashing — it *relocates* the
 same `output_activation` squash from §1/§2b, moving it from inside the
 network's last layer to right here, then multiplying the result by an
-extra `Vds`-shaped envelope (below). Concretely: `output_activation` is set
+extra `Vds`-shaping factor (below). Concretely: `output_activation` is set
 to `linear` (so the network's raw number, `NN(Vgs, Vds)`, comes out
 untouched), and *that* raw number is then run through `softplus` or `tanh`
 here instead — mathematically identical to picking `softplus`/`tanh` as
 `output_activation` directly, just computed in a different spot so its
-result can be multiplied by the envelope rather than returned as `Ids` on
-its own. This is how the network is made to automatically obey basic
+result can be multiplied by the `Vds`-shaping factor rather than returned
+as `Ids` on its own. This is how the network is made to automatically obey basic
 transistor physics — exactly zero current at `Vds = 0`, current flowing the
 correct direction — instead of hoping it learns that from data alone.
 
@@ -143,17 +143,17 @@ correct direction — instead of hoping it learns that from data alone.
 equation.** That equation looks like this — look at its *tail*, the part
 that only depends on `Vds`:
 
-$$\underbrace{I_{pk}\cdot(1+\tanh\psi)}_{\text{depends on }V_{gs}\text{ only}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{depends on }V_{ds}\text{ only — the "envelope"}}$$
+$$\underbrace{I_{pk}\cdot(1+\tanh\psi)}_{\text{depends on }V_{gs}\text{ only}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{depends on }V_{ds}\text{ only — the "}V_{ds}\text{-shaping factor"}}$$
 
 (`ψ` is a polynomial in `Vgs` — see §5 for the full Angelov formula and
 what its symbols mean. It's not used as the *model* anywhere in this
 project's current work; it only matters here for this one borrowed piece.)
 
-The `vdsgate` wrapper reuses that exact `Vds`-envelope — literally the same
-`tanh(α·Vds)·(1+λ·Vds)` formula — but **replaces the empirically-derived
+The `vdsgate` wrapper reuses that exact `Vds`-shaping factor — literally the
+same `tanh(α·Vds)·(1+λ·Vds)` formula — but **replaces the empirically-derived
 `Vgs`-dependent part with the neural network**:
 
-$$I_{ds} = \underbrace{\text{activation}(\mathrm{NN})}_{\substack{\text{network stands in}\\\text{for the empirical term}}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{same envelope as Angelov}}$$
+$$I_{ds} = \underbrace{\text{activation}(\mathrm{NN})}_{\substack{\text{network stands in}\\\text{for the empirical term}}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{same }V_{ds}\text{-shaping factor as Angelov}}$$
 
 - That `activation(...)` **is `output_activation`, relocated** — by default
   it's `softplus`, same `softplus` as in §2b's table, just applied here
@@ -238,7 +238,7 @@ formula with a longer or shorter polynomial in `Vgs`:
 
 $$\psi = \sum_{n=1}^{N} P_n \cdot (V_{gs}-V_{pk})^n \qquad (N = 3,\ 6,\ \text{or } 9)$$
 
-$$I_{emp} = \underbrace{I_{pk}\cdot(1+\tanh\psi)}_{\text{"how much current, as a function of } V_{gs}\text{"}} \cdot\ \underbrace{\tanh(\alpha\cdot V_{ds})\cdot(1+\lambda\cdot V_{ds})}_{\text{"the } V_{ds}\text{ envelope"}}$$
+$$I_{emp} = \underbrace{I_{pk}\cdot(1+\tanh\psi)}_{\text{"how much current, as a function of } V_{gs}\text{"}} \cdot\ \underbrace{\tanh(\alpha\cdot V_{ds})\cdot(1+\lambda\cdot V_{ds})}_{\text{"the } V_{ds}\text{-shaping factor"}}$$
 
 More polynomial terms ($N=9$) trace the curve's shape more precisely, at the
 cost of needing smaller learning rates on the higher-order terms to avoid

@@ -73,7 +73,7 @@ flowchart TD
 That's the entire mechanism. In all three cases: one activation function,
 applied once, to the network's own raw number — optionally followed by a
 single multiplication to fix the range for the two bounded ones. Nothing
-about the Angelov equation, the "envelope," or any wrapper is involved
+about the Angelov equation, the `Vds`-shaping factor, or any wrapper is involved
 anywhere in this.
 
 ## Where the wrapper *would* come in (for contrast only — not used here)
