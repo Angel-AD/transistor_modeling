@@ -11,7 +11,7 @@ Which method a training run uses is controlled by one config string,
 ```
 equation_type = "pure"                → the neural network IS the model
 equation_type = "pure:<wrapper>"       → the network's output gets reshaped by <wrapper>
-equation_type = "noNN_knee:<eq>"       → a physics formula <eq> is the model, and the
+equation_type = "noNN_knee:<eq>"       → an empirical formula <eq> is the model, and the
                                           network only adds a small correction on top
 ```
 
@@ -22,7 +22,7 @@ equation_type = "noNN_knee:<eq>"       → a physics formula <eq> is the model, 
 flowchart TD
     IN["Vgs, Vds"] --> SPLIT{"equation_type"}
     SPLIT -->|"pure[:wrapper]"| PUREPATH["Neural network → optional wrapper"]
-    SPLIT -->|"noNN_knee:eq"| HYBRIDPATH["Physics formula + a gated correction from the network"]
+    SPLIT -->|"noNN_knee:eq"| HYBRIDPATH["Empirical formula + a gated correction from the network"]
     PUREPATH --> OUT["Ids"]
     HYBRIDPATH --> OUT
 ```
@@ -75,10 +75,10 @@ cutoff). See §2b for what happens if you pick a *bounded* one instead
 
 $$I_{ds} = \mathrm{NN}(V_{gs}, V_{ds})$$
 
-The network is asked to learn the whole curve by itself, with no physics
-built in. Simple, but nothing stops it from predicting something physically
-silly (e.g. a nonzero current at `Vds = 0`, where a real transistor always
-reads exactly zero).
+The network is asked to learn the whole curve by itself, with no known
+transistor behavior built in. Simple, but nothing stops it from predicting
+something physically silly (e.g. a nonzero current at `Vds = 0`, where a
+real transistor always reads exactly zero).
 
 ### 2b. Bounded output activations need a "margin"
 
@@ -121,16 +121,16 @@ to automatically obey basic transistor physics — exactly zero current at
 network learns that from data alone. Every `vdsgate*` config in this repo
 uses one.
 
-**The key idea: it borrows its shape directly from the Angelov physics
+**The key idea: it borrows its shape directly from the Angelov empirical
 equation described in §3.** Look at the *tail* of that equation:
 
 $$\underbrace{I_{pk}\cdot(1+\tanh\psi)}_{\text{depends on }V_{gs}\text{ only}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{depends on }V_{ds}\text{ only — the "envelope"}}$$
 
 The `vdsgate` wrapper reuses that exact `Vds`-envelope — literally the same
-`tanh(α·Vds)·(1+λ·Vds)` formula — but **replaces the physics-derived
+`tanh(α·Vds)·(1+λ·Vds)` formula — but **replaces the empirically-derived
 `Vgs`-dependent part with the neural network**:
 
-$$I_{ds} = \underbrace{g(\mathrm{NN})}_{\substack{\text{network stands in}\\\text{for the physics term}}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{same envelope as Angelov}}$$
+$$I_{ds} = \underbrace{g(\mathrm{NN})}_{\substack{\text{network stands in}\\\text{for the empirical term}}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{same envelope as Angelov}}$$
 
 - $g(\cdot)$ is a small "gate" function on the network's raw output — by
   default $g = \mathrm{softplus}(\mathrm{NN})$, which keeps the sign of
@@ -140,7 +140,7 @@ $$I_{ds} = \underbrace{g(\mathrm{NN})}_{\substack{\text{network stands in}\\\tex
 
 ```mermaid
 flowchart LR
-    NN["neural network(Vgs, Vds)"] --> GATE["gate g( )<br/>stands in for physics"]
+    NN["neural network(Vgs, Vds)"] --> GATE["gate g( )<br/>stands in for the empirical equation"]
     GATE --> M1["× tanh(α·Vds)"]
     M1 --> M2["× (1 + λ·Vds)"]
     M2 --> OUT["Ids"]
@@ -174,19 +174,19 @@ $$I_{ds} = g(\mathrm{NN}) \cdot \tanh\!\left(\frac{V_{ds}}{V_{ds,knee}(V_{gs})}\
 
 ---
 
-## 3. Family B — Physics + NN hybrid (`equation_type: "noNN_knee:<eq>"`)
+## 3. Family B — Empirical + NN hybrid (`equation_type: "noNN_knee:<eq>"`)
 
-Here the roles flip: the physics equation is the model, and the network only
+Here the roles flip: the empirical equation is the model, and the network only
 supplies a small, gated *correction* on top of it.
 
-### 3a. The physics equation itself (the Angelov family)
+### 3a. The empirical equation itself (the Angelov family)
 
 `classic_angelov`, `angelov_6_term`, and `angelov_9_term` are the same
 formula with a longer or shorter polynomial in `Vgs`:
 
 $$\psi = \sum_{n=1}^{N} P_n \cdot (V_{gs}-V_{pk})^n \qquad (N = 3,\ 6,\ \text{or } 9)$$
 
-$$I_{phys} = \underbrace{I_{pk}\cdot(1+\tanh\psi)}_{\text{"how much current, as a function of } V_{gs}\text{"}} \cdot\ \underbrace{\tanh(\alpha\cdot V_{ds})\cdot(1+\lambda\cdot V_{ds})}_{\text{"the } V_{ds}\text{ envelope"}}$$
+$$I_{emp} = \underbrace{I_{pk}\cdot(1+\tanh\psi)}_{\text{"how much current, as a function of } V_{gs}\text{"}} \cdot\ \underbrace{\tanh(\alpha\cdot V_{ds})\cdot(1+\lambda\cdot V_{ds})}_{\text{"the } V_{ds}\text{ envelope"}}$$
 
 More polynomial terms ($N=9$) trace the curve's shape more precisely, at the
 cost of needing smaller learning rates on the higher-order terms to avoid
@@ -201,26 +201,26 @@ dispersion effects the simpler forms can't. See
 
 A **gate** decides how much the network's correction is allowed to
 contribute, and it fades toward zero as `Vds` grows (deep in the region
-where the physics equation is already reliable on its own):
+where the empirical equation is already reliable on its own):
 
 $$\text{gate} = 1 - \tanh\!\left(\frac{|\alpha|}{k} \cdot V_{ds}\right)$$
 
 Near `Vds = 0` the gate is close to 1 (network fully active); at large `Vds`
-it decays toward 0 (physics takes over). It reuses the physics equation's
+it decays toward 0 (the empirical equation takes over). It reuses that equation's
 own $\alpha$ — it isn't learned separately — so the gate automatically
 matches how steep that particular equation's knee is. $k$
 (`knee_alpha_scale`) just widens or narrows that transition.
 
 ```mermaid
 flowchart TD
-    PHYS["Physics equation: I_phys(Vgs, Vds)"] --> COMBINE
+    EMP["Empirical equation: I_emp(Vgs, Vds)"] --> COMBINE
     Vds --> GATEFN["gate = 1 − tanh(|α|/k · Vds)"]
     NN["Neural network(Vgs, Vds)"] --> COMBINE
     GATEFN --> COMBINE{"knee_combiner"}
-    COMBINE -->|sum| C1["I_phys + gate·NN"]
-    COMBINE -->|product| C2["I_phys · (1 + gate·NN)"]
-    COMBINE -->|sum_gated_vgs| C3["I_phys + gate·h(Vgs)·NN"]
-    COMBINE -->|residual| C4["I_phys · (1 + α_max·gate·tanh(NN))"]
+    COMBINE -->|sum| C1["I_emp + gate·NN"]
+    COMBINE -->|product| C2["I_emp · (1 + gate·NN)"]
+    COMBINE -->|sum_gated_vgs| C3["I_emp + gate·h(Vgs)·NN"]
+    COMBINE -->|residual| C4["I_emp · (1 + α_max·gate·tanh(NN))"]
     C1 & C2 & C3 & C4 --> OUT["Ids"]
 ```
 
@@ -228,10 +228,10 @@ flowchart TD
 
 | `knee_combiner` | formula | plain-language meaning |
 |---|---|---|
-| `sum` (default) | $I_{phys} + \text{gate}\cdot\mathrm{NN}$ | network adds/subtracts current directly |
-| `product` | $I_{phys}\cdot(1+\text{gate}\cdot\mathrm{NN})$ | network's output is a *percentage* nudge on the physics prediction |
-| `sum_gated_vgs` | $I_{phys} + \text{gate}\cdot h(V_{gs})\cdot\mathrm{NN}$ | adds a *second* gate that also fades the network out near pinch-off (fixes a common gm "bump" artifact there) |
-| `residual` | $I_{phys}\cdot(1+\alpha_{max}\cdot\text{gate}\cdot\tanh(\mathrm{NN}))$ | caps the correction to at most $\pm\alpha_{max}$ of the physics prediction, so it can never run away |
+| `sum` (default) | $I_{emp} + \text{gate}\cdot\mathrm{NN}$ | network adds/subtracts current directly |
+| `product` | $I_{emp}\cdot(1+\text{gate}\cdot\mathrm{NN})$ | network's output is a *percentage* nudge on the empirical-equation prediction |
+| `sum_gated_vgs` | $I_{emp} + \text{gate}\cdot h(V_{gs})\cdot\mathrm{NN}$ | adds a *second* gate that also fades the network out near pinch-off (fixes a common gm "bump" artifact there) |
+| `residual` | $I_{emp}\cdot(1+\alpha_{max}\cdot\text{gate}\cdot\tanh(\mathrm{NN}))$ | caps the correction to at most $\pm\alpha_{max}$ of the empirical-equation prediction, so it can never run away |
 
 > **One correction to a related doc:** `docs/README.md` used to also list
 > `max`/`min` as valid `knee_combiners` values. They don't exist in the code
@@ -243,8 +243,8 @@ flowchart TD
 ## 4. Tight-prior seeding (`use_opt_params` + `freeze_physics`)
 
 A cross-cutting trick used with the `noNN_knee` family: rather than training
-a physics equation's parameters from a random start, seed them from a
-physics-only fit (done separately via SLSQP, a classic optimization
+an empirical equation's parameters from a random start, seed them from an
+empirical-only fit (done separately via SLSQP, a classic optimization
 algorithm — see `docs/README.md` §4), then keep each parameter **within
 ±10% of that seeded value** during training:
 
@@ -253,7 +253,7 @@ $$v = (v_{seed}-\delta) + \big[(v_{seed}+\delta)-(v_{seed}-\delta)\big]\cdot\mat
 
 $\theta$ is the actual trainable number, but no matter what value it takes,
 `sigmoid(θ)` always stays between 0 and 1 — so `v` can *never* leave its
-±10% box. This keeps the physics parameters physically sensible even while
+±10% box. This keeps the equation's parameters physically sensible even while
 letting them adjust slightly to fit the data better.
 
 - **`freeze_physics: false`** — `θ` trains; `v` refines anywhere inside the box.
