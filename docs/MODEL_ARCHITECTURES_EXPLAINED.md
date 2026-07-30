@@ -58,13 +58,14 @@ flowchart LR
     Vgs(("Vgs")) --> A1 & A2 & A3
     Vds(("Vds")) --> A1 & A2 & A3
     A1 & A2 & A3 --> B1 & B2
-    B1 & B2 --> OUT["final activation"]
+    B1 & B2 --> OUT["output activation"]
 ```
 
-The network's **very last step** squashes its output through one more
-activation — usually `linear` (no squashing at all) or `softplus` (forces
-the output to be ≥ 0, a soft ramp instead of a hard cutoff). See §2b for
-what happens if you pick a *bounded* one instead (`sigmoid`, `tanh`).
+The network's **output activation** is its very last step, one more
+function its raw output is squashed through — usually `linear` (no
+squashing at all) or `softplus` (forces the output to be ≥ 0, a soft ramp
+instead of a hard cutoff). See §2b for what happens if you pick a
+*bounded* one instead (`sigmoid`, `tanh`).
 
 ---
 
@@ -79,9 +80,9 @@ transistor behavior built in. Simple, but nothing stops it from predicting
 something physically silly (e.g. a nonzero current at `Vds = 0`, where a
 real transistor always reads exactly zero).
 
-### 2b. Bounded final activations need a "margin"
+### 2b. Bounded output activations need a "margin"
 
-If that last squashing step is `sigmoid` (squashes to the range `(0, 1)`) or
+If the output activation is `sigmoid` (squashes to the range `(0, 1)`) or
 `tanh` (squashes to `(-1, 1)`), there's a problem: real measured currents can
 be several amps, but the network's raw output can never exceed 1. A sigmoid
 output alone can never predict a 2.7 A current — it's mathematically capped.
@@ -94,12 +95,12 @@ $$\text{scale} = (1 + \text{margin}) \cdot \max(I_{ds}^{\text{measured}})$$
 `scale` is computed once, from the training data, before training starts.
 With `margin = 0` (the default), `scale = 1` and bounded activations are
 left uselessly capped at ±1 — so this project sets a margin whenever
-`sigmoid`/`tanh` is used as the final activation (`0.1` is what this repo
+`sigmoid`/`tanh` is used as the output activation (`0.1` is what this repo
 actually uses: `scale = 1.1 × max(measured Ids)`, giving 10% headroom above
 the largest value ever seen). Unbounded activations (`linear`, `softplus`)
 don't need this at all — the margin is simply ignored for them.
 
-| final activation | bounded? | needs a margin? |
+| output activation | bounded? | needs a margin? |
 |---|---|---|
 | `linear` | no | no |
 | `softplus` | no (≥0, but unbounded above) | no |
@@ -107,20 +108,20 @@ don't need this at all — the margin is simply ignored for them.
 | `tanh` | yes, `(-1,1)` | yes |
 
 (Verified directly in the repo's own experiments: the ones using `sigmoid`
-and `tanh` as the final activation set a `0.1` margin; the ones using
+and `tanh` as the output activation set a `0.1` margin; the ones using
 `softplus` set no margin at all.)
 
 ---
 
 ## 3. The network's output shaped to look like a transistor curve
 
-This doesn't add a new kind of squashing — it *relocates* the same final
-activation from §1/§2b, moving it from inside the network's last step to
-right here, then multiplying the result by an extra `Vds`-shaped envelope
-(below). Concretely: the network's own final step is set to do nothing (no
+This doesn't add a new kind of squashing — it *relocates* the same output
+activation from §1/§2b, moving it from inside the network to right here,
+then multiplying the result by an extra `Vds`-shaped envelope (below).
+Concretely: the network's own output activation is set to do nothing (no
 squashing at all, so its raw number comes out untouched), and *that* raw
 number is instead squashed here — mathematically identical to picking that
-same squashing function as the network's final step directly, just
+same squashing function as the network's output activation directly, just
 computed in a different spot so its result can be multiplied by the
 envelope rather than returned as `Ids` on its own. This is how the network
 is made to automatically obey basic transistor physics — exactly zero
@@ -143,14 +144,14 @@ This approach reuses that exact `Vds`-envelope — literally the same
 
 $$I_{ds} = \underbrace{\text{activation}(\mathrm{NN})}_{\substack{\text{network stands in}\\\text{for the empirical term}}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{same envelope as Angelov}}$$
 
-- That `activation(...)` **is that same final-activation choice, relocated**
+- That `activation(...)` **is that same output-activation choice, relocated**
   — by default it's `softplus`, same `softplus` as in §2b's table, just
   applied here instead of inside the network. Using `softplus` keeps the
   sign of `Ids` locked to the sign of `Vds` (physically required); the
   other available choice here is `tanh`, which trades away that sign
   guarantee for a cleaner transition right at pinch-off. (`sigmoid` is
   *not* one of the two choices available here — it's only available as the
-  network's own final activation in §2, without this extra shaping step.)
+  network's own output activation in §2, without this extra shaping step.)
 - $\alpha$ (steepness) and $\lambda$ (slope) are just two extra learned
   numbers, same role as in the Angelov equation.
 
@@ -200,7 +201,7 @@ best-ids shortlists, retrained across all 6 measurement CSVs, consistency
 checks — see [`SWEEP_METHODOLOGY.md`](SWEEP_METHODOLOGY.md)) uses **only**
 the two approaches above:
 
-- The final-activation experiments (`sigmoid` + margin, `tanh` + margin,
+- The output-activation experiments (`sigmoid` + margin, `tanh` + margin,
   `softplus`, and their gm-loss-free counterparts) use **approach 1** —
   the network predicting current directly.
 - Two of the experiment groups use **approach 2** — the network's output
