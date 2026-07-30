@@ -80,27 +80,30 @@ transistor behavior built in. Simple, but nothing stops it from predicting
 something physically silly (e.g. a nonzero current at `Vds = 0`, where a
 real transistor always reads exactly zero).
 
-### 2b. Bounded output activations need a "margin"
+### 2b. Bounded output activations need a "scale"
 
 If the output activation is `sigmoid` (squashes to the range `(0, 1)`) or
 `tanh` (squashes to `(-1, 1)`), there's a problem: real measured currents can
 be several amps, but the network's raw output can never exceed 1. A sigmoid
 output alone can never predict a 2.7 A current — it's mathematically capped.
 
-The fix rescales the squashed output up to the real range:
+The fix rescales the squashed output up to the real range by multiplying it
+by a `scale` factor:
 
 $$I_{ds} = \text{scale} \cdot \text{activation}\big(\mathrm{NN}(V_{gs}, V_{ds})\big)$$
 $$\text{scale} = (1 + \text{margin}) \cdot \max(I_{ds}^{\text{measured}})$$
 
-`scale` is computed once, from the training data, before training starts.
-With `margin = 0` (the default), `scale = 1` and bounded activations are
-left uselessly capped at ±1 — so this project sets a margin whenever
+`scale` is computed once, from the training data, before training starts,
+from a `margin` value — the fraction of extra headroom on top of the
+largest measured current, not the multiplier itself. With `margin = 0`
+(the default), `scale = 1` and bounded activations are left uselessly
+capped at ±1 — so this project sets a margin above `0` whenever
 `sigmoid`/`tanh` is used as the output activation (`0.1` is what this repo
 actually uses: `scale = 1.1 × max(measured Ids)`, giving 10% headroom above
 the largest value ever seen). Unbounded activations (`linear`, `softplus`)
-don't need this at all — the margin is simply ignored for them.
+don't need a scale at all — the margin is simply ignored for them.
 
-| output activation | bounded? | needs a margin? |
+| output activation | bounded? | needs a scale (via a margin)? |
 |---|---|---|
 | `linear` | no | no |
 | `softplus` | no (≥0, but unbounded above) | no |
