@@ -1,28 +1,28 @@
 # Model architectures — how `Ids` is computed
 
-This is a reference for every way `per_neuron_simple_angelov_nn_test.py` (via
-`optim_utils/per_neuron_models.py`) can turn `(Vgs, Vds)` into a predicted drain
-current `Ids`. It's driven entirely by the `equation_type` config string, whose
-format is:
+This explains, in plain terms, every way this codebase turns two numbers —
+`Vgs` (gate voltage) and `Vds` (drain voltage) — into a predicted drain
+current `Ids`. No prior ML or device-physics background assumed; jargon is
+defined the first time it's used.
+
+Which method a training run uses is controlled by one config string,
+`equation_type`. It comes in exactly two shapes:
 
 ```
-equation_type = "<mode>[:<wrapper_or_eq>]"
+equation_type = "pure"                → the neural network IS the model
+equation_type = "pure:<wrapper>"       → the network's output gets reshaped by <wrapper>
+equation_type = "noNN_knee:<eq>"       → a physics formula <eq> is the model, and the
+                                          network only adds a small correction on top
 ```
 
-Two families are actually used across every config in `physics_nn_configs/`
-(confirmed by grepping every `equation_type` value in the repo):
-
-- **`pure[:<wrapper>]`** — the network *is* the model. An optional output
-  **wrapper** reshapes its raw output into a physically-sane Ids-Vds curve.
-- **`noNN_knee:<eq>`** — a physics equation (Angelov family) provides the
-  baseline, and the network supplies a *gated correction* on top of it.
+(Confirmed by checking every `equation_type` value actually used in
+`physics_nn_configs/*.json` — nothing else appears in this project.)
 
 ```mermaid
 flowchart TD
-    IN["Vgs, Vds"] --> NORM["normalize"]
-    NORM --> SPLIT{"equation_type"}
-    SPLIT -->|"pure[:wrapper]"| PUREPATH["Base NN → output wrapper"]
-    SPLIT -->|"noNN_knee:eq"| HYBRIDPATH["Physics eq + gated NN correction"]
+    IN["Vgs, Vds"] --> SPLIT{"equation_type"}
+    SPLIT -->|"pure[:wrapper]"| PUREPATH["Neural network → optional wrapper"]
+    SPLIT -->|"noNN_knee:eq"| HYBRIDPATH["Physics formula + a gated correction from the network"]
     PUREPATH --> OUT["Ids"]
     HYBRIDPATH --> OUT
 ```
@@ -31,130 +31,192 @@ flowchart TD
 
 ## 1. The base network
 
-Every path starts with the same building block: a small feed-forward net where
-**each neuron in a layer can have its own activation function** — not one
-activation per layer, one *per neuron*. This is what an architecture string
-encodes:
+Every path starts with the same kind of network: a small stack of layers
+where — unusually — **each neuron in a layer can use a different activation
+function**. Normal networks use one activation for a whole layer; here, one
+layer might mix `tanh` and `sin` neurons side by side. An architecture string
+like
 
 ```
-"[[\"tanh\",\"sin\",\"swish\"], [\"tanh\",\"tanh\"]]"
+[["tanh", "sin", "swish"], ["tanh", "tanh"]]
 ```
+
+means: layer 1 has 3 neurons (tanh, sin, swish), layer 2 has 2 neurons (both
+tanh).
 
 ```mermaid
 flowchart LR
-    subgraph L0["input"]
-        Vgs; Vds
+    subgraph L1["layer 1 · 3 neurons"]
+        A1["tanh"]
+        A2["sin"]
+        A3["swish"]
     end
-    subgraph L1["layer 1: 3 neurons"]
-        A1["tanh"]; A2["sin"]; A3["swish"]
+    subgraph L2["layer 2 · 2 neurons"]
+        B1["tanh"]
+        B2["tanh"]
     end
-    subgraph L2["layer 2: 2 neurons"]
-        B1["tanh"]; B2["tanh"]
-    end
-    OUT["output_activation\n(linear | softplus)"]
-    Vgs & Vds --> A1 & A2 & A3
+    Vgs(("Vgs")) --> A1 & A2 & A3
+    Vds(("Vds")) --> A1 & A2 & A3
     A1 & A2 & A3 --> B1 & B2
-    B1 & B2 --> OUT
+    B1 & B2 --> OUT["output_activation"]
 ```
 
-The **final layer's** activation is set separately by `output_activation`
-(`linear` or `softplus`) — this is a property of the network itself, and is
-**orthogonal** to the "wrapper" described in §2 (the wrapper post-processes
-whatever the network already output).
+The network's **very last step** squashes its output through one more
+activation, `output_activation` — usually `linear` (no squashing at all) or
+`softplus` (forces the output to be ≥ 0, a soft ramp instead of a hard
+cutoff). See §2b for what happens if you pick a *bounded* one instead
+(`sigmoid`, `tanh`).
 
 ---
 
 ## 2. Family A — Pure NN (`equation_type: "pure"` or `"pure:<wrapper>"`)
 
-With no wrapper, the model is just:
+### 2a. No wrapper: the network's raw prediction
 
 $$I_{ds} = \mathrm{NN}(V_{gs}, V_{ds})$$
 
-But a **wrapper** can reshape the raw network output into a curve that's
-guaranteed to obey basic transistor physics (odd in `Vds`, exactly `0` at
-`Vds=0`, correct sign) — this is what every `vdsgate*` config in this repo
-actually uses.
+The network is asked to learn the whole curve by itself, with no physics
+built in. Simple, but nothing stops it from predicting something physically
+silly (e.g. a nonzero current at `Vds = 0`, where a real transistor always
+reads exactly zero).
 
-### 2a. `vdsgate` / `vdsgatelin` — constant knee
+### 2b. Bounded output activations need a "margin"
 
-$$I_{ds} = g(\mathrm{NN}) \cdot \tanh(\alpha \cdot V_{ds}) \cdot (1 + \lambda \cdot V_{ds})$$
+If `output_activation` is `sigmoid` (squashes to the range `(0, 1)`) or
+`tanh` (squashes to `(-1, 1)`), there's a problem: real measured currents can
+be several amps, but the network's raw output can never exceed 1. A sigmoid
+output alone can never predict a 2.7 A current — it's mathematically capped.
 
-- $\alpha = \mathrm{softplus}(\alpha_{raw}) > 0$ — a single learned scalar (the "knee steepness").
-- $\lambda$ — a single learned scalar (linear Vds slope beyond the knee).
-- $g(\cdot)$ — the *gate*: `vdsgate` uses $g=\mathrm{softplus}(\mathrm{NN})$ (guarantees
-  $\mathrm{sign}(I_{ds})=\mathrm{sign}(V_{ds})$); `vdsgatelin` uses $g=\mathrm{NN}$ raw
-  (more flexible, no sign guarantee).
+The fix, `ids_out_margin`, rescales the squashed output up to the real range:
+
+$$I_{ds} = \text{scale} \cdot \text{activation}\big(\mathrm{NN}(V_{gs}, V_{ds})\big)$$
+$$\text{scale} = (1 + \text{margin}) \cdot \max(I_{ds}^{\text{measured}})$$
+
+`scale` is computed once, from the training data, before training starts.
+With `margin = 0` (the default), `scale = 1` and bounded activations are
+left uselessly capped at ±1 — so any project using `sigmoid`/`tanh` as
+`output_activation` sets a margin (`0.1` is what this repo actually uses:
+`scale = 1.1 × max(measured Ids)`, giving 10% headroom above the largest
+value ever seen). Unbounded activations (`linear`, `softplus`) don't need
+this at all — `margin` is simply ignored for them.
+
+| `output_activation` | bounded? | needs `ids_out_margin`? |
+|---|---|---|
+| `linear` | no | no |
+| `softplus` | no (≥0, but unbounded above) | no |
+| `sigmoid` | yes, `(0,1)` | yes |
+| `tanh` | yes, `(-1,1)` | yes |
+
+(Verified directly in the repo's own sweeps: the `sigmoid_margin10` and
+`tanh_margin10` config sweeps set `output_activation: "sigmoid"`/`"tanh"`
+together with `ids_out_margin: 0.1`; the `softplus` sweep sets neither —
+`per_neuron_simple_angelov_nn_test.py:778-790`.)
+
+### 2c. Wrapper: reshaping the output to look like a transistor curve
+
+The **wrapper** is a second, independent squashing step, applied *after* the
+network's own `output_activation`. It's how a plain "pure" network is made
+to automatically obey basic transistor physics — exactly zero current at
+`Vds = 0`, current flowing the correct direction — instead of hoping the
+network learns that from data alone. Every `vdsgate*` config in this repo
+uses one.
+
+**The key idea: it borrows its shape directly from the Angelov physics
+equation described in §3.** Look at the *tail* of that equation:
+
+$$\underbrace{I_{pk}\cdot(1+\tanh\psi)}_{\text{depends on }V_{gs}\text{ only}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{depends on }V_{ds}\text{ only — the "envelope"}}$$
+
+The `vdsgate` wrapper reuses that exact `Vds`-envelope — literally the same
+`tanh(α·Vds)·(1+λ·Vds)` formula — but **replaces the physics-derived
+`Vgs`-dependent part with the neural network**:
+
+$$I_{ds} = \underbrace{g(\mathrm{NN})}_{\substack{\text{network stands in}\\\text{for the physics term}}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{same envelope as Angelov}}$$
+
+- $g(\cdot)$ is a small "gate" function on the network's raw output — by
+  default $g = \mathrm{softplus}(\mathrm{NN})$, which keeps the sign of
+  `Ids` locked to the sign of `Vds` (physically required).
+- $\alpha$ (steepness) and $\lambda$ (slope) are just two extra learned
+  numbers, same role as in the Angelov equation.
 
 ```mermaid
 flowchart LR
-    NN["NN(Vgs, Vds)"] --> GATE["gate g(·)"]
-    GATE --> MUL1["× tanh(α·Vds)"]
-    MUL1 --> MUL2["× (1 + λ·Vds)"]
-    MUL2 --> OUT["Ids"]
+    NN["neural network(Vgs, Vds)"] --> GATE["gate g( )<br/>stands in for physics"]
+    GATE --> M1["× tanh(α·Vds)"]
+    M1 --> M2["× (1 + λ·Vds)"]
+    M2 --> OUT["Ids"]
 ```
 
-### 2b. `vdsgate_aeff*` — Vgs-dependent knee (the family actually used most)
-
-Same shape, but $\alpha$ and $\lambda$ become **polynomials in $V_{gs}$** instead
-of constants — the knee position/slope now varies with gate voltage:
+**`vdsgate_aeff*` — the version actually used most in this repo — takes this
+one step further**: instead of fixed numbers, $\alpha$ and $\lambda$ become
+small polynomials *in* `Vgs` (so the knee shape can change across the gate
+voltage range, not stay identical everywhere):
 
 $$I_{ds} = g(\mathrm{NN}) \cdot \tanh\big(a_{eff}(V_{gs}) \cdot V_{ds}\big) \cdot \big(1 + l_{eff}(V_{gs}) \cdot V_{ds}\big)$$
 
-$$a_{eff}(V_{gs}) = \mathrm{softplus}\Big(\sum_{i=0}^{N} a_i \cdot \hat V_{gs}^{\,i}\Big) \qquad
-l_{eff}(V_{gs}) = \mathrm{softplus}\Big(\sum_{j=0}^{N-1} l_j \cdot \hat V_{gs}^{\,j}\Big)$$
+The suffix on the wrapper name picks how complex that polynomial is allowed
+to be:
 
-($\hat V_{gs}$ = normalized Vgs.) The suffix picks the polynomial order $N$ and a
-few optional variants:
-
-| suffix | $a_{eff}$ order | notes |
+| suffix | polynomial order | meaning |
 |---|---|---|
-| `_lin` | 1 | |
-| `_quad` | 2 | most commonly used in this repo |
-| `_cub` (bare `vdsgate_aeff` too) | 3 | |
-| `_quart` / `_quint` / `_sext` / `_sept` | 4 / 5 / 6 / 7 | higher-order fits |
-| `_sig` | — | $a_{eff}$ uses $2\cdot\mathrm{sigmoid}(\cdot)$ instead of softplus (bounded above too) |
-| `_clam` | — | $l_{eff}$ forced to a **constant** (order 0) instead of order $N{-}1$ |
-| `_freelam` | — | $l_{eff}$ = raw polynomial, unconstrained (can go negative) |
+| `_lin` | 1 | straight line in Vgs |
+| `_quad` | 2 | curve — **the one used most in this repo** |
+| `_cub` (also the bare `vdsgate_aeff`) | 3 | more flexible curve |
+| `_quart`/`_quint`/`_sext`/`_sept` | 4–7 | higher-order fits, rarely needed |
+| `_sig` | — | bounds $a_{eff}$ with sigmoid instead of softplus |
+| `_clam` | — | forces $\lambda$ to a single constant instead of its own polynomial |
+| `_freelam` | — | lets $\lambda$ go negative (unconstrained) |
 
-```mermaid
-flowchart LR
-    Vgs --> POLYA["a_eff(Vgs) = softplus(poly)"]
-    Vgs --> POLYL["l_eff(Vgs) = softplus(poly)"]
-    NN["NN(Vgs, Vds)"] --> GATE["gate g(·)"]
-    GATE --> MUL1["× tanh(a_eff·Vds)"]
-    POLYA --> MUL1
-    MUL1 --> MUL2["× (1 + l_eff·Vds)"]
-    POLYL --> MUL2
-    MUL2 --> OUT["Ids"]
-```
-
-### 2c. `vdsgate_vdsk*` — Vgs-dependent knee, parameterized as a *voltage*
-
-Same idea, but instead of a steepness $\alpha$, it directly models **where the
-knee sits, in volts** — better-conditioned for curves near pinch-off, where the
-physical knee shifts toward 0V:
+A close cousin, **`vdsgate_vdsk*`**, models the same idea but stores *where
+the knee sits, in volts* directly, instead of a steepness number — more
+numerically stable for curves very close to pinch-off:
 
 $$I_{ds} = g(\mathrm{NN}) \cdot \tanh\!\left(\frac{V_{ds}}{V_{ds,knee}(V_{gs})}\right) \cdot \big(1 + l_{eff}(V_{gs}) \cdot V_{ds}\big)$$
-
-$$V_{ds,knee}(V_{gs}) = \mathrm{softplus}\Big(\sum_{i=0}^{N} k_i \cdot \hat V_{gs}^{\,i}\Big) + 10^{-4}$$
-
-Suffixes (`_lin`/`_quad`/`_cub`, `_clam`, `_freelam`) work the same way as §2b
-(no `_sig` variant here).
 
 ---
 
 ## 3. Family B — Physics + NN hybrid (`equation_type: "noNN_knee:<eq>"`)
 
-Here the network doesn't predict `Ids` at all — it predicts a **correction** on
-top of a physics baseline, and a **gate** suppresses that correction in deep
-saturation (where the physics equation is already reliable):
+Here the roles flip: the physics equation is the model, and the network only
+supplies a small, gated *correction* on top of it.
+
+### 3a. The physics equation itself (the Angelov family)
+
+`classic_angelov`, `angelov_6_term`, and `angelov_9_term` are the same
+formula with a longer or shorter polynomial in `Vgs`:
+
+$$\psi = \sum_{n=1}^{N} P_n \cdot (V_{gs}-V_{pk})^n \qquad (N = 3,\ 6,\ \text{or } 9)$$
+
+$$I_{phys} = \underbrace{I_{pk}\cdot(1+\tanh\psi)}_{\text{"how much current, as a function of } V_{gs}\text{"}} \cdot\ \underbrace{\tanh(\alpha\cdot V_{ds})\cdot(1+\lambda\cdot V_{ds})}_{\text{"the } V_{ds}\text{ envelope"}}$$
+
+More polynomial terms ($N=9$) trace the curve's shape more precisely, at the
+cost of needing smaller learning rates on the higher-order terms to avoid
+blowing up.
+
+`mod1_angelov` is a more advanced variant that lets the peak voltage and
+steepness *themselves* shift with `Vds` — useful for capturing current
+dispersion effects the simpler forms can't. See
+`optim_utils/per_neuron_noNN.py:mod1_angelov` for its full form.
+
+### 3b. The gate: when does the network get to speak?
+
+A **gate** decides how much the network's correction is allowed to
+contribute, and it fades toward zero as `Vds` grows (deep in the region
+where the physics equation is already reliable on its own):
+
+$$\text{gate} = 1 - \tanh\!\left(\frac{|\alpha|}{k} \cdot V_{ds}\right)$$
+
+Near `Vds = 0` the gate is close to 1 (network fully active); at large `Vds`
+it decays toward 0 (physics takes over). It reuses the physics equation's
+own $\alpha$ — it isn't learned separately — so the gate automatically
+matches how steep that particular equation's knee is. $k$
+(`knee_alpha_scale`) just widens or narrows that transition.
 
 ```mermaid
 flowchart TD
-    PHYS["Physics eq: I_phys(Vgs, Vds)"] --> COMBINE
+    PHYS["Physics equation: I_phys(Vgs, Vds)"] --> COMBINE
     Vds --> GATEFN["gate = 1 − tanh(|α|/k · Vds)"]
-    NN["NN(Vgs, Vds)"] --> COMBINE
-    GATEFN --> COMBINE{"combiner"}
+    NN["Neural network(Vgs, Vds)"] --> COMBINE
+    GATEFN --> COMBINE{"knee_combiner"}
     COMBINE -->|sum| C1["I_phys + gate·NN"]
     COMBINE -->|product| C2["I_phys · (1 + gate·NN)"]
     COMBINE -->|sum_gated_vgs| C3["I_phys + gate·h(Vgs)·NN"]
@@ -162,71 +224,45 @@ flowchart TD
     C1 & C2 & C3 & C4 --> OUT["Ids"]
 ```
 
-The gate is **not learned** (`.detach()`'d) — it's a fixed function of the
-physics equation's own knee-steepness parameter $\alpha$ (or $\alpha_R$ for
-`mod1_angelov`), so early in saturation (small $V_{ds}$) the gate is near 1 (NN
-fully active) and deep in saturation it decays toward 0 (physics takes over):
+### 3c. `knee_combiner` — how the correction is folded in
 
-$$\text{gate} = 1 - \tanh\!\left(\frac{|\alpha|}{k} \cdot V_{ds}\right), \qquad k = \texttt{knee\_alpha\_scale}$$
-
-### 3a. `knee_combiner` — how the gated correction is applied
-
-| `knee_combiner` | formula | when to use |
+| `knee_combiner` | formula | plain-language meaning |
 |---|---|---|
-| `sum` (default) | $I_{phys} + \text{gate}\cdot \mathrm{NN}$ | simplest; NN adds/subtracts current directly |
-| `product` | $I_{phys}\cdot(1+\text{gate}\cdot \mathrm{NN})$ | NN is a *percentage* correction, scales with $I_{phys}$ |
-| `sum_gated_vgs` | $I_{phys} + \text{gate}\cdot h(V_{gs})\cdot \mathrm{NN}$ | adds a **second** gate $h(V_{gs})$ that fades the NN out below threshold (fixes gm bumps near pinch-off) |
-| `residual` | $I_{phys}\cdot\big(1+\alpha_{max}\cdot\text{gate}\cdot[g_{V_{gs}}]\cdot\tanh(\mathrm{NN})\big)$ | bounds the correction to $\pm\alpha_{max}$ of $I_{phys}$; optional extra sigmoid $V_{gs}$ gate |
+| `sum` (default) | $I_{phys} + \text{gate}\cdot\mathrm{NN}$ | network adds/subtracts current directly |
+| `product` | $I_{phys}\cdot(1+\text{gate}\cdot\mathrm{NN})$ | network's output is a *percentage* nudge on the physics prediction |
+| `sum_gated_vgs` | $I_{phys} + \text{gate}\cdot h(V_{gs})\cdot\mathrm{NN}$ | adds a *second* gate that also fades the network out near pinch-off (fixes a common gm "bump" artifact there) |
+| `residual` | $I_{phys}\cdot(1+\alpha_{max}\cdot\text{gate}\cdot\tanh(\mathrm{NN}))$ | caps the correction to at most $\pm\alpha_{max}$ of the physics prediction, so it can never run away |
 
-> **Not real:** `docs/README.md` also lists `max`/`min` as valid `knee_combiners`
-> — these do not exist in the code (only the 4 above do; anything else silently
-> falls back to `sum`).
-
-### 3b. The physics equations (`<eq>`)
-
-**`classic_angelov` / `angelov_6_term` / `angelov_9_term`** share one form —
-only the polynomial order in $V_{gs}$ changes:
-
-$$\psi = \sum_{n=1}^{N} P_n \cdot (V_{gs}-V_{pk})^n \qquad (N = 3, 6, \text{or } 9)$$
-
-$$I_{phys} = I_{pk}\cdot(1+\tanh\psi)\cdot\tanh(\alpha\cdot V_{ds})\cdot(1+\lambda\cdot V_{ds})$$
-
-More polynomial terms ($N{=}9$) fit the gm curve's shape more precisely but need
-smaller learning rates on the high-order terms to stay numerically stable.
-
-**`mod1_angelov`** is the advanced variant — it lets the peak voltage $V_{pk}$
-and the knee steepness $\alpha$ **shift with $V_{ds}$** (captures current-collapse /
-dispersion effects the simpler forms can't):
-
-$$V_{pk}(V_{ds}) = V_{pks} - \delta V_{pks} + \delta V_{pks}\cdot\tanh(\alpha_S\cdot V_{ds})$$
-$$\alpha_{eff}(V_{ds}) = \alpha_R + \alpha_S\cdot(1+\tanh(\psi_1))$$
-
-with two conduction branches ($\psi_1$ centered on $V_{pk}$, $\psi_2$ on a
-smoothed complementary voltage) combined before the same
-$\tanh(\alpha_{eff}\cdot V_{ds})\cdot(1+\lambda\cdot V_{ds})$ envelope. See
-`optim_utils/per_neuron_noNN.py:mod1_angelov` for the full 18-parameter form.
+> **One correction to a related doc:** `docs/README.md` used to also list
+> `max`/`min` as valid `knee_combiners` values. They don't exist in the code
+> — only the four above are implemented (anything else silently behaves like
+> `sum`). Already fixed there.
 
 ---
 
 ## 4. Tight-prior seeding (`use_opt_params` + `freeze_physics`)
 
-Cross-cutting mechanism for the `noNN_knee` family: instead of training physics
-params from scratch, seed them from an SLSQP physics-only fit and constrain each
-to stay within **±10% of its seeded value**:
+A cross-cutting trick used with the `noNN_knee` family: rather than training
+a physics equation's parameters from a random start, seed them from a
+physics-only fit (done separately via SLSQP, a classic optimization
+algorithm — see `docs/README.md` §4), then keep each parameter **within
+±10% of that seeded value** during training:
 
-$$\delta = |v_{seed}| \cdot 0.10 \quad(\text{floored at } 10^{-6})$$
-$$v = (v_{seed}-\delta) + \big[(v_{seed}+\delta) - (v_{seed}-\delta)\big]\cdot\mathrm{sigmoid}(\theta)$$
+$$\delta = |v_{seed}| \cdot 0.10$$
+$$v = (v_{seed}-\delta) + \big[(v_{seed}+\delta)-(v_{seed}-\delta)\big]\cdot\mathrm{sigmoid}(\theta)$$
 
-The raw trainable parameter is $\theta$; no matter what $\theta$ does, $v$ can
-never leave $[v_{seed}-\delta,\ v_{seed}+\delta]$. Two regimes:
+$\theta$ is the actual trainable number, but no matter what value it takes,
+`sigmoid(θ)` always stays between 0 and 1 — so `v` can *never* leave its
+±10% box. This keeps the physics parameters physically sensible even while
+letting them adjust slightly to fit the data better.
 
-- **`freeze_physics: false`** — $\theta$ trains, $v$ refines within the ±10% box.
-- **`freeze_physics: true`** — $\theta$ is never updated, $v$ stays exactly at $v_{seed}$.
+- **`freeze_physics: false`** — `θ` trains; `v` refines anywhere inside the box.
+- **`freeze_physics: true`** — `θ` never updates; `v` stays exactly at its seed.
 
 ```mermaid
 flowchart LR
-    SEED["SLSQP seed value v_seed"] --> BOX["box: [v_seed − δ, v_seed + δ]"]
-    THETA["raw trainable θ"] --> SIG["sigmoid(θ) ∈ (0,1)"]
+    SEED["SLSQP-fitted seed value"] --> BOX["allowed range: seed ± 10%"]
+    THETA["trainable number θ"] --> SIG["sigmoid(θ), always between 0 and 1"]
     SIG --> BOX
-    BOX --> V["v (physics param used in the equation)"]
+    BOX --> V["the value actually used in the equation"]
 ```

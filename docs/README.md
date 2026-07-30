@@ -8,7 +8,9 @@ should be able to read it and drive the whole pipeline.
 
 > For how the models themselves are built (the NN, the physics equations, the
 > various `equation_type` wrappers/combiners), see
-> [MODEL_ARCHITECTURES.md](MODEL_ARCHITECTURES.md).
+> [MODEL_ARCHITECTURES.md](MODEL_ARCHITECTURES.md). For how architectures are
+> searched for and compared across measurement CSVs, see
+> [SWEEP_METHODOLOGY.md](SWEEP_METHODOLOGY.md).
 
 ---
 
