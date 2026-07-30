@@ -94,6 +94,7 @@ SCALAR_MAP = {
     "ids_constraint":   "ids_constraint",
     "ids_target":       "ids_target",
     "ids_lambda":       "ids_lambda",
+    "adamw_avoid_localmin": "adamw_avoid_localmin",
     # Region box bounds (2-D Vgs x Vds weighting). Scalars per experiment; paired
     # with the swept region_weight above. Read from the ranked CSV (see below).
     "region_vgs_lo":    "region_vgs_lo",
@@ -302,6 +303,7 @@ def params_from_json(jdata: dict, run_dir=None) -> dict:
     p["lbfgs_gm_aware"]  = _parse_bool(g("lbfgs_gm_aware", True))
     p["loss_norm"]        = g("loss_norm", "nmse") or "nmse"
     p["deterministic"]    = _parse_bool(g("deterministic", True))
+    p["adamw_avoid_localmin"] = _parse_bool(g("adamw_avoid_localmin", False))
     p["mixed_init"]       = g("mixed_init", "per_activation")
 
     p["gm_warmup_epochs"] = _coerce(g("gm_warmup_epochs", 0)) or 0

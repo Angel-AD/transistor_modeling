@@ -1209,6 +1209,7 @@ def main():
         'lbfgs_max_iter': args.lbfgs_max_iter,
         'lbfgs_gm_aware': lbfgs_gm_aware,
         'loss_norm': args.loss_norm,
+        'adamw_avoid_localmin': bool(args.adamw_avoid_localmin),
         'csv': CSV_PATH,
     }
     if args.config_name:

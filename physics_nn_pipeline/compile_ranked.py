@@ -185,6 +185,7 @@ def _row_from_json(json_path, baselines):
         "lbfgs_max_iter": run_artifacts.field(d, run_dir, "lbfgs_max_iter"),
         "lbfgs_gm_aware": run_artifacts.field(d, run_dir, "lbfgs_gm_aware"),
         "loss_norm": run_artifacts.field(d, run_dir, "loss_norm"),
+        "adamw_avoid_localmin": run_artifacts.field(d, run_dir, "adamw_avoid_localmin"),
         "csv": run_artifacts.field(d, run_dir, "csv"),
         "epochs": d.get("epochs", ""),
         "seed": d.get("seed", ""),

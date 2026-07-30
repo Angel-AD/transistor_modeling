@@ -238,6 +238,7 @@ def compile_results(target_dir, output_csv="compiled_results.csv", sort_keys=Non
                 "lbfgs_max_iter": run_artifacts.field(data, os.path.dirname(jpath), "lbfgs_max_iter"),
                 "lbfgs_gm_aware": run_artifacts.field(data, os.path.dirname(jpath), "lbfgs_gm_aware"),
                 "loss_norm": run_artifacts.field(data, os.path.dirname(jpath), "loss_norm"),
+                "adamw_avoid_localmin": run_artifacts.field(data, os.path.dirname(jpath), "adamw_avoid_localmin"),
                 "csv": run_artifacts.field(data, os.path.dirname(jpath), "csv"),
                 "epochs": data.get("epochs", ""),
                 "seed": data.get("seed", ""),
@@ -297,8 +298,8 @@ def compile_results(target_dir, output_csv="compiled_results.csv", sort_keys=Non
             "ids_lambda", "gm_warmup_epochs", "gm_warmup_lr", "gm_vds_min", "gm_vgs_min",
             "ids_region_weight", "ids_region_center", "ids_region_width", "ids_region_lo", "ids_region_hi",
             "deterministic", "mixed_init", "vds_loss",
-            "gm_max_ratio", "lbfgs_epochs", "lbfgs_max_iter", "lbfgs_gm_aware", "loss_norm", "csv",
-            "epochs", "seed"]
+            "gm_max_ratio", "lbfgs_epochs", "lbfgs_max_iter", "lbfgs_gm_aware", "loss_norm",
+            "adamw_avoid_localmin", "csv", "epochs", "seed"]
     # Region metrics (compute_region_metrics.py) vary by run; collect the union and
     # slot them in before architecture/file_path so they rank/sort like any column.
     region_cols = sorted({k for r in results for k in r if k.startswith("region_")})
