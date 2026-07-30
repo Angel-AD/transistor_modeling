@@ -116,7 +116,7 @@ python plot_best_configs.py        --dir runs/nn/<experiment> --csv ../csvs/<...
   "DEFAULTS": {                         // applied to every experiment unless overridden
     "base_configs": { "<name>": { ...base_config... } },
     "knee_alpha_scales": [1.0],         // physics knee scale (physics modes only)
-    "knee_combiners":    ["sum"],       // sum|product|residual|sum_gated_vgs|max|min (physics modes only)
+    "knee_combiners":    ["sum"],       // sum|product|sum_gated_vgs|residual (physics modes only)
     "learning_rates":    [0.01],
     "nn_architectures":  ["[[\"tanh\",\"sin\"],[\"tanh\",\"sin\"]]"],  // or "@GENERATE@"
     "output_activations":["linear"],    // linear|softplus|...
