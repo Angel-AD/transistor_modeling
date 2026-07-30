@@ -103,7 +103,7 @@ actually uses: `scale = 1.1 × max(measured Ids)`, giving 10% headroom above
 the largest value ever seen). Unbounded activations (`linear`, `softplus`)
 don't need to be scaled at all — the margin is simply ignored for them.
 
-| output activation | bounded? | needs to be scaled (via a margin)? |
+| output activation | bounded? | needs to be scaled? |
 |---|---|---|
 | `linear` | no | no |
 | `softplus` | no (≥0, but unbounded above) | no |
