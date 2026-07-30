@@ -126,11 +126,18 @@ together with `ids_out_margin: 0.1`; the `softplus` sweep sets neither —
 `equation_type: "pure:<wrapper>"`, where `<wrapper>` is `vdsgate`,
 `vdsgatelin`, `vdsgate_aeff*`, or `vdsgate_vdsk*`.
 
-The **wrapper** is a second, independent squashing step, applied *after* the
-network's own `output_activation`. It's how the network is made to
-automatically obey basic transistor physics — exactly zero current at
-`Vds = 0`, current flowing the correct direction — instead of hoping it
-learns that from data alone.
+The **wrapper** doesn't add a new kind of squashing — it *relocates* the
+same `output_activation` squash from §1/§2b, moving it from inside the
+network's last layer to right here, then multiplying the result by an
+extra `Vds`-shaped envelope (below). Concretely: `output_activation` is set
+to `linear` (so the network's raw number, `NN(Vgs, Vds)`, comes out
+untouched), and *that* raw number is then run through `softplus` or `tanh`
+here instead — mathematically identical to picking `softplus`/`tanh` as
+`output_activation` directly, just computed in a different spot so its
+result can be multiplied by the envelope rather than returned as `Ids` on
+its own. This is how the network is made to automatically obey basic
+transistor physics — exactly zero current at `Vds = 0`, current flowing the
+correct direction — instead of hoping it learns that from data alone.
 
 **The key idea: it borrows its shape directly from the Angelov empirical
 equation.** That equation looks like this — look at its *tail*, the part
@@ -148,15 +155,20 @@ The `vdsgate` wrapper reuses that exact `Vds`-envelope — literally the same
 
 $$I_{ds} = \underbrace{g(\mathrm{NN})}_{\substack{\text{network stands in}\\\text{for the empirical term}}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{same envelope as Angelov}}$$
 
-- $g(\cdot)$ is a small "gate" function on the network's raw output — by
-  default $g = \mathrm{softplus}(\mathrm{NN})$, which keeps the sign of
-  `Ids` locked to the sign of `Vds` (physically required).
+- $g(\cdot)$ **is `output_activation`, relocated** — by default
+  $g = \mathrm{softplus}(\mathrm{NN})$, same `softplus` as in §2b's table,
+  just applied here instead of inside the network. Using `softplus` keeps
+  the sign of `Ids` locked to the sign of `Vds` (physically required); the
+  other available choice is $g = \tanh(\mathrm{NN})$, which trades away that
+  sign guarantee for a cleaner transition right at pinch-off. (`sigmoid` is
+  not one of the two choices here — it's only available as `output_activation`
+  in §2, without this wrapper.)
 - $\alpha$ (steepness) and $\lambda$ (slope) are just two extra learned
   numbers, same role as in the Angelov equation.
 
 ```mermaid
 flowchart LR
-    NN["neural network(Vgs, Vds)"] --> GATE["gate g( )<br/>stands in for the empirical equation"]
+    NN["neural network(Vgs, Vds), output_activation=linear"] --> GATE["softplus or tanh,<br/>applied here instead of inside the network"]
     GATE --> M1["× tanh(α·Vds)"]
     M1 --> M2["× (1 + λ·Vds)"]
     M2 --> OUT["Ids"]
@@ -178,7 +190,7 @@ to be:
 | `_quad` | 2 | curve — **the one used most in this repo** |
 | `_cub` (also the bare `vdsgate_aeff`) | 3 | more flexible curve |
 | `_quart`/`_quint`/`_sext`/`_sept` | 4–7 | higher-order fits, rarely needed |
-| `_sig` | — | bounds $a_{eff}$ with sigmoid instead of softplus |
+| `_sig` | — | bounds $a_{eff}$ with sigmoid instead of softplus — a *different* sigmoid than the gate discussion above; this one only affects $a_{eff}$'s own ceiling, not $g$ |
 | `_clam` | — | forces $\lambda$ to a single constant instead of its own polynomial |
 | `_freelam` | — | lets $\lambda$ go negative (unconstrained) |
 

@@ -114,11 +114,18 @@ and `tanh` as the final activation set a `0.1` margin; the ones using
 
 ## 3. The network's output shaped to look like a transistor curve
 
-A second, independent squashing step can be applied *after* the network's
-own final activation. It's how the network is made to automatically obey
-basic transistor physics — exactly zero current at `Vds = 0`, current
-flowing the correct direction — instead of hoping it learns that from data
-alone.
+This doesn't add a new kind of squashing — it *relocates* the same final
+activation from §1/§2b, moving it from inside the network's last step to
+right here, then multiplying the result by an extra `Vds`-shaped envelope
+(below). Concretely: the network's own final step is set to do nothing (no
+squashing at all, so its raw number comes out untouched), and *that* raw
+number is instead squashed here — mathematically identical to picking that
+same squashing function as the network's final step directly, just
+computed in a different spot so its result can be multiplied by the
+envelope rather than returned as `Ids` on its own. This is how the network
+is made to automatically obey basic transistor physics — exactly zero
+current at `Vds = 0`, current flowing the correct direction — instead of
+hoping it learns that from data alone.
 
 **The key idea: it borrows its shape directly from the Angelov empirical
 equation.** That equation looks like this — look at its *tail*, the part
@@ -136,15 +143,21 @@ This approach reuses that exact `Vds`-envelope — literally the same
 
 $$I_{ds} = \underbrace{g(\mathrm{NN})}_{\substack{\text{network stands in}\\\text{for the empirical term}}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{same envelope as Angelov}}$$
 
-- $g(\cdot)$ is a small "gate" function on the network's raw output — by
-  default $g = \mathrm{softplus}(\mathrm{NN})$, which keeps the sign of
-  `Ids` locked to the sign of `Vds` (physically required).
+- $g(\cdot)$ **is that same final-activation choice, relocated** — by
+  default $g = \mathrm{softplus}(\mathrm{NN})$, same `softplus` as in §2b's
+  table, just applied here instead of inside the network. Using `softplus`
+  keeps the sign of `Ids` locked to the sign of `Vds` (physically
+  required); the other available choice here is $g = \tanh(\mathrm{NN})$,
+  which trades away that sign guarantee for a cleaner transition right at
+  pinch-off. (`sigmoid` is *not* one of the two choices available here —
+  it's only available as the network's own final activation in §2, without
+  this extra shaping step.)
 - $\alpha$ (steepness) and $\lambda$ (slope) are just two extra learned
   numbers, same role as in the Angelov equation.
 
 ```mermaid
 flowchart LR
-    NN["neural network(Vgs, Vds)"] --> GATE["gate g( )<br/>stands in for the empirical equation"]
+    NN["neural network(Vgs, Vds), no squashing"] --> GATE["softplus or tanh,<br/>applied here instead of inside the network"]
     GATE --> M1["× tanh(α·Vds)"]
     M1 --> M2["× (1 + λ·Vds)"]
     M2 --> OUT["Ids"]
@@ -167,8 +180,10 @@ How complex that polynomial is allowed to be is a tunable choice:
 | higher-order | 4–7 | rarely needed |
 
 A few extra variants are also available: bounding the steepness term with a
-sigmoid instead of an unbounded ramp; fixing the slope to a single constant
-instead of letting it vary with `Vgs`; or letting the slope go negative
+sigmoid instead of an unbounded ramp (a *different* sigmoid from the gate
+discussed above — this one only affects the steepness term's own ceiling,
+not the gate itself); fixing the slope to a single constant instead of
+letting it vary with `Vgs`; or letting the slope go negative
 (unconstrained) instead of staying non-negative.
 
 A close cousin models the same idea but stores *where the knee sits, in
