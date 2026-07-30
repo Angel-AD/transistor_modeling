@@ -80,7 +80,7 @@ transistor behavior built in. Simple, but nothing stops it from predicting
 something physically silly (e.g. a nonzero current at `Vds = 0`, where a
 real transistor always reads exactly zero).
 
-### 2b. Bounded output activations need a "scale"
+### 2b. Bounded output activations need to be scaled
 
 If the output activation is `sigmoid` (squashes to the range `(0, 1)`) or
 `tanh` (squashes to `(-1, 1)`), there's a problem: real measured currents can
@@ -101,9 +101,9 @@ capped at ±1 — so this project sets a margin above `0` whenever
 `sigmoid`/`tanh` is used as the output activation (`0.1` is what this repo
 actually uses: `scale = 1.1 × max(measured Ids)`, giving 10% headroom above
 the largest value ever seen). Unbounded activations (`linear`, `softplus`)
-don't need a scale at all — the margin is simply ignored for them.
+don't need to be scaled at all — the margin is simply ignored for them.
 
-| output activation | bounded? | needs a scale (via a margin)? |
+| output activation | bounded? | needs to be scaled (via a margin)? |
 |---|---|---|
 | `linear` | no | no |
 | `softplus` | no (≥0, but unbounded above) | no |
