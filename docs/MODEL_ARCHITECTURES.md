@@ -153,16 +153,16 @@ The `vdsgate` wrapper reuses that exact `Vds`-envelope — literally the same
 `tanh(α·Vds)·(1+λ·Vds)` formula — but **replaces the empirically-derived
 `Vgs`-dependent part with the neural network**:
 
-$$I_{ds} = \underbrace{g(\mathrm{NN})}_{\substack{\text{network stands in}\\\text{for the empirical term}}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{same envelope as Angelov}}$$
+$$I_{ds} = \underbrace{\text{activation}(\mathrm{NN})}_{\substack{\text{network stands in}\\\text{for the empirical term}}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{same envelope as Angelov}}$$
 
-- $g(\cdot)$ **is `output_activation`, relocated** — by default
-  $g = \mathrm{softplus}(\mathrm{NN})$, same `softplus` as in §2b's table,
-  just applied here instead of inside the network. Using `softplus` keeps
-  the sign of `Ids` locked to the sign of `Vds` (physically required); the
-  other available choice is $g = \tanh(\mathrm{NN})$, which trades away that
-  sign guarantee for a cleaner transition right at pinch-off. (`sigmoid` is
-  not one of the two choices here — it's only available as `output_activation`
-  in §2, without this wrapper.)
+- That `activation(...)` **is `output_activation`, relocated** — by default
+  it's `softplus`, same `softplus` as in §2b's table, just applied here
+  instead of inside the network. Using `softplus` keeps the sign of `Ids`
+  locked to the sign of `Vds` (physically required); the other available
+  choice is `tanh`, which trades away that sign guarantee for a cleaner
+  transition right at pinch-off. (`sigmoid` is not one of the two choices
+  here — it's only available as `output_activation` in §2, without this
+  wrapper.)
 - $\alpha$ (steepness) and $\lambda$ (slope) are just two extra learned
   numbers, same role as in the Angelov equation.
 
@@ -179,7 +179,7 @@ one step further**: instead of fixed numbers, $\alpha$ and $\lambda$ become
 small polynomials *in* `Vgs` (so the knee shape can change across the gate
 voltage range, not stay identical everywhere):
 
-$$I_{ds} = g(\mathrm{NN}) \cdot \tanh\big(a_{eff}(V_{gs}) \cdot V_{ds}\big) \cdot \big(1 + l_{eff}(V_{gs}) \cdot V_{ds}\big)$$
+$$I_{ds} = \text{activation}(\mathrm{NN}) \cdot \tanh\big(a_{eff}(V_{gs}) \cdot V_{ds}\big) \cdot \big(1 + l_{eff}(V_{gs}) \cdot V_{ds}\big)$$
 
 The suffix on the wrapper name picks how complex that polynomial is allowed
 to be:
@@ -190,7 +190,7 @@ to be:
 | `_quad` | 2 | curve — **the one used most in this repo** |
 | `_cub` (also the bare `vdsgate_aeff`) | 3 | more flexible curve |
 | `_quart`/`_quint`/`_sext`/`_sept` | 4–7 | higher-order fits, rarely needed |
-| `_sig` | — | bounds $a_{eff}$ with sigmoid instead of softplus — a *different* sigmoid than the gate discussion above; this one only affects $a_{eff}$'s own ceiling, not $g$ |
+| `_sig` | — | bounds $a_{eff}$ with sigmoid instead of softplus — a *different* sigmoid than the `activation(...)` discussed above; this one only affects $a_{eff}$'s own ceiling |
 | `_clam` | — | forces $\lambda$ to a single constant instead of its own polynomial |
 | `_freelam` | — | lets $\lambda$ go negative (unconstrained) |
 
@@ -198,7 +198,7 @@ A close cousin, **`vdsgate_vdsk*`**, models the same idea but stores *where
 the knee sits, in volts* directly, instead of a steepness number — more
 numerically stable for curves very close to pinch-off:
 
-$$I_{ds} = g(\mathrm{NN}) \cdot \tanh\!\left(\frac{V_{ds}}{V_{ds,knee}(V_{gs})}\right) \cdot \big(1 + l_{eff}(V_{gs}) \cdot V_{ds}\big)$$
+$$I_{ds} = \text{activation}(\mathrm{NN}) \cdot \tanh\!\left(\frac{V_{ds}}{V_{ds,knee}(V_{gs})}\right) \cdot \big(1 + l_{eff}(V_{gs}) \cdot V_{ds}\big)$$
 
 ---
 

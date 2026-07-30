@@ -141,17 +141,16 @@ This approach reuses that exact `Vds`-envelope — literally the same
 `tanh(α·Vds)·(1+λ·Vds)` formula — but **replaces the empirically-derived
 `Vgs`-dependent part with the neural network**:
 
-$$I_{ds} = \underbrace{g(\mathrm{NN})}_{\substack{\text{network stands in}\\\text{for the empirical term}}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{same envelope as Angelov}}$$
+$$I_{ds} = \underbrace{\text{activation}(\mathrm{NN})}_{\substack{\text{network stands in}\\\text{for the empirical term}}} \cdot\ \underbrace{\tanh(\alpha \cdot V_{ds})\cdot(1+\lambda \cdot V_{ds})}_{\text{same envelope as Angelov}}$$
 
-- $g(\cdot)$ **is that same final-activation choice, relocated** — by
-  default $g = \mathrm{softplus}(\mathrm{NN})$, same `softplus` as in §2b's
-  table, just applied here instead of inside the network. Using `softplus`
-  keeps the sign of `Ids` locked to the sign of `Vds` (physically
-  required); the other available choice here is $g = \tanh(\mathrm{NN})$,
-  which trades away that sign guarantee for a cleaner transition right at
-  pinch-off. (`sigmoid` is *not* one of the two choices available here —
-  it's only available as the network's own final activation in §2, without
-  this extra shaping step.)
+- That `activation(...)` **is that same final-activation choice, relocated**
+  — by default it's `softplus`, same `softplus` as in §2b's table, just
+  applied here instead of inside the network. Using `softplus` keeps the
+  sign of `Ids` locked to the sign of `Vds` (physically required); the
+  other available choice here is `tanh`, which trades away that sign
+  guarantee for a cleaner transition right at pinch-off. (`sigmoid` is
+  *not* one of the two choices available here — it's only available as the
+  network's own final activation in §2, without this extra shaping step.)
 - $\alpha$ (steepness) and $\lambda$ (slope) are just two extra learned
   numbers, same role as in the Angelov equation.
 
@@ -168,7 +167,7 @@ further**: instead of fixed numbers, $\alpha$ and $\lambda$ become small
 polynomials *in* `Vgs` (so the knee shape can change across the gate
 voltage range, not stay identical everywhere):
 
-$$I_{ds} = g(\mathrm{NN}) \cdot \tanh\big(a_{eff}(V_{gs}) \cdot V_{ds}\big) \cdot \big(1 + l_{eff}(V_{gs}) \cdot V_{ds}\big)$$
+$$I_{ds} = \text{activation}(\mathrm{NN}) \cdot \tanh\big(a_{eff}(V_{gs}) \cdot V_{ds}\big) \cdot \big(1 + l_{eff}(V_{gs}) \cdot V_{ds}\big)$$
 
 How complex that polynomial is allowed to be is a tunable choice:
 
@@ -180,9 +179,9 @@ How complex that polynomial is allowed to be is a tunable choice:
 | higher-order | 4–7 | rarely needed |
 
 A few extra variants are also available: bounding the steepness term with a
-sigmoid instead of an unbounded ramp (a *different* sigmoid from the gate
-discussed above — this one only affects the steepness term's own ceiling,
-not the gate itself); fixing the slope to a single constant instead of
+sigmoid instead of an unbounded ramp (a *different* sigmoid from the
+`activation(...)` discussed above — this one only affects the steepness
+term's own ceiling); fixing the slope to a single constant instead of
 letting it vary with `Vgs`; or letting the slope go negative
 (unconstrained) instead of staying non-negative.
 
@@ -190,7 +189,7 @@ A close cousin models the same idea but stores *where the knee sits, in
 volts* directly, instead of a steepness number — more numerically stable
 for curves very close to pinch-off:
 
-$$I_{ds} = g(\mathrm{NN}) \cdot \tanh\!\left(\frac{V_{ds}}{V_{ds,knee}(V_{gs})}\right) \cdot \big(1 + l_{eff}(V_{gs}) \cdot V_{ds}\big)$$
+$$I_{ds} = \text{activation}(\mathrm{NN}) \cdot \tanh\!\left(\frac{V_{ds}}{V_{ds,knee}(V_{gs})}\right) \cdot \big(1 + l_{eff}(V_{gs}) \cdot V_{ds}\big)$$
 
 ---
 
