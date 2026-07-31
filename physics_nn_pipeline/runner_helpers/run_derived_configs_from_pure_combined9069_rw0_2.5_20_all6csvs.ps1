@@ -51,7 +51,8 @@ param(
         "sigmoid_margin10", "sigmoid_margin10_nogm",
         "softplus", "softplus_nogm",
         "tanh_margin10", "tanh_margin10_nogm",
-        "vdsgate_aeff_quad_tanhm", "vdsgate_aeff_quad_v3"
+        "vdsgate_aeff_quad_tanhm", "vdsgate_aeff_quad_v3",
+        "vdsgate_v3", "vdsgate_tanhm"
     ),
     [string[]]$Derivations = @("best200", "bothshapeok", "best100_gmshapeok"),
     [string]$OutputParent = "csv_base_2.5_20",

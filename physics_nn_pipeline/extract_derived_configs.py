@@ -52,7 +52,8 @@ FILTER_RESULTS = HERE / "filter_results.py"
 GEN_CONFIG = HERE / "gen_config_from_rows.py"
 
 FOLDERS = ["sigmoid_margin10", "sigmoid_margin10_nogm", "softplus", "softplus_nogm",
-           "tanh_margin10", "tanh_margin10_nogm", "vdsgate_aeff_quad_tanhm", "vdsgate_aeff_quad_v3"]
+           "tanh_margin10", "tanh_margin10_nogm", "vdsgate_aeff_quad_tanhm", "vdsgate_aeff_quad_v3",
+           "vdsgate_v3", "vdsgate_tanhm"]
 
 SHAPE_KEEP = [
     "id", "run_id", "arch_id", "arch_hash", "vds_loss", "region_knee_combined_gm",
