@@ -47,16 +47,7 @@
 
 param(
     [int]$Workers = 46,
-    # "vdsgate_v3"/"vdsgate_tanhm" DELIBERATELY excluded: they use the SIMPLEGATE convention
-    # (output_activation IS the gate) and this driver calls the ORIGINAL multi_experiment_runner.py,
-    # which would double-squash them. Train those two via
-    # run_derived_configs_from_pure_combined9069_rw0_2.5_20_all6csvs_simplegate.ps1 instead.
-    [string[]]$Folders = @(
-        "sigmoid_margin10", "sigmoid_margin10_nogm",
-        "softplus", "softplus_nogm",
-        "tanh_margin10", "tanh_margin10_nogm",
-        "vdsgate_aeff_quad_tanhm", "vdsgate_aeff_quad_v3"
-    ),
+    [string[]]$Folders = @("vdsgate_v3", "vdsgate_tanhm"),  # SIMPLEGATE fork: scoped to the 2 simplegate-trained folders only
     [string[]]$Derivations = @("best200", "bothshapeok", "best100_gmshapeok"),
     [string]$OutputParent = "csv_base_2.5_20",
     [string]$Suffix = "rw0_2.5_20",
@@ -118,7 +109,7 @@ foreach ($derivation in $Derivations) {
             $root = Join-Path $outputRoot "$($csv.BaseName)\$folder"
             $allRoots += $root
             Write-Host "=== [$derivation] $($csv.Name) / $folder -> $root ===" -ForegroundColor Cyan
-            python multi_experiment_runner.py `
+            python multi_experiment_runner_simplegate.py `
                 --config $config `
                 --csv $csv.FullName `
                 --master_root_path $root `
@@ -138,7 +129,7 @@ Write-Host "all csvs/folders/derivations finished. compiling..." -ForegroundColo
 # true here (Set-Location above), so no Push-Location/Pop-Location needed around it.
 foreach ($root in $allRoots) {
     Write-Host "=== compile $root ===" -ForegroundColor Cyan
-    & .\compile_helpers\compile_overall.ps1 -root $root -ShortName
+    & .\compile_helpers\compile_overall_simplegate.ps1 -root $root -ShortName
     Write-Host "compiled: $root" -ForegroundColor Green
 }
 Write-Host "all done: $($allRoots.Count) ($($Derivations.Count) derivations x $($Folders.Count) folders x $($csvFiles.Count) csvs) runs compiled." -ForegroundColor Green

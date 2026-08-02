@@ -46,18 +46,19 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from plot_csv_row import _read_rows  # noqa: E402
 
-ANALYZE_SHAPE = HERE / "analyze_shape.py"
+ANALYZE_SHAPE = HERE / "analyze_shape_simplegate.py"
 KEEP_COLUMNS = HERE / "keep_columns.py"
 FILTER_RESULTS = HERE / "filter_results.py"
 GEN_CONFIG = HERE / "gen_config_from_rows.py"
 
-FOLDERS = ["sigmoid_margin10", "sigmoid_margin10_nogm", "softplus", "softplus_nogm",
-           "tanh_margin10", "tanh_margin10_nogm", "vdsgate_aeff_quad_tanhm", "vdsgate_aeff_quad_v3"]
-# "vdsgate_v3"/"vdsgate_tanhm" are DELIBERATELY not listed here: they were trained with the
-# SIMPLEGATE convention (output_activation IS the gate, no separate vdsgate_output_activation
-# key), and this script's own model-reconstruction path (via analyze_shape.py) assumes the OLD
-# two-key convention. Processing them here would silently double-squash/mismatch their gate.
-# They belong ONLY in extract_derived_configs_simplegate.py's own FOLDERS list -- see that file.
+FOLDERS = ["vdsgate_v3", "vdsgate_tanhm"]
+# ONLY these two: the folders actually trained with the SIMPLEGATE convention. The other 8
+# (sigmoid_margin10, ..., vdsgate_aeff_quad_v3/tanhm) are DELIBERATELY excluded here -- they
+# were trained with the OLD two-key convention (output_activation + a separate
+# vdsgate_output_activation gate setting), and this file's model-reconstruction path (via
+# analyze_shape_simplegate.py) assumes output_activation alone IS the gate. Processing them
+# here would silently drop their actual gate squash. They belong ONLY in the original
+# extract_derived_configs.py's FOLDERS list.
 
 SHAPE_KEEP = [
     "id", "run_id", "arch_id", "arch_hash", "vds_loss", "region_knee_combined_gm",
@@ -263,9 +264,8 @@ def do_best200(folder: str, folder_root: Path, out_configs_dir: Path, python_exe
         # filter_results.py --root operates on the whole folder_root's base csv directly and
         # can't restrict to an arbitrary precomputed id subset -- same reason best100_gmshapeok/
         # bothshapeok bypass it. So: filter to tanh-only in Python first, then reuse
-        # _escalate_and_select (the exact same gate-then-rank logic filter_results.py's
-        # --filter/--top_n/--sort_by combination implements) and call gen_config_from_rows.py
-        # directly with --ids, instead of the filter_results.py subprocess route.
+        # _escalate_and_select and call gen_config_from_rows.py directly with --ids, instead of
+        # the filter_results.py subprocess route.
         rows = _read_rows(base_csv)
         tanh_hashes = _tanh_only_hashes(base_csv)
         rows = [r for r in rows if r.get("arch_hash") in tanh_hashes]
@@ -354,11 +354,8 @@ def main():
     ap.add_argument("--tanh_only", action="store_true",
                      help="Restrict the SELECTION POOL to tanh-only architectures (every layer "
                           "'tanh', no swish/mish/other mixed in) BEFORE running best200/"
-                          "best100_gmshapeok/bothshapeok's usual gate-then-rank/compliance logic "
-                          "-- NOT a post-hoc filter of an already-heterogeneous-selected pool "
-                          "(that's what run_tanh_only_analysis.py does downstream, on "
-                          "already-trained data). Output folder name becomes '<folder>_tanhonly' "
-                          "so it never collides with the existing (heterogeneous) derived configs.")
+                          "best100_gmshapeok/bothshapeok's usual gate-then-rank/compliance logic. "
+                          "Output folder name becomes '<folder>_tanhonly'.")
     ap.add_argument("--dry_run", action="store_true")
     args = ap.parse_args()
 
